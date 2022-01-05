@@ -236,7 +236,8 @@ class ThirdTab(QWidget):
         self.setLayout(layout)
 
 
-app = QApplication(sys.argv)
-tabwidget = TabWidget(data=None)
-tabwidget.show()
-app.exec()
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    tabwidget = TabWidget(data=None)
+    tabwidget.show()
+    app.exec()
