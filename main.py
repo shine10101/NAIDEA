@@ -1,6 +1,5 @@
 # Youtube Example- https://www.youtube.com/watch?v=lkXDVxTHm24
-#test commit
-# Really useful!
+
 from PyQt5.QtWidgets import QFileDialog, QPushButton, QHBoxLayout, QRadioButton, QGridLayout,QStyleFactory,QApplication, \
     QLineEdit, QLabel, QListWidget, QGroupBox, QCheckBox, QComboBox,QDialog, QDialogButtonBox, QTabWidget, QWidget, QVBoxLayout
 import sys
@@ -21,9 +20,14 @@ class TabWidget(QDialog):
         self.setWindowIcon(QIcon("myicon.png"))
         self.showMaximized()
 
+        #create filter object
+        FilterLayout = QHBoxLayout()
+        FilterLayout.addWidget(self.createHeader1a(), 2)#column width
+        FilterLayout.addWidget(self.createHeader2a(), 2)
+
         #create tab widget object
         tabwidget = QTabWidget()
-        tabwidget.addTab(FirstTab(self.data), "Global")
+        tabwidget.addTab(FirstTab(self.data), "Macro-Level")
         tabwidget.addTab(SecondTab(), "Farm-Level")
         tabwidget.addTab(ThirdTab(), "Help")
 
@@ -33,45 +37,19 @@ class TabWidget(QDialog):
         buttonbox.rejected.connect(self.reject)
 
         vbox = QVBoxLayout()
+        vbox.addLayout(FilterLayout)
         vbox.addWidget(tabwidget)
         vbox.addWidget(buttonbox)
 
         self.setLayout(vbox)
 
-class FirstTab(QWidget):
-    def __init__(self, data, parent=None):
-        super(FirstTab, self).__init__(parent) #superclass to access methods of the base class
-        self.data = data
-
-        # The key to plotting information
-        self.model = QtGui.QStandardItemModel(self)
-        self.tableView = QtWidgets.QTableView(self)
-        self.tableView.setModel(self.model)
-        self.tableView.horizontalHeader().setStretchLastSection(True)
-
-        # Grid layout of entire tab
-        layout = QGridLayout()
-        layout.addWidget(self.createHeader1(), 2, 0)#row, column,
-        layout.addWidget(self.createHeader2(), 2, 1)
-        layout.addWidget(self.tableView, 3, 0)
-        layout.addWidget(self.MR(), 3, 1)
-        layout.addWidget(self.BL(), 4, 0)
-        layout.addWidget(self.createExampleGroup(self.data), 4, 1)
-        layout.setRowStretch(2, 1)
-        layout.setRowStretch(3, 3)
-        layout.setRowStretch(4, 3)
-        layout.setColumnStretch(0, 0)
-        layout.setColumnStretch(0, 1)
-        layout.setColumnStretch(1, 1)
-
-        self.setLayout(layout)
-
-    def createHeader1(self): # function defining characteristics of each group/grid object
+    def createHeader1a(self): # function defining characteristics of each group/grid object
         HeaderBox = QGroupBox("Import Survey Data")
 
         inputfilebtn = QPushButton("Import")
         inputfilebtn.resize(150, 50)
         inputfilebtn.clicked.connect(self.on_pushButtonLoad_clicked)
+
         exportfilebtn = QPushButton("Export")
         exportfilebtn.setGeometry(200, 150, 100, 40)
         #import box layout
@@ -93,7 +71,7 @@ class FirstTab(QWidget):
 
         return HeaderBox
 
-    def createHeader2(self): # function defining characteristics of each group/grid object
+    def createHeader2a(self): # function defining characteristics of each group/grid object
         HeaderBox = QGroupBox("Filters")
         HeaderBox.setFlat(True)
         return HeaderBox
@@ -102,23 +80,58 @@ class FirstTab(QWidget):
         option = QFileDialog.Options()
         fname = QFileDialog.getOpenFileName(self, 'Open file',
                                             'c:\\', "CSV files (*.csv)", options=option)
-        # data = pd.read_csv(fname[0])
         # global data
-        data = csv.reader(open(fname[0], "r"))
+        #data = csv.reader(open(fname[0], "r")) # tableview
 
-        for row in data:
-            items = [
-                QtGui.QStandardItem(field)
-                for field in row
-            ]
-            self.model.appendRow(items)
+        # for row in data:
+        #     items = [
+        #         QtGui.QStandardItem(field)
+        #         for field in row
+        #     ]
+        #     self.model.appendRow(items)
 
         global importedfile
         importedfile = pd.read_csv(fname[0])
-        # print(d1)
 
-    def createExampleGroup(self, data):  # function defining characteristics of each group/grid object
-        groupBox = QGroupBox("Best Food")
+    @QtCore.pyqtSlot()
+    def on_pushButtonLoad_clicked(self):
+        self.getfile()
+        print(importedfile)
+        FT=FirstTab(data=importedfile)
+        FT.MRChart(importedfile)
+        # self.FirstTab.MRChart(importedfile)
+        # self.FirstTab.BLChart(importedfile)
+
+class FirstTab(QWidget):
+    def __init__(self, data):
+        super(FirstTab, self).__init__() #superclass to access methods of the base class
+        self.data = data
+
+        # The key to plotting information
+        # self.model = QtGui.QStandardItemModel(self)
+        # self.tableView = QtWidgets.QTableView(self)
+        # self.tableView.setModel(self.model)
+        # self.tableView.horizontalHeader().setStretchLastSection(True)
+
+        # Grid layout of entire tab
+        layout = QGridLayout()
+        #layout.addWidget(self.createHeader1(), 2, 0)#row, column,
+        #layout.addWidget(self.createHeader2(), 2, 1)
+        layout.addWidget(self.infrastructure(), 3, 0)
+        layout.addWidget(self.energy(), 3, 1)
+        layout.addWidget(self.der(), 4, 0)
+        layout.addWidget(self.info(self.data), 4, 1)
+        #layout.setRowStretch(2, 1)
+        layout.setRowStretch(3, 3)
+        layout.setRowStretch(4, 3)
+        #layout.setColumnStretch(0, 0)
+        layout.setColumnStretch(0, 1)
+        layout.setColumnStretch(1, 1)
+
+        self.setLayout(layout)
+
+    def info(self, data):  # function defining characteristics of each group/grid object
+        groupBox = QGroupBox("NAIDEA Information")
         label = QLabel(str(data))
         print(data)
 
@@ -127,18 +140,19 @@ class FirstTab(QWidget):
         groupBox.setLayout(ExLayout)
         return groupBox
 
-    def MRChart(self, importedfile):
+    def MRChart(self, importedfile): # pie
         fig = go.Pie(labels=importedfile["IBDX"], values=importedfile["TotalKWh"])
         layout = go.Layout(autosize=True, legend=dict(orientation="h",xanchor='center', x=0.5))# height = 600, width = 1000,
         fig = go.Figure(data=fig, layout=layout)
         fig.update_layout(margin=dict(t=0, b=0, l=0, r=0))
+        fig.show()
         # fig.update_layout(autosize=True)
         # fig.update_traces(quartilemethod="linear")
         self.browser.setHtml(fig.to_html(include_plotlyjs='cdn'))
-        # print(importedfile)
+        print("123")
 
-    def MR(self):
-        groupBox = QGroupBox("Energy Use")
+    def energy(self):
+        groupBox = QGroupBox("Energy Breakdown")
 
         self.browser = QtWebEngineWidgets.QWebEngineView(self)
         exportfilebtn = QCheckBox("Export and do this")
@@ -150,8 +164,15 @@ class FirstTab(QWidget):
 
         return groupBox
 
-    def BL(self): # box and whisker
-        groupBox = QGroupBox("Energy Use")
+    def infrastructure(self):
+        groupBox = QGroupBox("Infrastructure Breakdown")
+
+
+
+        return groupBox
+
+    def der(self): # box and whisker
+        groupBox = QGroupBox("Dairy Energy Rating")
 
         self.browserBL = QtWebEngineWidgets.QWebEngineView(self)
         exportfilebtn = QCheckBox("Export and do this")
@@ -171,16 +192,10 @@ class FirstTab(QWidget):
                                 go.Bar(name='OtherKWh', x=importedfile["MonthString"], y=importedfile["OtherKWh"])])
         fig.update_layout(barmode='stack',
                         legend=dict(orientation="h",xanchor='center', x=0.5))
-        # fig.show()
+        fig.show()
         fig.update_layout(margin=dict(t=0, b=0, l=0, r=0))
         self.browserBL.setHtml(fig.to_html(include_plotlyjs='cdn'))
         # print(importedfile)
-
-    @QtCore.pyqtSlot()
-    def on_pushButtonLoad_clicked(self):
-        self.getfile()
-        self.MRChart(importedfile)
-        self.BLChart(importedfile)
 
 class SecondTab(QWidget):
     def __init__(self):
@@ -218,7 +233,7 @@ class ThirdTab(QWidget):
     def __init__(self):
         super().__init__()
 
-        label = QLabel("Terms and COndition")
+        label = QLabel("Terms and Condition")
         listwidget = QListWidget()
         list = []
 
