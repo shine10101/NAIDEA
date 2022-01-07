@@ -1,20 +1,16 @@
-# Youtube Example- https://www.youtube.com/watch?v=lkXDVxTHm24
-
 from PyQt5.QtWidgets import QFileDialog, QPushButton, QHBoxLayout, QRadioButton, QGridLayout,QStyleFactory,QApplication, \
     QLineEdit, QLabel, QListWidget, QGroupBox, QCheckBox, QComboBox,QDialog, QDialogButtonBox, QTabWidget, QWidget, QVBoxLayout
 import sys
 from PyQt5.QtGui import QIcon, QFont, QStandardItemModel
 from PyQt5 import QtCore, QtGui, QtWidgets, QtWidgets, QtWebEngineWidgets
 import pandas as pd
-import csv
-import numpy as np
-import plotly.express as px
 import plotly.graph_objs as go
 
 class TabWidget(QDialog):
-    def __init__(self, data, parent=None):
-        super(TabWidget, self).__init__(parent)
+    def __init__(self, data):
+        super(TabWidget, self).__init__()
         self.data = data
+        self.firstTab = FirstTab(self.data)
 
         self.setWindowTitle("NAIDEA")
         self.setWindowIcon(QIcon("myicon.png"))
@@ -27,7 +23,7 @@ class TabWidget(QDialog):
 
         #create tab widget object
         tabwidget = QTabWidget()
-        tabwidget.addTab(FirstTab(self.data), "Macro-Level")
+        tabwidget.addTab(self.firstTab, "Macro-Level")
         tabwidget.addTab(SecondTab(), "Farm-Level")
         tabwidget.addTab(ThirdTab(), "Help")
 
@@ -82,7 +78,7 @@ class TabWidget(QDialog):
                                             'c:\\', "CSV files (*.csv)", options=option)
         # global data
         #data = csv.reader(open(fname[0], "r")) # tableview
-
+        importedfile = pd.read_csv("C:/sampledata.csv")
         # for row in data:
         #     items = [
         #         QtGui.QStandardItem(field)
@@ -90,17 +86,16 @@ class TabWidget(QDialog):
         #     ]
         #     self.model.appendRow(items)
 
-        global importedfile
-        importedfile = pd.read_csv(fname[0])
+        return pd.read_csv(fname[0])
 
     @QtCore.pyqtSlot()
     def on_pushButtonLoad_clicked(self):
-        self.getfile()
-        print(importedfile)
-        FT=FirstTab(data=importedfile)
-        FT.MRChart(importedfile)
-        # self.FirstTab.MRChart(importedfile)
-        # self.FirstTab.BLChart(importedfile)
+        importedfile = self.getfile()
+        if importedfile is None:
+            return
+        self.firstTab.MRChart(importedfile)
+        self.firstTab.BLChart(importedfile)
+        self.firstTab.energychart(importedfile)
 
 class FirstTab(QWidget):
     def __init__(self, data):
@@ -115,16 +110,12 @@ class FirstTab(QWidget):
 
         # Grid layout of entire tab
         layout = QGridLayout()
-        #layout.addWidget(self.createHeader1(), 2, 0)#row, column,
-        #layout.addWidget(self.createHeader2(), 2, 1)
         layout.addWidget(self.infrastructure(), 3, 0)
         layout.addWidget(self.energy(), 3, 1)
         layout.addWidget(self.der(), 4, 0)
         layout.addWidget(self.info(self.data), 4, 1)
-        #layout.setRowStretch(2, 1)
         layout.setRowStretch(3, 3)
         layout.setRowStretch(4, 3)
-        #layout.setColumnStretch(0, 0)
         layout.setColumnStretch(0, 1)
         layout.setColumnStretch(1, 1)
 
@@ -145,14 +136,10 @@ class FirstTab(QWidget):
         layout = go.Layout(autosize=True, legend=dict(orientation="h",xanchor='center', x=0.5))# height = 600, width = 1000,
         fig = go.Figure(data=fig, layout=layout)
         fig.update_layout(margin=dict(t=0, b=0, l=0, r=0))
-        fig.show()
-        # fig.update_layout(autosize=True)
-        # fig.update_traces(quartilemethod="linear")
         self.browser.setHtml(fig.to_html(include_plotlyjs='cdn'))
-        print("123")
 
-    def energy(self):
-        groupBox = QGroupBox("Energy Breakdown")
+    def infrastructure(self):
+        groupBox = QGroupBox("Infrastructure Breakdown")
 
         self.browser = QtWebEngineWidgets.QWebEngineView(self)
         exportfilebtn = QCheckBox("Export and do this")
@@ -164,12 +151,40 @@ class FirstTab(QWidget):
 
         return groupBox
 
-    def infrastructure(self):
-        groupBox = QGroupBox("Infrastructure Breakdown")
+    def energychart(self, importedfile):
 
+        kwhdata = importedfile[["CoolingKWh", "VacuumKWh", "WaterHeatKWh", "OtherKWh"]]
+        summed = kwhdata.sum(axis=0)
+        fig = go.Pie(labels=summed.index, values=summed.values)
+        layout = go.Layout(autosize=True, legend=dict(orientation="h",xanchor='center', x=0.5))# height = 600, width = 1000,
+        fig = go.Figure(data=fig, layout=layout)
+        fig.update_layout(margin=dict(t=0, b=0, l=0, r=0))
+        self.browserEn.setHtml(fig.to_html(include_plotlyjs='cdn'))
+
+    def energy(self):
+        groupBox = QGroupBox("Energy Breakdown")
+
+        self.browserEn = QtWebEngineWidgets.QWebEngineView(self)
+        exportfilebtn = QCheckBox("Export and do this")
+        middleright = QHBoxLayout()
+        middleright.addWidget(self.browserEn)
+        middleright.addWidget(exportfilebtn)
+        groupBox.setLayout(middleright)
+        groupBox.setFlat(True)
 
 
         return groupBox
+
+    def BLChart(self, importedfile):
+        fig = go.Figure(data = [go.Bar(name='TotalKWh', x=importedfile["MonthString"], y=importedfile["TotalKWh"]),
+                                go.Bar(name='CoolingkWh', x=importedfile["MonthString"], y=importedfile["CoolingKWh"]),
+                                go.Bar(name='VacuumKWh', x=importedfile["MonthString"], y=importedfile["VacuumKWh"]),
+                                go.Bar(name='WaterHeatKWh', x=importedfile["MonthString"], y=importedfile["WaterHeatKWh"]),
+                                go.Bar(name='OtherKWh', x=importedfile["MonthString"], y=importedfile["OtherKWh"])])
+        fig.update_layout(barmode='stack',
+                        legend=dict(orientation="h",xanchor='center', x=0.5))
+        fig.update_layout(margin=dict(t=0, b=0, l=0, r=0))
+        self.browserBL.setHtml(fig.to_html(include_plotlyjs='cdn'))
 
     def der(self): # box and whisker
         groupBox = QGroupBox("Dairy Energy Rating")
@@ -183,19 +198,6 @@ class FirstTab(QWidget):
         groupBox.setFlat(True)
 
         return groupBox # box and whiskey
-
-    def BLChart(self, importedfile):
-        fig = go.Figure(data = [go.Bar(name='TotalKWh', x=importedfile["MonthString"], y=importedfile["TotalKWh"]),
-                                go.Bar(name='CoolingkWh', x=importedfile["MonthString"], y=importedfile["CoolingKWh"]),
-                                go.Bar(name='VacuumKWh', x=importedfile["MonthString"], y=importedfile["VacuumKWh"]),
-                                go.Bar(name='WaterHeatKWh', x=importedfile["MonthString"], y=importedfile["WaterHeatKWh"]),
-                                go.Bar(name='OtherKWh', x=importedfile["MonthString"], y=importedfile["OtherKWh"])])
-        fig.update_layout(barmode='stack',
-                        legend=dict(orientation="h",xanchor='center', x=0.5))
-        fig.show()
-        fig.update_layout(margin=dict(t=0, b=0, l=0, r=0))
-        self.browserBL.setHtml(fig.to_html(include_plotlyjs='cdn'))
-        # print(importedfile)
 
 class SecondTab(QWidget):
     def __init__(self):
