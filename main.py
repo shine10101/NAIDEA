@@ -78,7 +78,7 @@ class TabWidget(QDialog):
                                             'c:\\', "CSV files (*.csv)", options=option)
         # global data
         #data = csv.reader(open(fname[0], "r")) # tableview
-        importedfile = pd.read_csv("C:/sampledata.csv")
+        importedfile = pd.read_csv("C:/NAIDEADATA.csv")
         # for row in data:
         #     items = [
         #         QtGui.QStandardItem(field)
@@ -110,7 +110,7 @@ class FirstTab(QWidget):
 
         # Grid layout of entire tab
         layout = QGridLayout()
-        layout.addWidget(self.infrastructure(), 3, 0)
+        layout.addWidget(self.infrastructure(self.data), 3, 0)
         layout.addWidget(self.energy(), 3, 1)
         layout.addWidget(self.der(), 4, 0)
         layout.addWidget(self.info(self.data), 4, 1)
@@ -132,24 +132,59 @@ class FirstTab(QWidget):
         return groupBox
 
     def MRChart(self, importedfile): # pie
-        fig = go.Pie(labels=importedfile["IBDX"], values=importedfile["TotalKWh"])
-        layout = go.Layout(autosize=True, legend=dict(orientation="h",xanchor='center', x=0.5))# height = 600, width = 1000,
-        fig = go.Figure(data=fig, layout=layout)
-        fig.update_layout(margin=dict(t=0, b=0, l=0, r=0))
-        self.browser.setHtml(fig.to_html(include_plotlyjs='cdn'))
+            radioButton = self.sender()
+            fig = go.Pie(labels=importedfile[self.radioButton.label])
+            layout = go.Layout(autosize=True, legend=dict(orientation="h",xanchor='center', x=0.5))
+            fig = go.Figure(data=fig, layout=layout)
+            fig.update_layout(margin=dict(t=0, b=0, l=0, r=0))
+            self.browser.setHtml(fig.to_html(include_plotlyjs='cdn'))
 
-    def infrastructure(self):
+    def infrastructure(self, importedfile):
         groupBox = QGroupBox("Infrastructure Breakdown")
 
         self.browser = QtWebEngineWidgets.QWebEngineView(self)
-        exportfilebtn = QCheckBox("Export and do this")
+        right = QVBoxLayout()
+
+        self.radioButton = QRadioButton("Low-Energy Lighting")
+        self.radioButton.setChecked(True)
+        self.radioButton.label = "low_energy_lighting"
+        self.radioButton.toggled.connect(self.MRChart)
+        right.addWidget(self.radioButton)
+
+        self.radioButton = QRadioButton("Green Electricity")
+        self.radioButton.label = "green-electricity"
+        self.radioButton.toggled.connect(self.MRChart)
+        right.addWidget(self.radioButton)
+
+        self.radioButton = QRadioButton("Variable Speed Drive")
+        self.radioButton.label = "VSD"
+        self.radioButton.toggled.connect(self.MRChart)
+        right.addWidget(self.radioButton)
+
+        self.radioButton = QRadioButton("Plate Cooler")
+        self.radioButton.label = "coolingsystem_platecooler"
+        self.radioButton.toggled.connect(self.MRChart)
+        right.addWidget(self.radioButton)
+
+        # self.radioButton.setChecked(True)
+        # self.radioButton1.toggled.connect(self.MRChart(self.data))
+
+        # right.addWidget(self.radioButton1)
+        # right.addWidget(self.radioButton2)
+        # right.addWidget(self.radioButton3)
+        # right.addWidget(self.radioButton4)
+
         middleright = QHBoxLayout()
         middleright.addWidget(self.browser)
-        middleright.addWidget(exportfilebtn)
+        middleright.addLayout(right)
         groupBox.setLayout(middleright)
         groupBox.setFlat(True)
 
         return groupBox
+
+
+
+
 
     def energychart(self, importedfile):
 
@@ -176,11 +211,11 @@ class FirstTab(QWidget):
         return groupBox
 
     def BLChart(self, importedfile):
-        fig = go.Figure(data = [go.Bar(name='TotalKWh', x=importedfile["MonthString"], y=importedfile["TotalKWh"]),
-                                go.Bar(name='CoolingkWh', x=importedfile["MonthString"], y=importedfile["CoolingKWh"]),
-                                go.Bar(name='VacuumKWh', x=importedfile["MonthString"], y=importedfile["VacuumKWh"]),
-                                go.Bar(name='WaterHeatKWh', x=importedfile["MonthString"], y=importedfile["WaterHeatKWh"]),
-                                go.Bar(name='OtherKWh', x=importedfile["MonthString"], y=importedfile["OtherKWh"])])
+        fig = go.Figure(data = [go.Bar(name='TotalKWh', x=importedfile["month"], y=importedfile["TotalKWh"]),
+                                go.Bar(name='CoolingkWh', x=importedfile["month"], y=importedfile["CoolingKWh"]),
+                                go.Bar(name='VacuumKWh', x=importedfile["month"], y=importedfile["VacuumKWh"]),
+                                go.Bar(name='WaterHeatKWh', x=importedfile["month"], y=importedfile["WaterHeatKWh"]),
+                                go.Bar(name='OtherKWh', x=importedfile["month"], y=importedfile["OtherKWh"])])
         fig.update_layout(barmode='stack',
                         legend=dict(orientation="h",xanchor='center', x=0.5))
         fig.update_layout(margin=dict(t=0, b=0, l=0, r=0))
