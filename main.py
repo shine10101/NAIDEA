@@ -1,6 +1,8 @@
 from PyQt5.QtWidgets import QFileDialog, QPushButton, QHBoxLayout, QRadioButton, QGridLayout,QStyleFactory,QApplication, \
-    QLineEdit, QLabel, QListWidget, QGroupBox, QCheckBox, QComboBox,QDialog, QDialogButtonBox, QTabWidget, QWidget, QVBoxLayout
+    QLineEdit, QLabel, QListWidget, QGroupBox, QCheckBox, QComboBox,QDialog, QDialogButtonBox, QTabWidget, QWidget, QVBoxLayout, QButtonGroup, QTextEdit
 import sys
+from qtrangeslider import QRangeSlider, QLabeledRangeSlider
+from qtrangeslider.qtcompat.QtCore import Qt
 from PyQt5.QtGui import QIcon, QFont, QStandardItemModel
 from PyQt5 import QtCore, QtGui, QtWidgets, QtWidgets, QtWebEngineWidgets
 import pandas as pd
@@ -18,8 +20,9 @@ class TabWidget(QDialog):
 
         #create filter object
         FilterLayout = QHBoxLayout()
-        FilterLayout.addWidget(self.createHeader1a(), 2)#column width
-        FilterLayout.addWidget(self.createHeader2a(), 2)
+        FilterLayout.addWidget(self.createHeader1a(), 1)#import/export
+        FilterLayout.addWidget(self.createHeader2a(), 4)# filters
+        FilterLayout.addWidget(self.Header3(), 4)# images
 
         #create tab widget object
         tabwidget = QTabWidget()
@@ -68,7 +71,147 @@ class TabWidget(QDialog):
         return HeaderBox
 
     def createHeader2a(self): # function defining characteristics of each group/grid object
+
+        QSS = """
+        QSlider {
+            min-height: 10px;
+        }
+        
+        QSlider::groove:horizontal {
+            border: 0px;
+            background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #888, stop:1 #ddd);
+            height: 10px;
+            border-radius: 5px;
+        }
+        QSlider::handle {
+            background: qradialgradient(cx:0, cy:0, radius: 1.2, fx:0.35,
+                                        fy:0.3, stop:0 #eef, stop:1 #002);
+            height: 10px;
+            width: 10px;
+            border-radius: 5px;
+        }
+        QSlider::sub-page:horizontal {
+            background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #227, stop:1 #77a);
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
+        }
+        QRangeSlider {
+            qproperty-barColor: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #227, stop:1 #77a);
+        }
+        """
+
         HeaderBox = QGroupBox("Filters")
+        leftlayout = QGridLayout()
+
+        self.radiogroup1 = QButtonGroup()
+        self.radiogroup2 = QButtonGroup()
+        self.radiogroup3 = QButtonGroup()
+
+        label1 = QLabel(self)
+        label1.setText("Variable Speed Drive:")
+        label1.setAlignment(Qt.AlignTop)
+        leftlayout.addWidget(label1, 0, 0)
+        self.VSD_yes = QRadioButton("Yes")
+        self.VSD_no = QRadioButton("No")
+        self.VSD_all = QRadioButton("All")
+        self.VSD_yes.setChecked(True)
+        self.radiogroup1.addButton(self.VSD_yes)
+        self.radiogroup1.addButton(self.VSD_no)
+        self.radiogroup1.addButton(self.VSD_all)
+        leftlayout.addWidget(self.VSD_yes, 0, 1)
+        leftlayout.addWidget(self.VSD_no, 0, 2)
+        leftlayout.addWidget(self.VSD_all, 0, 3)
+
+
+        label2 = QLabel(self)
+        label2.setText("Plate Cooler:")
+        label2.setAlignment(Qt.AlignTop)
+        leftlayout.addWidget(label2, 1, 0)
+        self.PHE_yes = QRadioButton("Yes")
+        self.PHE_no = QRadioButton("No")
+        self.PHE_all = QRadioButton("All")
+        self.PHE_yes.setChecked(True)
+        self.radiogroup2.addButton(self.PHE_yes)
+        self.radiogroup2.addButton(self.PHE_no)
+        self.radiogroup2.addButton(self.PHE_all)
+        leftlayout.addWidget(self.PHE_yes, 1, 1)
+        leftlayout.addWidget(self.PHE_no, 1, 2)
+        leftlayout.addWidget(self.PHE_all, 1, 3)
+
+        label3 = QLabel(self)
+        label3.setText("Cooling System:")
+        label3.setAlignment(Qt.AlignTop)
+        leftlayout.addWidget(label3, 2, 0)
+        self.cs_DX = QRadioButton("DX")
+        self.cs_IB = QRadioButton("IB")
+        self.cs_all = QRadioButton("All")
+        self.cs_DX.setChecked(True)
+        self.radiogroup3.addButton(self.cs_DX)
+        self.radiogroup3.addButton(self.cs_IB)
+        self.radiogroup3.addButton(self.cs_all)
+        leftlayout.addWidget(self.cs_DX, 2, 1)
+        leftlayout.addWidget(self.cs_IB, 2, 2)
+        leftlayout.addWidget(self.cs_all, 2, 3)
+        leftlayout.setRowStretch(leftlayout.rowCount(), 1)
+
+        righttoplayout = QHBoxLayout()
+        rightmiddlelayout = QHBoxLayout()
+        rightbottomlayout = QHBoxLayout()
+        # range slider bars for farm size
+        #https://pythonrepo.com/repo/tlambert03-QtRangeSlider-python-graphical-user-interface-applications
+        #https://doc.qt.io/qt-5/qslider.html
+        label4 = QLabel(self)
+        label4.setText("Farm Size\n(No. Cows):")
+        label4.setAlignment(Qt.AlignLeft)
+        righttoplayout.addWidget(label4)
+        self.slider1 = QLabeledRangeSlider(Qt.Horizontal)
+        self.slider1.setSingleStep(step=25)
+        self.slider1.setEdgeLabelMode(opt=0)
+        self.slider1.setHandleLabelPosition(opt=2)
+        self.slider1.setRange(5, 500)
+        self.slider1.setTickInterval(25)
+        self.slider1.setValue((80, 200))
+        self.slider1.setStyleSheet(QSS)
+        righttoplayout.addWidget(self.slider1)
+
+
+        label5 = QLabel(self)
+        label5.setAlignment(Qt.AlignLeft)
+        label5.setText("Dairy Energy\nRating (DER):")
+        rightmiddlelayout.addWidget(label5)
+        self.der_a = QCheckBox("A")
+        self.der_b = QCheckBox("B")
+        self.der_c = QCheckBox("C")
+        self.der_d = QCheckBox("D")
+        self.der_e = QCheckBox("E")
+        self.der_a.setChecked(True)
+        self.der_b.setChecked(True)
+        self.filterbutton = QPushButton("Filter")
+        rightmiddlelayout.addWidget(self.der_a)
+        rightmiddlelayout.addWidget(self.der_b)
+        rightmiddlelayout.addWidget(self.der_c)
+        rightmiddlelayout.addWidget(self.der_d)
+        rightmiddlelayout.addWidget(self.der_e)
+        rightmiddlelayout.addWidget(self.filterbutton)
+
+        rightlayout = QVBoxLayout()
+        rightlayout.addLayout(righttoplayout)
+        rightlayout.addStretch(1)
+        rightlayout.addLayout(rightmiddlelayout)
+        rightlayout.addStretch(1)
+        rightlayout.addLayout(rightbottomlayout)
+
+        layout = QHBoxLayout()
+        layout.addLayout(leftlayout)
+        layout.addLayout(rightlayout)
+        HeaderBox.setLayout(layout)
+        HeaderBox.setFlat(True)#
+
+        return HeaderBox
+
+    def Header3(self): # function defining characteristics of each group/grid object
+        HeaderBox = QGroupBox("A Collaboration of:")
+
         HeaderBox.setFlat(True)
         return HeaderBox
 
@@ -126,12 +269,15 @@ class FirstTab(QWidget):
 
     def info(self, data):  # function defining characteristics of each group/grid object
         groupBox = QGroupBox("NAIDEA Information")
-        label = QLabel(str(data))
-        print(data)
+        label = QTextEdit()
+        label.setFrameStyle(0)
+        label.setReadOnly(True)
+        label.textCursor().insertHtml("The National Artificial Intelligent Dairy Energy Application (NAIDEA) was developed and is maintained by researchers in the MeSSO research group at the Munster Technological University (messo.mtu.ie). NAIDEA is not for use by commercial bodies. Contact messo@mtu.ie for further information.")
 
-        ExLayout = QGridLayout()
+        ExLayout = QVBoxLayout()
         ExLayout.addWidget(label)
         groupBox.setLayout(ExLayout)
+        groupBox.setFlat(True)
         return groupBox
 
     def MRChart(self, importedfile): # pie
