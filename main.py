@@ -1,12 +1,13 @@
-from PyQt5.QtWidgets import QFileDialog, QPushButton, QHBoxLayout, QRadioButton, QGridLayout,QStyleFactory,QApplication, \
-    QLineEdit, QLabel, QListWidget, QGroupBox, QCheckBox, QComboBox,QDialog, QDialogButtonBox, QTabWidget, QWidget, QVBoxLayout, QButtonGroup, QTextEdit
+from PyQt5.QtWidgets import QMainWindow, QFileDialog, QPushButton, QHBoxLayout, QRadioButton, QGridLayout,QApplication, \
+    QLabel, QListWidget, QGroupBox, QCheckBox, QComboBox,QDialog, QDialogButtonBox, QTabWidget, QWidget, QVBoxLayout, QButtonGroup, QTextEdit
 import sys
-from qtrangeslider import QRangeSlider, QLabeledRangeSlider
+from qtrangeslider import QLabeledRangeSlider
 from qtrangeslider.qtcompat.QtCore import Qt
-from PyQt5.QtGui import QIcon, QFont, QStandardItemModel
-from PyQt5 import QtCore, QtGui, QtWidgets, QtWidgets, QtWebEngineWidgets
+from PyQt5.QtGui import QIcon
+from PyQt5 import QtCore, QtWebEngineWidgets
 import pandas as pd
 import plotly.graph_objs as go
+from os.path import abspath
 
 class TabWidget(QDialog):
     def __init__(self, data):
@@ -15,7 +16,7 @@ class TabWidget(QDialog):
         self.firstTab = FirstTab(self.data)
 
         self.setWindowTitle("NAIDEA")
-        self.setWindowIcon(QIcon("myicon.png"))
+        self.setWindowIcon(QIcon('icon.png'))
         self.showMaximized()
 
         #create filter object
@@ -100,7 +101,7 @@ class TabWidget(QDialog):
         }
         """
 
-        HeaderBox = QGroupBox("Filters")
+        HeaderBox = QGroupBox("Filter Survey Data")
         leftlayout = QGridLayout()
 
         self.radiogroup1 = QButtonGroup()
@@ -436,6 +437,7 @@ class ThirdTab(QWidget):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
+    app.setStyle('Breeze')
     tabwidget = TabWidget(data=None)
     tabwidget.show()
     app.exec()
