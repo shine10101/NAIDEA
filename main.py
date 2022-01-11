@@ -78,7 +78,7 @@ class TabWidget(QDialog):
                                             'c:\\', "CSV files (*.csv)", options=option)
         # global data
         #data = csv.reader(open(fname[0], "r")) # tableview
-        importedfile = pd.read_csv("C:/NAIDEADATA.csv")
+        #importedfile = pd.read_csv("C:/NAIDEADATA.csv")
         # for row in data:
         #     items = [
         #         QtGui.QStandardItem(field)
@@ -96,6 +96,9 @@ class TabWidget(QDialog):
         self.firstTab.MRChart(importedfile)
         self.firstTab.BLChart(importedfile)
         self.firstTab.energychart(importedfile)
+
+        global database
+        database = importedfile
 
 class FirstTab(QWidget):
     def __init__(self, data):
@@ -132,12 +135,20 @@ class FirstTab(QWidget):
         return groupBox
 
     def MRChart(self, importedfile): # pie
-            radioButton = self.sender()
-            fig = go.Pie(labels=importedfile[self.radioButton.label])
-            layout = go.Layout(autosize=True, legend=dict(orientation="h",xanchor='center', x=0.5))
-            fig = go.Figure(data=fig, layout=layout)
-            fig.update_layout(margin=dict(t=0, b=0, l=0, r=0))
-            self.browser.setHtml(fig.to_html(include_plotlyjs='cdn'))
+        # https://pythonbasics.org/pyqt-radiobutton/
+        if self.radioButton1.isChecked():
+            fig = go.Pie(labels=importedfile[self.radioButton1.label])
+        elif self.radioButton2.isChecked():
+            fig = go.Pie(labels=importedfile[self.radioButton2.label])
+        elif self.radioButton3.isChecked():
+            fig = go.Pie(labels=importedfile[self.radioButton3.label])
+        elif self.radioButton4.isChecked():
+            fig = go.Pie(labels=importedfile[self.radioButton4.label])
+
+        layout = go.Layout(autosize=True, legend=dict(orientation="h",xanchor='center', x=0.5))
+        fig = go.Figure(data=fig, layout=layout)
+        fig.update_layout(margin=dict(t=0, b=0, l=0, r=0))
+        self.browser.setHtml(fig.to_html(include_plotlyjs='cdn'))
 
     def infrastructure(self, importedfile):
         groupBox = QGroupBox("Infrastructure Breakdown")
@@ -145,34 +156,26 @@ class FirstTab(QWidget):
         self.browser = QtWebEngineWidgets.QWebEngineView(self)
         right = QVBoxLayout()
 
-        self.radioButton = QRadioButton("Low-Energy Lighting")
-        self.radioButton.setChecked(True)
-        self.radioButton.label = "low_energy_lighting"
-        self.radioButton.toggled.connect(self.MRChart)
-        right.addWidget(self.radioButton)
+        self.radioButton1 = QRadioButton("Low-Energy Lighting")
+        self.radioButton1.label = "low_energy_lighting"
+        self.radioButton1.toggled.connect(lambda: self.MRChart(database))
+        right.addWidget(self.radioButton1)
 
-        self.radioButton = QRadioButton("Green Electricity")
-        self.radioButton.label = "green-electricity"
-        self.radioButton.toggled.connect(self.MRChart)
-        right.addWidget(self.radioButton)
+        self.radioButton2 = QRadioButton("Green Electricity")
+        self.radioButton2.setChecked(True)
+        self.radioButton2.label = "green_electricity"
+        self.radioButton2.toggled.connect(lambda: self.MRChart(database))
+        right.addWidget(self.radioButton2)
 
-        self.radioButton = QRadioButton("Variable Speed Drive")
-        self.radioButton.label = "VSD"
-        self.radioButton.toggled.connect(self.MRChart)
-        right.addWidget(self.radioButton)
+        self.radioButton3 = QRadioButton("Variable Speed Drive")
+        self.radioButton3.label = "VSD"
+        self.radioButton3.toggled.connect(lambda: self.MRChart(database))
+        right.addWidget(self.radioButton3)
 
-        self.radioButton = QRadioButton("Plate Cooler")
-        self.radioButton.label = "coolingsystem_platecooler"
-        self.radioButton.toggled.connect(self.MRChart)
-        right.addWidget(self.radioButton)
-
-        # self.radioButton.setChecked(True)
-        # self.radioButton1.toggled.connect(self.MRChart(self.data))
-
-        # right.addWidget(self.radioButton1)
-        # right.addWidget(self.radioButton2)
-        # right.addWidget(self.radioButton3)
-        # right.addWidget(self.radioButton4)
+        self.radioButton4 = QRadioButton("Plate Cooler")
+        self.radioButton4.label = "coolingsystem_platecooler"
+        self.radioButton4.toggled.connect(lambda: self.MRChart(database))
+        right.addWidget(self.radioButton4)
 
         middleright = QHBoxLayout()
         middleright.addWidget(self.browser)
@@ -181,10 +184,6 @@ class FirstTab(QWidget):
         groupBox.setFlat(True)
 
         return groupBox
-
-
-
-
 
     def energychart(self, importedfile):
 
