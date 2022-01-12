@@ -13,7 +13,6 @@ class TabWidget(QDialog):
     def __init__(self, data):
         super(TabWidget, self).__init__()
         self.data = data
-        self.firstTab = FirstTab(self.data)
 
         self.setWindowTitle("NAIDEA")
         self.setWindowIcon(QIcon('icon.png'))
@@ -24,6 +23,7 @@ class TabWidget(QDialog):
         FilterLayout.addWidget(self.createHeader1a(), 1)#import/export
         FilterLayout.addWidget(self.createHeader2a(), 4)# filters
         FilterLayout.addWidget(self.Header3(), 4)# images
+        self.firstTab = FirstTab(self)
 
         #create tab widget object
         tabwidget = QTabWidget()
@@ -44,7 +44,7 @@ class TabWidget(QDialog):
         self.setLayout(vbox)
 
     def createHeader1a(self): # function defining characteristics of each group/grid object
-        HeaderBox = QGroupBox("Import Survey Data")
+        HeaderBox = QGroupBox("Import/Export Data")
 
         inputfilebtn = QPushButton("Import")
         inputfilebtn.resize(150, 50)
@@ -101,7 +101,7 @@ class TabWidget(QDialog):
         }
         """
 
-        HeaderBox = QGroupBox("Filter Survey Data")
+        HeaderBox = QGroupBox("Filter Data")
         leftlayout = QGridLayout()
 
         self.radiogroup1 = QButtonGroup()
@@ -115,7 +115,7 @@ class TabWidget(QDialog):
         self.VSD_yes = QRadioButton("Yes")
         self.VSD_no = QRadioButton("No")
         self.VSD_all = QRadioButton("All")
-        self.VSD_yes.setChecked(True)
+        self.VSD_all.setChecked(True)
         self.radiogroup1.addButton(self.VSD_yes)
         self.radiogroup1.addButton(self.VSD_no)
         self.radiogroup1.addButton(self.VSD_all)
@@ -131,7 +131,7 @@ class TabWidget(QDialog):
         self.PHE_yes = QRadioButton("Yes")
         self.PHE_no = QRadioButton("No")
         self.PHE_all = QRadioButton("All")
-        self.PHE_yes.setChecked(True)
+        self.PHE_all.setChecked(True)
         self.radiogroup2.addButton(self.PHE_yes)
         self.radiogroup2.addButton(self.PHE_no)
         self.radiogroup2.addButton(self.PHE_all)
@@ -146,7 +146,7 @@ class TabWidget(QDialog):
         self.cs_DX = QRadioButton("DX")
         self.cs_IB = QRadioButton("IB")
         self.cs_all = QRadioButton("All")
-        self.cs_DX.setChecked(True)
+        self.cs_all.setChecked(True)
         self.radiogroup3.addButton(self.cs_DX)
         self.radiogroup3.addButton(self.cs_IB)
         self.radiogroup3.addButton(self.cs_all)
@@ -171,7 +171,7 @@ class TabWidget(QDialog):
         self.slider1.setHandleLabelPosition(opt=2)
         self.slider1.setRange(5, 500)
         self.slider1.setTickInterval(25)
-        self.slider1.setValue((80, 200))
+        self.slider1.setValue((5, 500))
         self.slider1.setStyleSheet(QSS)
         righttoplayout.addWidget(self.slider1)
 
@@ -187,6 +187,9 @@ class TabWidget(QDialog):
         self.der_e = QCheckBox("E")
         self.der_a.setChecked(True)
         self.der_b.setChecked(True)
+        self.der_c.setChecked(True)
+        self.der_d.setChecked(True)
+        self.der_e.setChecked(True)
         self.filterbutton = QPushButton("Filter")
         rightmiddlelayout.addWidget(self.der_a)
         rightmiddlelayout.addWidget(self.der_b)
@@ -230,7 +233,8 @@ class TabWidget(QDialog):
         #     ]
         #     self.model.appendRow(items)
 
-        return pd.read_csv(fname[0])
+        if fname:
+            return pd.read_csv(fname[0])
 
     @QtCore.pyqtSlot()
     def on_pushButtonLoad_clicked(self):
@@ -240,14 +244,17 @@ class TabWidget(QDialog):
         self.firstTab.MRChart(importedfile)
         self.firstTab.BLChart(importedfile)
         self.firstTab.energychart(importedfile)
+        self.importedfile = importedfile
 
-        global database
-        database = importedfile
+    def printgetslider1(self):
+
+        return self.slider1.value()
 
 class FirstTab(QWidget):
-    def __init__(self, data):
+    def __init__(self, tabwidget):
         super(FirstTab, self).__init__() #superclass to access methods of the base class
-        self.data = data
+        self.tabwidget = tabwidget
+        self.data = tabwidget.data
 
         # The key to plotting information
         # self.model = QtGui.QStandardItemModel(self)
@@ -296,6 +303,7 @@ class FirstTab(QWidget):
         fig = go.Figure(data=fig, layout=layout)
         fig.update_layout(margin=dict(t=0, b=0, l=0, r=0))
         self.browser.setHtml(fig.to_html(include_plotlyjs='cdn'))
+        print(self.tabwidget.printgetslider1())
 
     def infrastructure(self, importedfile):
         groupBox = QGroupBox("Infrastructure Breakdown")
@@ -305,30 +313,32 @@ class FirstTab(QWidget):
 
         self.radioButton1 = QRadioButton("Low-Energy Lighting")
         self.radioButton1.label = "low_energy_lighting"
-        self.radioButton1.toggled.connect(lambda: self.MRChart(database))
+        self.radioButton1.toggled.connect(lambda: self.MRChart(self.tabwidget.importedfile))
         right.addWidget(self.radioButton1)
 
         self.radioButton2 = QRadioButton("Green Electricity")
         self.radioButton2.setChecked(True)
         self.radioButton2.label = "green_electricity"
-        self.radioButton2.toggled.connect(lambda: self.MRChart(database))
+        self.radioButton2.toggled.connect(lambda: self.MRChart(self.tabwidget.importedfile))
         right.addWidget(self.radioButton2)
 
         self.radioButton3 = QRadioButton("Variable Speed Drive")
         self.radioButton3.label = "VSD"
-        self.radioButton3.toggled.connect(lambda: self.MRChart(database))
+        self.radioButton3.toggled.connect(lambda: self.MRChart(self.tabwidget.importedfile))
         right.addWidget(self.radioButton3)
 
         self.radioButton4 = QRadioButton("Plate Cooler")
         self.radioButton4.label = "coolingsystem_platecooler"
-        self.radioButton4.toggled.connect(lambda: self.MRChart(database))
+        self.radioButton4.toggled.connect(lambda: self.MRChart(self.tabwidget.importedfile))
         right.addWidget(self.radioButton4)
+
 
         middleright = QHBoxLayout()
         middleright.addWidget(self.browser)
         middleright.addLayout(right)
         groupBox.setLayout(middleright)
         groupBox.setFlat(True)
+
 
         return groupBox
 
