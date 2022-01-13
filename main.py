@@ -4,19 +4,21 @@ import sys
 from qtrangeslider import QLabeledRangeSlider
 from qtrangeslider.qtcompat.QtCore import Qt
 from PyQt5.QtGui import QIcon,QPixmap
-from PyQt5 import QtCore, QtWebEngineWidgets
+from PyQt5 import QtCore, QtWebEngineWidgets, QtGui, QtWidgets
 import pandas as pd
 import plotly.graph_objs as go
+import csv
 from os.path import abspath
 
-class TabWidget(QDialog):
+class mainwindow(QDialog):
     def __init__(self, data):
-        super(TabWidget, self).__init__()
+        super(mainwindow, self).__init__()
         self.data = data
 
         self.setWindowTitle("NAIDEA")
         self.setWindowIcon(QIcon('icon.png'))
         self.showMaximized()
+        self.secondTab = SecondTab(self)
 
         #create filter object
         FilterLayout = QHBoxLayout()
@@ -25,11 +27,17 @@ class TabWidget(QDialog):
         FilterLayout.addWidget(self.Header3(), 4)# images
         self.firstTab = FirstTab(self)
 
+        #The key to plotting Treeview information
+        self.model = QtGui.QStandardItemModel(self)
+        self.tableView = QtWidgets.QTableView(self)
+        self.tableView.setModel(self.model)
+        self.tableView.horizontalHeader().setStretchLastSection(True)
+
         #create tab widget object
-        tabwidget = QTabWidget()
-        tabwidget.addTab(self.firstTab, "Macro-Level")
-        tabwidget.addTab(SecondTab(), "Farm-Level")
-        tabwidget.addTab(ThirdTab(), "Help")
+        tabs = QTabWidget()
+        tabs.addTab(self.firstTab, "Macro-Level")
+        tabs.addTab(self.tableView, "Farm-Level")
+        tabs.addTab(ThirdTab(), "Help")
 
         buttonbox = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
 
@@ -38,7 +46,7 @@ class TabWidget(QDialog):
 
         vbox = QVBoxLayout()
         vbox.addLayout(FilterLayout)
-        vbox.addWidget(tabwidget)
+        vbox.addWidget(tabs)
         vbox.addWidget(buttonbox)
 
         self.setLayout(vbox)
@@ -231,15 +239,16 @@ class TabWidget(QDialog):
         option = QFileDialog.Options()
         fname = QFileDialog.getOpenFileName(self, 'Open file',
                                             'c:\\', "CSV files (*.csv)", options=option)
-        # global data
-        #data = csv.reader(open(fname[0], "r")) # tableview
-        importedfile = pd.read_csv("C:/NAIDEADATA.csv")
-        # for row in data:
-        #     items = [
-        #         QtGui.QStandardItem(field)
-        #         for field in row
-        #     ]
-        #     self.model.appendRow(items)
+        # fname = "C:/NAIDEADATA.csv"
+        data = csv.reader(open(fname[0], "r")) # tableview
+        # data = importedfile
+        for row in data:
+            items = [
+                QtGui.QStandardItem(field)
+                for field in row
+            ]
+            self.model.appendRow(items)
+
 
         if fname:
             return pd.read_csv(fname[0])
@@ -258,17 +267,26 @@ class TabWidget(QDialog):
 
         return self.slider1.value()
 
+    def writetotableview(self, importedfile):
+        fname = "C:/NAIDEADATA.csv"
+        data = csv.reader(open(fname, "r")) # tableview
+        # fname = "C:/NAIDEADATA.csv"
+        # data = importedfile
+        for row in data:
+            items = [
+                QtGui.QStandardItem(field)
+                for field in row
+            ]
+            self.model.appendRow(items)
+
+        print(self.model)
+
 class FirstTab(QWidget):
     def __init__(self, tabwidget):
-        super(FirstTab, self).__init__() #superclass to access methods of the base class
+        super(FirstTab, self).__init__()
         self.tabwidget = tabwidget
         self.data = tabwidget.data
 
-        # The key to plotting information
-        # self.model = QtGui.QStandardItemModel(self)
-        # self.tableView = QtWidgets.QTableView(self)
-        # self.tableView.setModel(self.model)
-        # self.tableView.horizontalHeader().setStretchLastSection(True)
 
         # Grid layout of entire tab
         layout = QGridLayout()
@@ -483,42 +501,10 @@ class FirstTab(QWidget):
         return groupBox
 
 class SecondTab(QWidget):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, tabwidget):
+        super(SecondTab, self).__init__()
 
-        # The key to plotting information
-        # self.model = QtGui.QStandardItemModel(self)
-        # self.tableView = QtWidgets.QTableView(self)
-        # self.tableView.setModel(self.model)
-        # self.tableView.horizontalHeader().setStretchLastSection(True)
 
-        selectgroup = QGroupBox("Select Operating Systems")  # group box for grouping widgets - Could make a grid using this
-        combo = QComboBox() # list box
-        list = ["Windows", "Mac", "Linux", "Fedora", "Kali"] # options
-        combo.addItems(list)
-
-        #layout for combo box
-        selectLayout = QVBoxLayout()#organises widgets vertically
-        selectLayout.addWidget(combo)
-        selectgroup.setLayout(selectLayout) # adding/set the combo layout to select grou
-
-        #layout for check boxes
-        checkgroup = QGroupBox("whch OS do you like?") # Group box number 2
-        windows = QCheckBox("Windows")
-        mac = QCheckBox("Mac")
-        Linux = QCheckBox("Linux")
-
-        checkLayout = QVBoxLayout()#organises widgets vertically
-        checkLayout.addWidget(windows)
-        checkLayout.addWidget(mac)
-        checkLayout.addWidget(Linux)
-        checkgroup.setLayout(checkLayout)
-
-        #Brings select and xheck boxes together
-        mainLayout = QVBoxLayout()
-        mainLayout.addWidget(selectgroup) # adding/setting selectgroup to main lyout
-        mainLayout.addWidget(checkgroup)
-        self.setLayout(mainLayout)
 
 class ThirdTab(QWidget):
     def __init__(self):
@@ -546,6 +532,6 @@ class ThirdTab(QWidget):
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     app.setStyle('Breeze')
-    tabwidget = TabWidget(data=None)
-    tabwidget.show()
+    window = mainwindow(data=None)
+    window.show()
     app.exec()
