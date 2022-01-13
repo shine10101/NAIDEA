@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import QMainWindow, QFileDialog, QPushButton, QHBoxLayout, 
 import sys
 from qtrangeslider import QLabeledRangeSlider
 from qtrangeslider.qtcompat.QtCore import Qt
-from PyQt5.QtGui import QIcon
+from PyQt5.QtGui import QIcon,QPixmap
 from PyQt5 import QtCore, QtWebEngineWidgets
 import pandas as pd
 import plotly.graph_objs as go
@@ -216,6 +216,14 @@ class TabWidget(QDialog):
     def Header3(self): # function defining characteristics of each group/grid object
         HeaderBox = QGroupBox("A Collaboration of:")
 
+        # im = QPixmap("icon.png")
+        # label = QLabel()
+        # label.setPixmap(im)
+        # # label = im.scaled(64, 64)
+        # grid = QGridLayout()
+        # grid.addWidget(label, 1, 1)
+        # HeaderBox.setLayout(grid)
+
         HeaderBox.setFlat(True)
         return HeaderBox
 
@@ -225,7 +233,7 @@ class TabWidget(QDialog):
                                             'c:\\', "CSV files (*.csv)", options=option)
         # global data
         #data = csv.reader(open(fname[0], "r")) # tableview
-        #importedfile = pd.read_csv("C:/NAIDEADATA.csv")
+        importedfile = pd.read_csv("C:/NAIDEADATA.csv")
         # for row in data:
         #     items = [
         #         QtGui.QStandardItem(field)
@@ -291,13 +299,17 @@ class FirstTab(QWidget):
     def MRChart(self, importedfile): # pie
         # https://pythonbasics.org/pyqt-radiobutton/
         if self.radioButton1.isChecked():
-            fig = go.Pie(labels=importedfile[self.radioButton1.label])
+            importedfile = importedfile[["farm_id", self.radioButton1.label]].drop_duplicates()
+            fig = go.Pie(labels=importedfile[self.radioButton1.label],  hovertemplate = "%{label}: <br>No. Farms: %{value} <extra></extra>")
         elif self.radioButton2.isChecked():
-            fig = go.Pie(labels=importedfile[self.radioButton2.label])
+            importedfile = importedfile[["farm_id", self.radioButton2.label]].drop_duplicates()
+            fig = go.Pie(labels=importedfile[self.radioButton2.label],  hovertemplate = "%{label}: <br>No. Farms: %{value} <extra></extra>")
         elif self.radioButton3.isChecked():
-            fig = go.Pie(labels=importedfile[self.radioButton3.label])
+            importedfile = importedfile[["farm_id", self.radioButton3.label]].drop_duplicates()
+            fig = go.Pie(labels=importedfile[self.radioButton3.label],  hovertemplate = "%{label}: <br>No. Farms: %{value} <extra></extra>")
         elif self.radioButton4.isChecked():
-            fig = go.Pie(labels=importedfile[self.radioButton4.label])
+            importedfile = importedfile[["farm_id", self.radioButton4.label]].drop_duplicates()
+            fig = go.Pie(labels=importedfile[self.radioButton4.label],  hovertemplate = "%{label}: <br>No. Farms: %{value} <extra></extra>")
 
         layout = go.Layout(autosize=True, legend=dict(orientation="h",xanchor='center', x=0.5))
         fig = go.Figure(data=fig, layout=layout)
@@ -343,23 +355,48 @@ class FirstTab(QWidget):
         return groupBox
 
     def energychart(self, importedfile):
-
         kwhdata = importedfile[["CoolingKWh", "VacuumKWh", "WaterHeatKWh", "OtherKWh"]]
-        summed = kwhdata.sum(axis=0)
-        fig = go.Pie(labels=summed.index, values=summed.values)
-        layout = go.Layout(autosize=True, legend=dict(orientation="h",xanchor='center', x=0.5))# height = 600, width = 1000,
+        if self.radioButton5.isChecked():
+            kwhdata = importedfile[["CoolingKWh", "VacuumKWh", "WaterHeatKWh", "OtherKWh"]]
+            summed = round(kwhdata.sum(axis=0))
+            fig = go.Pie(labels=["Milk Cooling", "Milk Harvesting", "Water Heating", "Other Use"], values=summed.values,  hovertemplate = "%{label}: <br>Sum: %{value} kWh <extra></extra>")
+        elif self.radioButton6.isChecked():
+            summed = round(kwhdata.sum(axis=0))
+            fig = go.Pie(labels=["Milk Cooling", "Milk Harvesting", "Water Heating", "Other Use"], values=summed.values,  hovertemplate = "%{label}: <br>No. Farms: %{value} <extra></extra>")
+        elif self.radioButton7.isChecked():
+            summed = round(kwhdata.sum(axis=0)*0.324)
+            fig = go.Pie(labels=["Milk Cooling", "Milk Harvesting", "Water Heating", "Other Use"], values=summed.values,  hovertemplate = "%{label}: <br>Sum: %{value} gCO2 <extra></extra>")
+
+        layout = go.Layout(autosize=True, legend=dict(orientation="h",xanchor='center', x=0.5))
         fig = go.Figure(data=fig, layout=layout)
         fig.update_layout(margin=dict(t=0, b=0, l=0, r=0))
         self.browserEn.setHtml(fig.to_html(include_plotlyjs='cdn'))
 
     def energy(self):
-        groupBox = QGroupBox("Energy Breakdown")
+        groupBox = QGroupBox("Energy/Carbon Breakdown")
+
+        right = QVBoxLayout()
+
+        self.radioButton5 = QRadioButton("Energy Breakdown")
+        self.radioButton5.label = "low_energy_lighting"
+        self.radioButton5.toggled.connect(lambda: self.energychart(self.tabwidget.importedfile))
+        right.addWidget(self.radioButton5)
+
+        self.radioButton6 = QRadioButton("Dairy Energy Rating")
+        self.radioButton6.setChecked(True)
+        self.radioButton6.label = "green_electricity"
+        self.radioButton6.toggled.connect(lambda: self.energychart(self.tabwidget.importedfile))
+        right.addWidget(self.radioButton6)
+
+        self.radioButton7 = QRadioButton("Carbon Dioxide")
+        self.radioButton7.label = "VSD"
+        self.radioButton7.toggled.connect(lambda: self.energychart(self.tabwidget.importedfile))
+        right.addWidget(self.radioButton7)
 
         self.browserEn = QtWebEngineWidgets.QWebEngineView(self)
-        exportfilebtn = QCheckBox("Export and do this")
         middleright = QHBoxLayout()
         middleright.addWidget(self.browserEn)
-        middleright.addWidget(exportfilebtn)
+        middleright.addLayout(right)
         groupBox.setLayout(middleright)
         groupBox.setFlat(True)
 
@@ -367,32 +404,93 @@ class FirstTab(QWidget):
         return groupBox
 
     def BLChart(self, importedfile):
-        fig = go.Figure(data = [go.Bar(name='TotalKWh', x=importedfile["month"], y=importedfile["TotalKWh"]),
-                                go.Bar(name='CoolingkWh', x=importedfile["month"], y=importedfile["CoolingKWh"]),
-                                go.Bar(name='VacuumKWh', x=importedfile["month"], y=importedfile["VacuumKWh"]),
-                                go.Bar(name='WaterHeatKWh', x=importedfile["month"], y=importedfile["WaterHeatKWh"]),
-                                go.Bar(name='OtherKWh', x=importedfile["month"], y=importedfile["OtherKWh"])])
+
+        smonth = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+
+        if self.radioButton8.isChecked():# total
+            kwhdata = importedfile[["month", "CoolingKWh", "VacuumKWh", "WaterHeatKWh", "OtherKWh"]].groupby("month",
+                                                                                                             as_index=False).sum()
+            y_axislabel = "Electricity Use\n(kWh)"
+            hovertext = "%{x}: <br>%{y} kWh <extra></extra>"
+            fig = go.Figure(data=[go.Bar(name='Milk Cooling', x=smonth, y=round(kwhdata["CoolingKWh"], 1)),
+                                  go.Bar(name='Milk Harvesting', x=smonth, y=round(kwhdata["VacuumKWh"], 1)),
+                                  go.Bar(name='Water Heating', x=smonth, y=round(kwhdata["WaterHeatKWh"], 1)),
+                                  go.Bar(name='Other Use', x=smonth, y=round(kwhdata["OtherKWh"], 1))])
+                            # hovertemplate="%{x}: <br>%{y} kWh <extra></extra>")
+
+
+        elif self.radioButton9.isChecked(): # total / litre milk
+            kwhdata_perlitre = importedfile[["month", "milk_yield_litres", "CoolingKWh", "VacuumKWh", "WaterHeatKWh", "OtherKWh"]].groupby("month", as_index = False).sum()
+            month_vector = kwhdata_perlitre["month"]
+            kwhdata_perlitre = kwhdata_perlitre[["CoolingKWh", "VacuumKWh", "WaterHeatKWh", "OtherKWh"]].div(
+                kwhdata_perlitre.milk_yield_litres, axis=0)
+            kwhdata_perlitre = kwhdata_perlitre*1000
+            kwhdata_perlitre.insert(loc=0, column="month", value=month_vector)
+            kwhdata = kwhdata_perlitre
+            y_axislabel = "Electricity Use\n(Wh/Litre)"
+            hovertext = "%{label}: <br>%{value} Wh/Litre <extra></extra>"
+            fig = go.Figure(data=[go.Bar(name='Milk Cooling', x=smonth, y=round(kwhdata["CoolingKWh"], 1)),
+                                  go.Bar(name='Milk Harvesting', x=smonth, y=round(kwhdata["VacuumKWh"], 1)),
+                                  go.Bar(name='Water Heating', x=smonth, y=round(kwhdata["WaterHeatKWh"], 1)),
+                                  go.Bar(name='Other Use', x=smonth, y=round(kwhdata["OtherKWh"], 1))])
+                            # hovertemplate="%{label}: <br>%{value} Wh/Litre <extra></extra>")
+
+
+        elif self.radioButton10.isChecked(): # total / cow
+            kwhdata_percow = importedfile[["CoolingKWh", "VacuumKWh", "WaterHeatKWh", "OtherKWh"]].div(importedfile.herd_size, axis=0)
+            kwhdata_percow.insert(loc=0, column="month", value=importedfile['month'])
+            kwhdata = kwhdata_percow.groupby("month", as_index=False).mean()
+            y_axislabel = "Electricity Use\n(kWh/cow)"
+            hovertext = "%{label}: <br>%{value} kWh/Cow <extra></extra>"
+            fig = go.Figure(data=[go.Bar(name='Milk Cooling', x=smonth, y=round(kwhdata["CoolingKWh"], 1)),
+                                  go.Bar(name='Milk Harvesting', x=smonth, y=round(kwhdata["VacuumKWh"], 1)),
+                                  go.Bar(name='Water Heating', x=smonth, y=round(kwhdata["WaterHeatKWh"], 1)),
+                                  go.Bar(name='Other Use', x=smonth, y=round(kwhdata["OtherKWh"], 1))])
+                            # hovertemplate="%{label}: <br>%{value} kWh/Cow <extra></extra>")
+
+        fig.update_traces(hovertemplate=hovertext)
         fig.update_layout(barmode='stack',
-                        legend=dict(orientation="h",xanchor='center', x=0.5))
-        fig.update_layout(margin=dict(t=0, b=0, l=0, r=0))
+                        legend=dict(orientation="h", xanchor='center', x=0.5), margin=dict(t=0, b=0, l=0, r=0))
+
+        fig.update_yaxes(title=y_axislabel, title_font_size=10)
         self.browserBL.setHtml(fig.to_html(include_plotlyjs='cdn'))
 
     def der(self): # box and whisker
-        groupBox = QGroupBox("Dairy Energy Rating")
+        groupBox = QGroupBox("Monthly Energy Statistics")
+
+        right = QVBoxLayout()
+
+        self.radioButton8 = QRadioButton("Electricity Use")
+        self.radioButton8.toggled.connect(lambda: self.BLChart(self.tabwidget.importedfile))
+        right.addWidget(self.radioButton8)
+
+        self.radioButton9 = QRadioButton("Electricity Use / Litre")
+        self.radioButton9.setChecked(True)
+        self.radioButton9.toggled.connect(lambda: self.BLChart(self.tabwidget.importedfile))
+        right.addWidget(self.radioButton9)
+
+        self.radioButton10 = QRadioButton("Electricity Use / Cow")
+        self.radioButton10.toggled.connect(lambda: self.BLChart(self.tabwidget.importedfile))
+        right.addWidget(self.radioButton10)
 
         self.browserBL = QtWebEngineWidgets.QWebEngineView(self)
-        exportfilebtn = QCheckBox("Export and do this")
         middleright = QHBoxLayout()
         middleright.addWidget(self.browserBL)
-        middleright.addWidget(exportfilebtn)
+        middleright.addLayout(right)
         groupBox.setLayout(middleright)
         groupBox.setFlat(True)
 
-        return groupBox # box and whiskey
+        return groupBox
 
 class SecondTab(QWidget):
     def __init__(self):
         super().__init__()
+
+        # The key to plotting information
+        # self.model = QtGui.QStandardItemModel(self)
+        # self.tableView = QtWidgets.QTableView(self)
+        # self.tableView.setModel(self.model)
+        # self.tableView.horizontalHeader().setStretchLastSection(True)
 
         selectgroup = QGroupBox("Select Operating Systems")  # group box for grouping widgets - Could make a grid using this
         combo = QComboBox() # list box
