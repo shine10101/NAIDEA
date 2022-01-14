@@ -18,7 +18,6 @@ class mainwindow(QDialog):
         self.setWindowTitle("NAIDEA")
         self.setWindowIcon(QIcon('icon.png'))
         self.showMaximized()
-        self.secondTab = SecondTab(self)
 
         #create filter object
         FilterLayout = QHBoxLayout()
@@ -201,12 +200,14 @@ class mainwindow(QDialog):
         self.der_c.setChecked(True)
         self.der_d.setChecked(True)
         self.der_e.setChecked(True)
-        self.filterbutton = QPushButton("Filter")
         rightmiddlelayout.addWidget(self.der_a)
         rightmiddlelayout.addWidget(self.der_b)
         rightmiddlelayout.addWidget(self.der_c)
         rightmiddlelayout.addWidget(self.der_d)
         rightmiddlelayout.addWidget(self.der_e)
+
+        self.filterbutton = QPushButton("Filter")
+        self.filterbutton.clicked.connect(self.on_filterButtonLoad_clicked)
         rightmiddlelayout.addWidget(self.filterbutton)
 
         rightlayout = QVBoxLayout()
@@ -243,8 +244,19 @@ class mainwindow(QDialog):
         fname = QFileDialog.getOpenFileName(self, 'Open file',
                                             'c:\\', "CSV files (*.csv)", options=option)
         # fname = "C:/NAIDEADATA.csv"
+        # database for treeview
         df1 = pd.read_csv(fname[0])
-        self.model = PandasModel(df1)
+        df2 = df1[["farm_id", "milk_yield_litres", "TotalKWh", "CoolingKWh", "VacuumKWh", "WaterHeatKWh", "OtherKWh"]].groupby("farm_id",                                                                                                         as_index=False).sum().round()
+        df3_size = df1[["farm_id", "herd_size", "milking_cows"]].groupby("farm_id").mean().round()
+        df2 = pd.merge(left=df3_size, right=df2, left_on='farm_id', right_on='farm_id')
+        df4 = df1[["farm_id", "re_thermal_m3", "re_solarpv_kw", "re_wind_kw", "res_capacity_kw", "low_energy_lighting",
+                       "night_rate_electricity", "heat_recovery", "green_electricity", "num_parlour_units", "milking_frequency",
+                       "milking_duration_hours", "hotwash_freq", "milkpump_type", "vacuumpump_power_kw", "VSD", "bulktank_capacity_litres",
+                       "waterheating_power_elec_kw", "waterheating_power_gas_kw", "waterheating_power_oil_kw", "hotwatertank_capacity_litres",
+                       "coolingsystem_directexpansion", "coolingsystem_platecooler", "coolingsystem_icebank", "coolingsystem_waterchillingunit"]].drop_duplicates(subset='farm_id', keep="first")
+        df2 = pd.merge(left=df2, right=df4, left_on='farm_id', right_on='farm_id')
+        self.tvdatabase = df2
+        self.model = PandasModel(df2)
         self.tableView.setModel(self.model)
 
         if fname:
@@ -264,19 +276,54 @@ class mainwindow(QDialog):
 
         return self.slider1.value()
 
-    def writetotableview(self, importedfile):
-        fname = "C:/NAIDEADATA.csv"
-        data = csv.reader(open(fname, "r")) # tableview
-        # fname = "C:/NAIDEADATA.csv"
-        # data = importedfile
-        for row in data:
-            items = [
-                QtGui.QStandardItem(field)
-                for field in row
-            ]
-            self.model.appendRow(items)
+    @QtCore.pyqtSlot()
+    def on_filterButtonLoad_clicked(self):
+        current_tv = self.tvdatabase
+        current_charts = self.importedfile
 
-        print(self.model)
+        #farm size
+        minsize = self.slider1.value()[0]
+        maxsize = self.slider1.value()[1]
+
+        #VSD
+        if self.VSD_yes.isChecked():
+            current_tv = current_tv.loc[(current_tv['VSD'] == "yes")]
+        elif self.VSD_no.isChecked():
+            current_tv = current_tv.loc[(current_tv['VSD'] == "no")]
+
+        # #PHE
+        if self.PHE_yes.isChecked():
+            current_tv = current_tv.loc[(current_tv['coolingsystem_platecooler'] == "yes")]
+        elif self.PHE_no.isChecked():
+            current_tv = current_tv.loc[(current_tv['coolingsystem_platecooler'] == "no")]
+
+        # #Cooling System
+        # if self.cs_DX.isChecked():
+        #     current_tv = current_tv.loc[(current_tv['coolingsystem_directexpansion'] >= 'yes')]
+        # elif self.cs_IB.isChecked():
+        #     current_tv = current_tv.loc[(current_tv['coolingsystem_icebank'] >= 'yes')]
+
+        #filter treeview database based on slider chart values
+        current_tv = current_tv.loc[(current_tv['herd_size'] >= minsize) & (current_tv['herd_size'] <= maxsize)]
+        current_charts = current_charts.loc[current_charts['farm_id'].isin(current_tv["farm_id"])]
+
+
+        if current_tv is None:
+            return
+
+        if current_charts is None:
+            return
+
+        self.firstTab.MRChart(current_charts)
+        self.firstTab.BLChart(current_charts)
+        self.firstTab.energychart(current_charts)
+        self.model = PandasModel(current_tv)
+        self.tableView.setModel(self.model)
+
+        self.filtereddatabase = current_tv
+
+
+
 
 class FirstTab(QWidget):
     def __init__(self, tabwidget):
@@ -330,7 +377,6 @@ class FirstTab(QWidget):
         fig = go.Figure(data=fig, layout=layout)
         fig.update_layout(margin=dict(t=0, b=0, l=0, r=0))
         self.browser.setHtml(fig.to_html(include_plotlyjs='cdn'))
-        print(self.tabwidget.printgetslider1())
 
     def infrastructure(self, importedfile):
         groupBox = QGroupBox("Infrastructure Breakdown")
@@ -340,25 +386,38 @@ class FirstTab(QWidget):
 
         self.radioButton1 = QRadioButton("Low-Energy Lighting")
         self.radioButton1.label = "low_energy_lighting"
-        self.radioButton1.toggled.connect(lambda: self.MRChart(self.tabwidget.importedfile))
+        try:
+            self.radioButton1.toggled.connect(lambda: self.MRChart(self.tabwidget.filtereddatabase))
+        except AttributeError:
+            self.radioButton1.toggled.connect(lambda: self.MRChart(self.tabwidget.importedfile))
+
         right.addWidget(self.radioButton1)
 
         self.radioButton2 = QRadioButton("Green Electricity")
         self.radioButton2.setChecked(True)
         self.radioButton2.label = "green_electricity"
-        self.radioButton2.toggled.connect(lambda: self.MRChart(self.tabwidget.importedfile))
+        try:
+            self.radioButton2.toggled.connect(lambda: self.MRChart(self.tabwidget.filtereddatabase))
+        except AttributeError:
+            self.radioButton2.toggled.connect(lambda: self.MRChart(self.tabwidget.importedfile))
+
         right.addWidget(self.radioButton2)
 
         self.radioButton3 = QRadioButton("Variable Speed Drive")
         self.radioButton3.label = "VSD"
-        self.radioButton3.toggled.connect(lambda: self.MRChart(self.tabwidget.importedfile))
+        try:
+            self.radioButton3.toggled.connect(lambda: self.MRChart(self.tabwidget.filtereddatabase))
+        except AttributeError:
+            self.radioButton3.toggled.connect(lambda: self.MRChart(self.tabwidget.importedfile))
         right.addWidget(self.radioButton3)
 
         self.radioButton4 = QRadioButton("Plate Cooler")
         self.radioButton4.label = "coolingsystem_platecooler"
-        self.radioButton4.toggled.connect(lambda: self.MRChart(self.tabwidget.importedfile))
+        try:
+            self.radioButton4.toggled.connect(lambda: self.MRChart(self.tabwidget.filtereddatabase))
+        except AttributeError:
+            self.radioButton4.toggled.connect(lambda: self.MRChart(self.tabwidget.importedfile))
         right.addWidget(self.radioButton4)
-
 
         middleright = QHBoxLayout()
         middleright.addWidget(self.browser)
@@ -496,12 +555,6 @@ class FirstTab(QWidget):
         groupBox.setFlat(True)
 
         return groupBox
-
-class SecondTab(QWidget):
-    def __init__(self, tabwidget):
-        super(SecondTab, self).__init__()
-
-
 
 class ThirdTab(QWidget):
     def __init__(self):
