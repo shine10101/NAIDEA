@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import QMainWindow, QFileDialog, QPushButton, QHBoxLayout, 
 import sys
 from qtrangeslider import QLabeledRangeSlider
 from qtrangeslider.qtcompat.QtCore import Qt
-from PyQt5.QtGui import QIcon,QPixmap
+from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5 import QtCore, QtWebEngineWidgets, QtGui, QtWidgets
 import pandas as pd
 import plotly.graph_objs as go
@@ -28,10 +28,13 @@ class mainwindow(QDialog):
         self.firstTab = FirstTab(self)
 
         #The key to plotting Treeview information
+        #https://www.pythonguis.com/tutorials/qtableview-modelviews-numpy-pandas/
+
         self.model = QtGui.QStandardItemModel(self)
         self.tableView = QtWidgets.QTableView(self)
-        self.tableView.setModel(self.model)
         self.tableView.horizontalHeader().setStretchLastSection(True)
+        self.tableView.setEditTriggers(QtWidgets.QTableWidget.NoEditTriggers)
+        self.tableView.setObjectName("tableView")
 
         #create tab widget object
         tabs = QTabWidget()
@@ -240,18 +243,12 @@ class mainwindow(QDialog):
         fname = QFileDialog.getOpenFileName(self, 'Open file',
                                             'c:\\', "CSV files (*.csv)", options=option)
         # fname = "C:/NAIDEADATA.csv"
-        data = csv.reader(open(fname[0], "r")) # tableview
-        # data = importedfile
-        for row in data:
-            items = [
-                QtGui.QStandardItem(field)
-                for field in row
-            ]
-            self.model.appendRow(items)
-
+        df1 = pd.read_csv(fname[0])
+        self.model = PandasModel(df1)
+        self.tableView.setModel(self.model)
 
         if fname:
-            return pd.read_csv(fname[0])
+            return df1
 
     @QtCore.pyqtSlot()
     def on_pushButtonLoad_clicked(self):
@@ -528,6 +525,30 @@ class ThirdTab(QWidget):
         layout.addWidget(checkbox)
         self.setLayout(layout)
 
+class PandasModel(QtCore.QAbstractTableModel):
+    """
+    Class to populate a table view with a pandas dataframe
+    """
+    def __init__(self, data, parent=None):
+        QtCore.QAbstractTableModel.__init__(self, parent)
+        self._data = data
+
+    def rowCount(self, parent=None):
+        return len(self._data.values)
+
+    def columnCount(self, parent=None):
+        return self._data.columns.size
+
+    def data(self, index, role=QtCore.Qt.DisplayRole):
+        if index.isValid():
+            if role == QtCore.Qt.DisplayRole:
+                return str(self._data.iloc[index.row()][index.column()])
+        return None
+
+    def headerData(self, col, orientation, role):
+        if orientation == QtCore.Qt.Horizontal and role == QtCore.Qt.DisplayRole:
+            return self._data.columns[col]
+        return None
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
