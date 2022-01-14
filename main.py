@@ -14,6 +14,7 @@ class mainwindow(QDialog):
     def __init__(self, data):
         super(mainwindow, self).__init__()
         self.data = data
+        self.filtereddatabase = []
 
         self.setWindowTitle("NAIDEA")
         self.setWindowIcon(QIcon('icon.png'))
@@ -330,6 +331,7 @@ class FirstTab(QWidget):
         super(FirstTab, self).__init__()
         self.tabwidget = tabwidget
         self.data = tabwidget.data
+        self.filtereddatabase = []
 
 
         # Grid layout of entire tab
@@ -388,7 +390,7 @@ class FirstTab(QWidget):
         self.radioButton1.label = "low_energy_lighting"
         try:
             self.radioButton1.toggled.connect(lambda: self.MRChart(self.tabwidget.filtereddatabase))
-        except AttributeError:
+        except:
             self.radioButton1.toggled.connect(lambda: self.MRChart(self.tabwidget.importedfile))
 
         right.addWidget(self.radioButton1)
@@ -398,7 +400,7 @@ class FirstTab(QWidget):
         self.radioButton2.label = "green_electricity"
         try:
             self.radioButton2.toggled.connect(lambda: self.MRChart(self.tabwidget.filtereddatabase))
-        except AttributeError:
+        except:
             self.radioButton2.toggled.connect(lambda: self.MRChart(self.tabwidget.importedfile))
 
         right.addWidget(self.radioButton2)
@@ -407,7 +409,7 @@ class FirstTab(QWidget):
         self.radioButton3.label = "VSD"
         try:
             self.radioButton3.toggled.connect(lambda: self.MRChart(self.tabwidget.filtereddatabase))
-        except AttributeError:
+        except:
             self.radioButton3.toggled.connect(lambda: self.MRChart(self.tabwidget.importedfile))
         right.addWidget(self.radioButton3)
 
@@ -415,8 +417,9 @@ class FirstTab(QWidget):
         self.radioButton4.label = "coolingsystem_platecooler"
         try:
             self.radioButton4.toggled.connect(lambda: self.MRChart(self.tabwidget.filtereddatabase))
-        except AttributeError:
+        except:
             self.radioButton4.toggled.connect(lambda: self.MRChart(self.tabwidget.importedfile))
+
         right.addWidget(self.radioButton4)
 
         middleright = QHBoxLayout()
