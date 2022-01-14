@@ -7,14 +7,11 @@ from PyQt5.QtGui import QIcon, QPixmap
 from PyQt5 import QtCore, QtWebEngineWidgets, QtGui, QtWidgets
 import pandas as pd
 import plotly.graph_objs as go
-import csv
-from os.path import abspath
 
 class mainwindow(QDialog):
     def __init__(self, data):
         super(mainwindow, self).__init__()
         self.data = data
-        self.filtereddatabase = []
 
         self.setWindowTitle("NAIDEA")
         self.setWindowIcon(QIcon('icon.png'))
@@ -272,6 +269,7 @@ class mainwindow(QDialog):
         self.firstTab.BLChart(importedfile)
         self.firstTab.energychart(importedfile)
         self.importedfile = importedfile
+        self.on_filterButtonLoad_clicked()
 
     def printgetslider1(self):
 
@@ -299,10 +297,10 @@ class mainwindow(QDialog):
             current_tv = current_tv.loc[(current_tv['coolingsystem_platecooler'] == "no")]
 
         # #Cooling System
-        # if self.cs_DX.isChecked():
-        #     current_tv = current_tv.loc[(current_tv['coolingsystem_directexpansion'] >= 'yes')]
-        # elif self.cs_IB.isChecked():
-        #     current_tv = current_tv.loc[(current_tv['coolingsystem_icebank'] >= 'yes')]
+        if self.cs_DX.isChecked():
+            current_tv = current_tv.loc[(current_tv['coolingsystem_directexpansion'] == "yes")]
+        elif self.cs_IB.isChecked():
+            current_tv = current_tv.loc[(current_tv['coolingsystem_icebank'] == "yes")]
 
         #filter treeview database based on slider chart values
         current_tv = current_tv.loc[(current_tv['herd_size'] >= minsize) & (current_tv['herd_size'] <= maxsize)]
@@ -320,8 +318,8 @@ class mainwindow(QDialog):
         self.firstTab.energychart(current_charts)
         self.model = PandasModel(current_tv)
         self.tableView.setModel(self.model)
-
-        self.filtereddatabase = current_tv
+        self.filtereddatabase_ann = current_tv
+        self.filtereddatabase_mth = current_charts
 
 
 
@@ -388,38 +386,23 @@ class FirstTab(QWidget):
 
         self.radioButton1 = QRadioButton("Low-Energy Lighting")
         self.radioButton1.label = "low_energy_lighting"
-        try:
-            self.radioButton1.toggled.connect(lambda: self.MRChart(self.tabwidget.filtereddatabase))
-        except:
-            self.radioButton1.toggled.connect(lambda: self.MRChart(self.tabwidget.importedfile))
-
+        self.radioButton1.toggled.connect(lambda: self.MRChart(self.tabwidget.filtereddatabase_ann))
         right.addWidget(self.radioButton1)
 
         self.radioButton2 = QRadioButton("Green Electricity")
         self.radioButton2.setChecked(True)
         self.radioButton2.label = "green_electricity"
-        try:
-            self.radioButton2.toggled.connect(lambda: self.MRChart(self.tabwidget.filtereddatabase))
-        except:
-            self.radioButton2.toggled.connect(lambda: self.MRChart(self.tabwidget.importedfile))
-
+        self.radioButton2.toggled.connect(lambda: self.MRChart(self.tabwidget.filtereddatabase_ann))
         right.addWidget(self.radioButton2)
 
         self.radioButton3 = QRadioButton("Variable Speed Drive")
         self.radioButton3.label = "VSD"
-        try:
-            self.radioButton3.toggled.connect(lambda: self.MRChart(self.tabwidget.filtereddatabase))
-        except:
-            self.radioButton3.toggled.connect(lambda: self.MRChart(self.tabwidget.importedfile))
+        self.radioButton3.toggled.connect(lambda: self.MRChart(self.tabwidget.filtereddatabase_ann))
         right.addWidget(self.radioButton3)
 
         self.radioButton4 = QRadioButton("Plate Cooler")
         self.radioButton4.label = "coolingsystem_platecooler"
-        try:
-            self.radioButton4.toggled.connect(lambda: self.MRChart(self.tabwidget.filtereddatabase))
-        except:
-            self.radioButton4.toggled.connect(lambda: self.MRChart(self.tabwidget.importedfile))
-
+        self.radioButton4.toggled.connect(lambda: self.MRChart(self.tabwidget.filtereddatabase_ann))
         right.addWidget(self.radioButton4)
 
         middleright = QHBoxLayout()
@@ -456,18 +439,18 @@ class FirstTab(QWidget):
 
         self.radioButton5 = QRadioButton("Energy Breakdown")
         self.radioButton5.label = "low_energy_lighting"
-        self.radioButton5.toggled.connect(lambda: self.energychart(self.tabwidget.importedfile))
+        self.radioButton5.toggled.connect(lambda: self.energychart(self.tabwidget.filtereddatabase_mth))
         right.addWidget(self.radioButton5)
 
         self.radioButton6 = QRadioButton("Dairy Energy Rating")
         self.radioButton6.setChecked(True)
         self.radioButton6.label = "green_electricity"
-        self.radioButton6.toggled.connect(lambda: self.energychart(self.tabwidget.importedfile))
+        self.radioButton6.toggled.connect(lambda: self.energychart(self.tabwidget.filtereddatabase_mth))
         right.addWidget(self.radioButton6)
 
         self.radioButton7 = QRadioButton("Carbon Dioxide")
         self.radioButton7.label = "VSD"
-        self.radioButton7.toggled.connect(lambda: self.energychart(self.tabwidget.importedfile))
+        self.radioButton7.toggled.connect(lambda: self.energychart(self.tabwidget.filtereddatabase_mth))
         right.addWidget(self.radioButton7)
 
         self.browserEn = QtWebEngineWidgets.QWebEngineView(self)
@@ -538,16 +521,16 @@ class FirstTab(QWidget):
         right = QVBoxLayout()
 
         self.radioButton8 = QRadioButton("Electricity Use")
-        self.radioButton8.toggled.connect(lambda: self.BLChart(self.tabwidget.importedfile))
+        self.radioButton8.toggled.connect(lambda: self.BLChart(self.tabwidget.filtereddatabase_mth))
         right.addWidget(self.radioButton8)
 
         self.radioButton9 = QRadioButton("Electricity Use / Litre")
         self.radioButton9.setChecked(True)
-        self.radioButton9.toggled.connect(lambda: self.BLChart(self.tabwidget.importedfile))
+        self.radioButton9.toggled.connect(lambda: self.BLChart(self.tabwidget.filtereddatabase_mth))
         right.addWidget(self.radioButton9)
 
         self.radioButton10 = QRadioButton("Electricity Use / Cow")
-        self.radioButton10.toggled.connect(lambda: self.BLChart(self.tabwidget.importedfile))
+        self.radioButton10.toggled.connect(lambda: self.BLChart(self.tabwidget.filtereddatabase_mth))
         right.addWidget(self.radioButton10)
 
         self.browserBL = QtWebEngineWidgets.QWebEngineView(self)
