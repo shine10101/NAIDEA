@@ -394,7 +394,6 @@ class FirstTab(QWidget):
         self.modelkpi.setItem(0, 3, QStandardItem(str(230)))
         self.modelkpi.setItem(0, 4, QStandardItem("C"))
         self.modelkpi.setItem(0, 5, QStandardItem(str(15)))
-        self.modelkpi.point
 
         self.tableViewkpi.setModel(self.modelkpi)
 
