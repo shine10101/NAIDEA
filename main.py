@@ -1,9 +1,9 @@
-from PyQt5.QtWidgets import QMainWindow, QFileDialog, QPushButton, QHBoxLayout, QRadioButton, QGridLayout,QApplication, \
+from PyQt5.QtWidgets import QTableWidgetItem, QMainWindow, QFileDialog, QPushButton, QHBoxLayout, QRadioButton, QGridLayout,QApplication, \
     QLabel, QListWidget, QGroupBox, QCheckBox, QComboBox,QDialog, QDialogButtonBox, QTabWidget, QWidget, QVBoxLayout, QButtonGroup, QTextEdit
 import sys
 from qtrangeslider import QLabeledRangeSlider
 from qtrangeslider.qtcompat.QtCore import Qt
-from PyQt5.QtGui import QIcon, QPixmap
+from PyQt5.QtGui import QIcon, QPixmap, QStandardItem, QFont
 from PyQt5 import QtCore, QtWebEngineWidgets, QtGui, QtWidgets
 import pandas as pd
 import plotly.graph_objs as go
@@ -318,11 +318,9 @@ class mainwindow(QDialog):
         self.firstTab.energychart(current_charts)
         self.model = PandasModel(current_tv)
         self.tableView.setModel(self.model)
+        # self.tableView.setRowHeight(2, 100)
         self.filtereddatabase_ann = current_tv
         self.filtereddatabase_mth = current_charts
-
-
-
 
 class FirstTab(QWidget):
     def __init__(self, tabwidget):
@@ -331,17 +329,21 @@ class FirstTab(QWidget):
         self.data = tabwidget.data
         self.filtereddatabase = []
 
+        bottomright = QGridLayout()
+        bottomright.addWidget(self.kpi(self.data), 0, 0, 1, 1)
+        bottomright.addWidget(self.info(self.data), 1, 0, 2, 1)
 
         # Grid layout of entire tab
         layout = QGridLayout()
-        layout.addWidget(self.infrastructure(self.data), 3, 0)
-        layout.addWidget(self.energy(), 3, 1)
-        layout.addWidget(self.der(), 4, 0)
-        layout.addWidget(self.info(self.data), 4, 1)
-        layout.setRowStretch(3, 3)
-        layout.setRowStretch(4, 3)
+        layout.addWidget(self.infrastructure(self.data), 0, 0)
+        layout.addWidget(self.energy(), 0, 1)
+        layout.addWidget(self.energymonth(), 1, 0)
+        layout.addLayout(bottomright, 1, 1)
+        layout.setRowStretch(0, 1)
+        layout.setRowStretch(1, 1)
         layout.setColumnStretch(0, 1)
         layout.setColumnStretch(1, 1)
+
 
         self.setLayout(layout)
 
@@ -354,9 +356,69 @@ class FirstTab(QWidget):
 
         ExLayout = QVBoxLayout()
         ExLayout.addWidget(label)
+
         groupBox.setLayout(ExLayout)
         groupBox.setFlat(True)
+
         return groupBox
+
+    def kpi(self, data):
+        qss = """
+        {border: none;}
+        """
+
+
+        groupBoxkpi = QGroupBox("Key Performance Indicators")
+
+        self.modelkpi = QtGui.QStandardItemModel(self)
+        self.modelkpi.setRowCount(1)
+        self.modelkpi.setColumnCount(6)
+        self.tableViewkpi = QtWidgets.QTableView(self)
+        self.tableViewkpi.setFixedHeight(62) # height of available space
+        self.tableViewkpi.setShowGrid(False) # removes horizontal lines
+        self.tableViewkpi.setStyleSheet('QTableView::item {border-right: 1px solid #d6d9dc; QTableView::item {border-bottom: 1px solid #d6d9dc;}')
+        self.tableViewkpi.setFrameStyle(0)
+        self.tableViewkpi.setEditTriggers(QtWidgets.QTableWidget.NoEditTriggers)
+        self.tableViewkpi.horizontalHeader().setStretchLastSection(True) # stretch last column to meet available space
+        self.tableViewkpi.setObjectName("tableViewkpi")
+        self.tableViewkpi.verticalHeader().hide()
+        self.modelkpi.setHeaderData(0, Qt.Horizontal, "No. of Farms")
+        self.modelkpi.setHeaderData(1, Qt.Horizontal, "kWh")
+        self.modelkpi.setHeaderData(2, Qt.Horizontal, "Wh / Lm")
+        self.modelkpi.setHeaderData(3, Qt.Horizontal, "kWh / Cow")
+        self.modelkpi.setHeaderData(4, Qt.Horizontal, "Average DER")
+        self.modelkpi.setHeaderData(5, Qt.Horizontal, "gCO2 / Lm")
+        self.modelkpi.setItem(0, 0, QStandardItem(str(18)))
+        self.modelkpi.setItem(0, 1, QStandardItem(str(53000)))
+        self.modelkpi.setItem(0, 2, QStandardItem(str(45)))
+        self.modelkpi.setItem(0, 3, QStandardItem(str(230)))
+        self.modelkpi.setItem(0, 4, QStandardItem("C"))
+        self.modelkpi.setItem(0, 5, QStandardItem(str(15)))
+        self.modelkpi.point
+
+        self.tableViewkpi.setModel(self.modelkpi)
+
+        layout = QHBoxLayout()
+        layout.addWidget(self.tableViewkpi)
+
+
+        groupBoxkpi.setLayout(layout)
+        groupBoxkpi.setFlat(True)
+        return groupBoxkpi
+
+        # groupBox = QGroupBox("Key Performance Indicators")
+        # label = QTextEdit()
+        # label.setFrameStyle(0)
+        # label.setReadOnly(True)
+        # label.textCursor().insertHtml("The National Artificial Intelligent Dairy Energy Application (NAIDEA) was developed and is maintained by researchers in the MeSSO research group at the Munster Technological University (messo.mtu.ie). NAIDEA is not for use by commercial bodies. Contact messo@mtu.ie for further information.")
+        #
+        # ExLayout = QVBoxLayout()
+        # ExLayout.addWidget(label)
+        #
+        # groupBox.setLayout(ExLayout)
+        # groupBox.setFlat(True)
+
+        # return groupBox
 
     def MRChart(self, importedfile): # pie
         # https://pythonbasics.org/pyqt-radiobutton/
@@ -515,7 +577,7 @@ class FirstTab(QWidget):
         fig.update_yaxes(title=y_axislabel, title_font_size=10)
         self.browserBL.setHtml(fig.to_html(include_plotlyjs='cdn'))
 
-    def der(self): # box and whisker
+    def energymonth(self): # box and whisker
         groupBox = QGroupBox("Monthly Energy Statistics")
 
         right = QVBoxLayout()
@@ -546,23 +608,20 @@ class ThirdTab(QWidget):
     def __init__(self):
         super().__init__()
 
-        label = QLabel("Terms and Condition")
-        listwidget = QListWidget()
-        list = []
-
-        for i in range(1, 20):
-            list.append("This is Terms and Conditions")
-
-        listwidget.insertItems(0, list)
+        groupBox = QGroupBox("Help Section")
+        label = QTextEdit()
+        label.setFrameStyle(0)
+        label.setReadOnly(True)
+        label.textCursor().insertHtml("Helpful Information.")
 
         checkbox = QCheckBox("Agree the T&C's")
 
         #create layout
         layout = QVBoxLayout()
         layout.addWidget(label)
-        layout.addWidget(listwidget)
         layout.addWidget(checkbox)
         self.setLayout(layout)
+
 
 class PandasModel(QtCore.QAbstractTableModel):
     """
