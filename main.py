@@ -33,6 +33,9 @@ class mainwindow(QDialog):
         self.tableView.setEditTriggers(QtWidgets.QTableWidget.NoEditTriggers)
         self.tableView.setObjectName("tableView")
 
+        # KPI Tableview
+
+
         #create tab widget object
         tabs = QTabWidget()
         tabs.addTab(self.firstTab, "Macro-Level")
@@ -318,9 +321,11 @@ class mainwindow(QDialog):
         self.firstTab.energychart(current_charts)
         self.model = PandasModel(current_tv)
         self.tableView.setModel(self.model)
-        # self.tableView.setRowHeight(2, 100)
         self.filtereddatabase_ann = current_tv
         self.filtereddatabase_mth = current_charts
+
+        self.mdl = self.firstTab.kpi_table(self.filtereddatabase_ann)
+        self.firstTab.tableViewkpi.setModel(self.mdl)
 
 class FirstTab(QWidget):
     def __init__(self, tabwidget):
@@ -328,9 +333,10 @@ class FirstTab(QWidget):
         self.tabwidget = tabwidget
         self.data = tabwidget.data
         self.filtereddatabase = []
+        self.filtereddatabase_ann = []
 
         bottomright = QGridLayout()
-        bottomright.addWidget(self.kpi(self.data), 0, 0, 1, 1)
+        bottomright.addWidget(self.kpi(self.filtereddatabase_ann), 0, 0, 1, 1)
         bottomright.addWidget(self.info(self.data), 1, 0, 2, 1)
 
         # Grid layout of entire tab
@@ -362,12 +368,63 @@ class FirstTab(QWidget):
 
         return groupBox
 
+    def kpi_table(self, data):
+
+        try:
+            val = len(data)
+            if val == 0:
+                self.modelkpi.setItem(0, 0, QStandardItem(str("")))
+            else:
+                self.modelkpi.setItem(0, 0, QStandardItem(str(f'{round(val):,}')))
+        except:
+            self.modelkpi.setItem(0, 0, QStandardItem(str("")))
+
+        try:
+            val = sum(data["TotalKWh"])
+            if val == 0:
+                self.modelkpi.setItem(0, 1, QStandardItem(str("")))
+            else:
+                self.modelkpi.setItem(0, 1, QStandardItem(str(f'{round(val):,}')))
+        except:
+            self.modelkpi.setItem(0, 1, QStandardItem(str("")))
+
+        try:
+            val = sum(data["TotalKWh"]) / sum(data["milk_yield_litres"]) * 1000
+            self.modelkpi.setItem(0, 2, QStandardItem(str(round(val, 1))))
+        except:
+            self.modelkpi.setItem(0, 2, QStandardItem(str("")))
+
+        try:
+            val = data["TotalKWh"] / data["herd_size"]
+            val = val.mean()
+            if val == 0:
+                self.modelkpi.setItem(0, 3, QStandardItem(str("")))
+            else:
+                self.modelkpi.setItem(0, 3, QStandardItem(str(f'{round(val):,}')))
+
+        except:
+            self.modelkpi.setItem(0, 3, QStandardItem(str("")))
+
+        try:
+            self.modelkpi.setItem(0, 4, QStandardItem(str('C')))
+        except:
+            self.modelkpi.setItem(0, 4, QStandardItem(str("")))
+
+        try:
+            val = sum(data["TotalKWh"])*.324
+            if val == 0:
+                self.modelkpi.setItem(0, 5, QStandardItem(str("")))
+            else:
+                self.modelkpi.setItem(0, 5, QStandardItem(str(f'{round(val):,}')))
+        except:
+            self.modelkpi.setItem(0, 5, QStandardItem(str("")))
+
+        return self.modelkpi
+
     def kpi(self, data):
         qss = """
         {border: none;}
         """
-
-
         groupBoxkpi = QGroupBox("Key Performance Indicators")
 
         self.modelkpi = QtGui.QStandardItemModel(self)
@@ -379,23 +436,21 @@ class FirstTab(QWidget):
         self.tableViewkpi.setStyleSheet('QTableView::item {border-right: 1px solid #d6d9dc; QTableView::item {border-bottom: 1px solid #d6d9dc;}')
         self.tableViewkpi.setFrameStyle(0)
         self.tableViewkpi.setEditTriggers(QtWidgets.QTableWidget.NoEditTriggers)
-        self.tableViewkpi.horizontalHeader().setStretchLastSection(True) # stretch last column to meet available space
         self.tableViewkpi.setObjectName("tableViewkpi")
         self.tableViewkpi.verticalHeader().hide()
         self.modelkpi.setHeaderData(0, Qt.Horizontal, "No. of Farms")
         self.modelkpi.setHeaderData(1, Qt.Horizontal, "kWh")
         self.modelkpi.setHeaderData(2, Qt.Horizontal, "Wh / Lm")
-        self.modelkpi.setHeaderData(3, Qt.Horizontal, "kWh / Cow")
+        self.modelkpi.setHeaderData(3, Qt.Horizontal, "kWh /Farm /Cow")
         self.modelkpi.setHeaderData(4, Qt.Horizontal, "Average DER")
-        self.modelkpi.setHeaderData(5, Qt.Horizontal, "gCO2 / Lm")
-        self.modelkpi.setItem(0, 0, QStandardItem(str(18)))
-        self.modelkpi.setItem(0, 1, QStandardItem(str(53000)))
-        self.modelkpi.setItem(0, 2, QStandardItem(str(45)))
-        self.modelkpi.setItem(0, 3, QStandardItem(str(230)))
-        self.modelkpi.setItem(0, 4, QStandardItem("C"))
-        self.modelkpi.setItem(0, 5, QStandardItem(str(15)))
+        self.modelkpi.setHeaderData(5, Qt.Horizontal, "kg CO\u2082")
+        # 'kh CO{}'.format(get_sub('2'))
 
-        self.tableViewkpi.setModel(self.modelkpi)
+        # Align text in tableview
+        for item in range(0, 6):
+            self.tableViewkpi.setItemDelegateForColumn(item, AlignDelegate(self.kpi_table(data)))
+
+        self.tableViewkpi.setModel(self.kpi_table(data))
 
         layout = QHBoxLayout()
         layout.addWidget(self.tableViewkpi)
@@ -404,20 +459,6 @@ class FirstTab(QWidget):
         groupBoxkpi.setLayout(layout)
         groupBoxkpi.setFlat(True)
         return groupBoxkpi
-
-        # groupBox = QGroupBox("Key Performance Indicators")
-        # label = QTextEdit()
-        # label.setFrameStyle(0)
-        # label.setReadOnly(True)
-        # label.textCursor().insertHtml("The National Artificial Intelligent Dairy Energy Application (NAIDEA) was developed and is maintained by researchers in the MeSSO research group at the Munster Technological University (messo.mtu.ie). NAIDEA is not for use by commercial bodies. Contact messo@mtu.ie for further information.")
-        #
-        # ExLayout = QVBoxLayout()
-        # ExLayout.addWidget(label)
-        #
-        # groupBox.setLayout(ExLayout)
-        # groupBox.setFlat(True)
-
-        # return groupBox
 
     def MRChart(self, importedfile): # pie
         # https://pythonbasics.org/pyqt-radiobutton/
@@ -486,7 +527,7 @@ class FirstTab(QWidget):
             fig = go.Pie(labels=["Milk Cooling", "Milk Harvesting", "Water Heating", "Other Use"], values=summed.values,  hovertemplate = "%{label}: <br>No. Farms: %{value} <extra></extra>")
         elif self.radioButton7.isChecked():
             summed = round(kwhdata.sum(axis=0)*0.324)
-            fig = go.Pie(labels=["Milk Cooling", "Milk Harvesting", "Water Heating", "Other Use"], values=summed.values,  hovertemplate = "%{label}: <br>Sum: %{value} gCO2 <extra></extra>")
+            fig = go.Pie(labels=["Milk Cooling", "Milk Harvesting", "Water Heating", "Other Use"], values=summed.values,  hovertemplate = "%{label}: <br>Sum: %{value} kg CO\u2082 <extra></extra>")
 
         layout = go.Layout(autosize=True, legend=dict(orientation="h",xanchor='center', x=0.5))
         fig = go.Figure(data=fig, layout=layout)
@@ -590,7 +631,7 @@ class FirstTab(QWidget):
         self.radioButton9.toggled.connect(lambda: self.BLChart(self.tabwidget.filtereddatabase_mth))
         right.addWidget(self.radioButton9)
 
-        self.radioButton10 = QRadioButton("Electricity Use / Cow")
+        self.radioButton10 = QRadioButton("Electricity Use / Farm / Cow")
         self.radioButton10.toggled.connect(lambda: self.BLChart(self.tabwidget.filtereddatabase_mth))
         right.addWidget(self.radioButton10)
 
@@ -646,6 +687,11 @@ class PandasModel(QtCore.QAbstractTableModel):
         if orientation == QtCore.Qt.Horizontal and role == QtCore.Qt.DisplayRole:
             return self._data.columns[col]
         return None
+
+class AlignDelegate(QtWidgets.QStyledItemDelegate):
+    def initStyleOption(self, option, index):
+        super(AlignDelegate, self).initStyleOption(option, index)
+        option.displayAlignment = QtCore.Qt.AlignCenter
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
