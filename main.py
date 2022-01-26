@@ -7,6 +7,7 @@ from PyQt5.QtGui import QIcon, QPixmap, QStandardItem, QFont
 from PyQt5 import QtCore, QtWebEngineWidgets, QtGui, QtWidgets
 import pandas as pd
 import plotly.graph_objs as go
+import numpy as np
 
 class mainwindow(QDialog):
     def __init__(self, data):
@@ -244,9 +245,17 @@ class mainwindow(QDialog):
         option = QFileDialog.Options()
         fname = QFileDialog.getOpenFileName(self, 'Open file',
                                             'c:\\', "CSV files (*.csv)", options=option)
-        # fname = "C:/NAIDEADATA.csv"
+        # fname = "C:/NAIDEADATA2.csv"
         # database for treeview
         df1 = pd.read_csv(fname[0])
+        print("line 251")
+        total_db, cooling_db, vacuum_db, heating_db = self.processimportedfile(df1)
+        df1["TotalKWh"] = self.predicttotal(total_db)
+        df1["CoolingKWh"] = self.predictcooling(cooling_db)
+        df1["VacuumKWh"] = self.predictvacuum(vacuum_db)
+        df1["WaterHeatKWh"] = self.predictheating(heating_db)
+        df1[["TotalKWh", "CoolingKWh", "VacuumKWh", "WaterHeatKWh", "OtherKWh"]] = np.ones((len(df1), 5))
+        print("line 254")
         df2 = df1[["farm_id", "milk_yield_litres", "TotalKWh", "CoolingKWh", "VacuumKWh", "WaterHeatKWh", "OtherKWh"]].groupby("farm_id",                                                                                                         as_index=False).sum().round()
         df3_size = df1[["farm_id", "herd_size", "milking_cows"]].groupby("farm_id").mean().round()
         df2 = pd.merge(left=df3_size, right=df2, left_on='farm_id', right_on='farm_id')
@@ -277,6 +286,83 @@ class mainwindow(QDialog):
     def printgetslider1(self):
 
         return self.slider1.value()
+
+    def processimportedfile(self, data):
+        # fname = "C:/NAIDEADATA2.csv"
+        # # database for treeview
+        # df1 = pd.read_csv(fname)
+        data_mdl = data[["farm_id", "month", "milk_yield_litres", "herd_size", "milking_cows",
+                     "re_thermal_m3", "num_parlour_units", "milking_frequency", "hotwash_freq",
+                     "milkpump_type", "vacuumpump_power_kw", "VSD", "bulktank_capacity_litres",
+                     "waterheating_power_elec_kw", "waterheating_power_gas_kw", "waterheating_power_oil_kw",
+                     "hotwatertank_capacity_litres","coolingsystem_directexpansion", "coolingsystem_platecooler",
+                     "coolingsystem_icebank", "coolingsystem_waterchillingunit"]]
+        data_mdl['re_thermal_m3'].values[data_mdl['re_thermal_m3'] > 0] = 2
+        data_mdl['re_thermal_m3'].values[data_mdl['re_thermal_m3'] == 0] = 1
+        data_mdl = data_mdl.rename(columns={"month": "Month", "milk_yield_litres": "MilkYield", "herd_size": "DairyCows_Total",
+                                            "milking_cows": "DairyCows_Milking", "re_thermal_m3": "Parlour_SolarThermalY_N",
+                                            "num_parlour_units": "NoOfParlourUnits", "waterheating_power_elec_kw": "TotalWaterHeaterPower",
+                                            "hotwatertank_capacity_litres": "TotalWaterHeaterVolume", "bulktank_capacity_litres": "TotalBulkTankVolume",
+                                            "vacuumpump_power_kw": "TotalVacuumPower"})
+        hzhw = pd.get_dummies(data_mdl['hotwash_freq'])+1
+        hzhw = hzhw.rename(columns={"once a day": "OAD", "once a month": "OAM", "once a week": "OAW",
+                                    "once every two days": "E2ndD"})
+        milkpump = pd.get_dummies(data_mdl['milkpump_type'])+1
+        # milkpump.columns = milkpump.columns.str.lower()
+        PHE = pd.get_dummies(data_mdl['coolingsystem_platecooler'])+1 #yes ==2
+        PHE = PHE.rename(columns={"yes": "GWPHE"})
+        DXIB = pd.get_dummies(data_mdl['coolingsystem_directexpansion']) + 1  # DX=1
+        DXIB = DXIB.rename(columns={"no": "IBDX"})
+        ICWPHE = pd.get_dummies(data_mdl['coolingsystem_waterchillingunit']) + 1  # yes ==2
+        ICWPHE = ICWPHE.rename(columns={"yes": "ICWPHE"})
+        VSD = pd.get_dummies(data_mdl['VSD']) + 1  # yes ==2
+        VSD = VSD.rename(columns={"yes": "Parlour_VacuumPump1_VariableSpeedY_N"})
+        data_mdl = data_mdl.drop(columns=["VSD"])
+        # WH Fuel source
+        WH = data_mdl[["TotalWaterHeaterPower", "waterheating_power_gas_kw", "waterheating_power_oil_kw"]]
+        WH['TotalWaterHeaterPower'].values[WH['TotalWaterHeaterPower'] > 0] = 1
+        gasoroil = WH["waterheating_power_gas_kw"] + WH["waterheating_power_oil_kw"]
+        gasoroil.values[gasoroil > 0] = 1
+        electric = WH['TotalWaterHeaterPower']
+        electricplus = gasoroil + electric
+        ElectricAndOil = electricplus.to_frame(name = "ElectricAndOil")
+        Electric = electric + 1
+        Electric.values[electricplus == 2] = 1
+        Electric = pd.DataFrame(Electric.values, columns = ["Electric"])
+        # Dwelling
+        Dwelling = np.ones((len(ElectricAndOil), 1), dtype=int)
+        Dwelling = pd.DataFrame(Dwelling, columns = ["Dwelling"])
+        # Milking
+        Milking = np.ones((len(ElectricAndOil), 1), dtype=int)
+        Milking = pd.DataFrame(Milking, columns = ["Milking"])
+        Milking['Milking'].values[data_mdl['MilkYield'] == 0] = 2
+
+        # Form datasets for TCVH
+        df = pd.concat([data_mdl, hzhw[['OAD', "OAM", "OAW", "E2ndD"]],
+                        milkpump[['Diaphram','High Speed','Double Diaphram','Single Speed', 'VSD']],
+                        PHE['GWPHE'], DXIB['IBDX'], ICWPHE['ICWPHE'], VSD['Parlour_VacuumPump1_VariableSpeedY_N'],
+                        ElectricAndOil["ElectricAndOil"], Electric["Electric"], Dwelling["Dwelling"], Milking["Milking"]], axis=1)
+        df.columns = df.columns.str.lower()
+        df.columns = df.columns.str.replace(' ', '')
+
+        total_vars = ['farm_id', 'month', 'dairycows_milking', 'dairycows_total', 'milkyield','ibdx', 'gwphe', 'icwphe', 'totalbulktankvolume', 'parlour_vacuumpump1_variablespeedy_n', 'oad', 'oam', 'oaw', 'parlour_solarthermaly_n', 'totalwaterheatervolume','totalwaterheaterpower', 'electricandoil', 'diaphram', 'doublediaphram','highspeed','vsd','dwelling','milking']
+        total_vars = [each.lower() for each in total_vars]
+        total_db = df[total_vars]
+
+        cooling_vars = ['farm_id', 'Month',	'DairyCows_Total',	'MilkYield',	'NoOfParlourUnits',	'IBDX',	'GWPHE',	'ICWPHE',	'TotalBulkTankVolume']
+        cooling_vars = [each.lower() for each in cooling_vars]
+        cooling_db = df[cooling_vars]
+
+        vacuum_vars = ['farm_id', 'Month', 'DairyCows_Total',	'MilkYield',	'NoOfParlourUnits',	'TotalVacuumPower',	'Parlour_VacuumPump1_VariableSpeedY_N']
+        vacuum_vars = [each.lower() for each in vacuum_vars]
+        vacuum_db = df[vacuum_vars]
+
+        heating_vars = ['farm_id', 'Month', 'DairyCows_Milking',	'DairyCows_Total',	'MilkYield',	'E2ndD',	'OAD',	'OAM',	'OAW',	'Parlour_SolarThermalY_N',	'TotalWaterHeaterVolume',	'TotalWaterHeaterPower',	'Electric',	'ElectricAndOil']
+        heating_vars = [each.lower() for each in heating_vars]
+        heating_db = df[heating_vars]
+
+        return total_db, cooling_db, vacuum_db, heating_db
+
 
     @QtCore.pyqtSlot()
     def on_filterButtonLoad_clicked(self):
@@ -354,7 +440,7 @@ class FirstTab(QWidget):
         self.setLayout(layout)
 
     def info(self, data):  # function defining characteristics of each group/grid object
-        groupBox = QGroupBox("NAIDEA Information")
+        groupBox = QGroupBox("Terms + Conditions")
         label = QTextEdit()
         label.setFrameStyle(0)
         label.setReadOnly(True)
