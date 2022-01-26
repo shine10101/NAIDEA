@@ -250,13 +250,15 @@ class mainwindow(QDialog):
         df1 = pd.read_csv(fname[0])
         print("line 251")
         total_db, cooling_db, vacuum_db, heating_db = self.processimportedfile(df1)
-        df1["TotalKWh"] = self.predicttotal(total_db)
-        df1["CoolingKWh"] = self.predictcooling(cooling_db)
-        df1["VacuumKWh"] = self.predictvacuum(vacuum_db)
-        df1["WaterHeatKWh"] = self.predictheating(heating_db)
-        df1[["TotalKWh", "CoolingKWh", "VacuumKWh", "WaterHeatKWh", "OtherKWh"]] = np.ones((len(df1), 5))
-        print("line 254")
-        df2 = df1[["farm_id", "milk_yield_litres", "TotalKWh", "CoolingKWh", "VacuumKWh", "WaterHeatKWh", "OtherKWh"]].groupby("farm_id",                                                                                                         as_index=False).sum().round()
+        # df1["TotalKWh"] = self.predicttotal(total_db)
+        #c include transformation
+        total_db = total_db.values.tolist()
+        df1["TotalKWh"] = pd.DataFrame([self.predict_total(total_db[i]) for i in range(len(total_db))], columns=['TotalKWh'])
+        # df1["CoolingKWh"] = self.predictcooling(cooling_db)
+        # df1["VacuumKWh"] = self.predictvacuum(vacuum_db)
+        # df1["WaterHeatKWh"] = self.predictheating(heating_db)
+        df1[["CoolingKWh", "VacuumKWh", "WaterHeatKWh", "OtherKWh"]] = np.ones((len(df1), 4))
+        df2 = df1[["farm_id", "milk_yield_litres", "TotalKWh", "CoolingKWh", "VacuumKWh", "WaterHeatKWh", "OtherKWh"]].groupby("farm_id", as_index=False).sum().round()
         df3_size = df1[["farm_id", "herd_size", "milking_cows"]].groupby("farm_id").mean().round()
         df2 = pd.merge(left=df3_size, right=df2, left_on='farm_id', right_on='farm_id')
         df4 = df1[["farm_id", "re_thermal_m3", "re_solarpv_kw", "re_wind_kw", "res_capacity_kw", "low_energy_lighting",
@@ -363,6 +365,35 @@ class mainwindow(QDialog):
 
         return total_db, cooling_db, vacuum_db, heating_db
 
+    def predict_total(self, data):
+        wandb = pd.read_pickle('wandbtotal.pkl')
+        # https://stackoverflow.com/questions/45830206/pyinstaller-created-exe-file-can-not-load-a-keras-nn-model
+        weights = wandb.iloc[:, 1:len(data) + 1]
+        innerbias = wandb["Bias"]
+        outerlayerbias = wandb["Output Layer Weights"]
+        outerbias = wandb["utput bias"][0]
+
+        # explode input data
+        input_trans_minmax = pd.DataFrame(data)
+        input_trans_minmax = input_trans_minmax.transpose()
+        input_trans_minmax = input_trans_minmax.append([input_trans_minmax] * (weights.shape[0] - 1), ignore_index=True)
+
+        inputxweights = np.multiply(weights.to_numpy(), input_trans_minmax)
+        hiddensum = inputxweights.sum(axis=1)
+        transfcnplusbias = np.tanh(hiddensum + innerbias)
+        TFBplusbias = transfcnplusbias * outerlayerbias
+        outerlayersum = sum(TFBplusbias)
+        outerlayersumTF = np.tanh(outerlayersum + outerbias)
+
+        predictionvalue = (((outerlayersumTF - -1) * (7786.47616233046 - 79.1079213483073)) / (
+                    1 - -1)) + 79.1079213483073
+        return predictionvalue
+
+    # def predictcooling(self, data):
+    #
+    # def predictvacuum(self, data):
+    #
+    # def predictheating(self, data):
 
     @QtCore.pyqtSlot()
     def on_filterButtonLoad_clicked(self):
