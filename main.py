@@ -7,6 +7,8 @@ from PyQt5.QtGui import QIcon, QPixmap, QStandardItem, QFont
 from PyQt5 import QtCore, QtWebEngineWidgets, QtGui, QtWidgets
 import pandas as pd
 import plotly.graph_objs as go
+import numpy as np
+import math
 
 class mainwindow(QDialog):
     def __init__(self, data):
@@ -244,10 +246,20 @@ class mainwindow(QDialog):
         option = QFileDialog.Options()
         fname = QFileDialog.getOpenFileName(self, 'Open file',
                                             'c:\\', "CSV files (*.csv)", options=option)
-        # fname = "C:/NAIDEADATA.csv"
+        # fname = "C:/NAIDEADATA2.csv"
         # database for treeview
         df1 = pd.read_csv(fname[0])
-        df2 = df1[["farm_id", "milk_yield_litres", "TotalKWh", "CoolingKWh", "VacuumKWh", "WaterHeatKWh", "OtherKWh"]].groupby("farm_id",                                                                                                         as_index=False).sum().round()
+        total_db, cooling_db, vacuum_db, heating_db = self.processimportedfile(df1)
+        wandb_total = pd.read_csv('wandbtotalkwh.csv')
+        df1["TotalKWh"] = pd.DataFrame([self.predict_total(data=total_db.iloc[i, 1:total_db.shape[1]], wandb=wandb_total) for i in range(len(total_db))], columns=['TotalKWh'])
+        wandb_cooling = pd.read_csv('wandbcoolingkwh.csv')
+        df1["CoolingKWh"] = pd.DataFrame([self.predict_cooling(data=cooling_db.iloc[i, 1:cooling_db.shape[1]], wandb=wandb_cooling) for i in range(len(cooling_db))], columns=['CoolingKWh'])
+        wandb_vacuum = pd.read_csv('wandbvacuumkwh.csv')
+        df1["VacuumKWh"] = pd.DataFrame([self.predict_vacuum(data=vacuum_db.iloc[i, 1:vacuum_db.shape[1]], wandb=wandb_vacuum) for i in range(len(vacuum_db))], columns=['VacuumKWh'])
+        wandb_heating = pd.read_csv('wandbwaterheatkwh.csv')
+        df1["WaterHeatKWh"] = pd.DataFrame([self.predict_heating(data=heating_db.iloc[i, 1:heating_db.shape[1]], wandb=wandb_heating) for i in range(len(heating_db))], columns=['WaterHeatKWh'])
+        df1[["OtherKWh"]] = np.ones((len(df1), 1))
+        df2 = df1[["farm_id", "milk_yield_litres", "TotalKWh", "CoolingKWh", "VacuumKWh", "WaterHeatKWh", "OtherKWh"]].groupby("farm_id", as_index=False).sum().round()
         df3_size = df1[["farm_id", "herd_size", "milking_cows"]].groupby("farm_id").mean().round()
         df2 = pd.merge(left=df3_size, right=df2, left_on='farm_id', right_on='farm_id')
         df4 = df1[["farm_id", "re_thermal_m3", "re_solarpv_kw", "re_wind_kw", "res_capacity_kw", "low_energy_lighting",
@@ -277,6 +289,231 @@ class mainwindow(QDialog):
     def printgetslider1(self):
 
         return self.slider1.value()
+
+    def processimportedfile(self, data):
+        # fname = "C:/NAIDEADATA2.csv"
+        # df1 = pd.read_csv(fname)
+        data_mdl = data[["farm_id", "month", "milk_yield_litres", "herd_size", "milking_cows",
+                     "re_thermal_m3", "num_parlour_units", "milking_frequency", "hotwash_freq",
+                     "milkpump_type", "vacuumpump_power_kw", "VSD", "bulktank_capacity_litres",
+                     "waterheating_power_elec_kw", "waterheating_power_gas_kw", "waterheating_power_oil_kw",
+                     "hotwatertank_capacity_litres","coolingsystem_directexpansion", "coolingsystem_platecooler",
+                     "coolingsystem_icebank", "coolingsystem_waterchillingunit"]]
+        data_mdl['re_thermal_m3'].values[data_mdl['re_thermal_m3'] > 0] = 2
+        data_mdl['re_thermal_m3'].values[data_mdl['re_thermal_m3'] == 0] = 1
+        data_mdl = data_mdl.rename(columns={"month": "Month", "milk_yield_litres": "MilkYield", "herd_size": "DairyCows_Total",
+                                            "milking_cows": "DairyCows_Milking", "re_thermal_m3": "Parlour_SolarThermalY_N",
+                                            "num_parlour_units": "NoOfParlourUnits", "waterheating_power_elec_kw": "TotalWaterHeaterPower",
+                                            "hotwatertank_capacity_litres": "TotalWaterHeaterVolume", "bulktank_capacity_litres": "TotalBulkTankVolume",
+                                            "vacuumpump_power_kw": "TotalVacuumPower"})
+        hzhw = pd.get_dummies(data_mdl['hotwash_freq'])+1
+        hzhw = hzhw.rename(columns={"once a day": "OAD", "once a month": "OAM", "once a week": "OAW",
+                                    "once every two days": "E2ndD"})
+        milkpump = pd.get_dummies(data_mdl['milkpump_type'])+1
+        # milkpump.columns = milkpump.columns.str.lower()
+        PHE = pd.get_dummies(data_mdl['coolingsystem_platecooler'])+1 #yes ==2
+        PHE = PHE.rename(columns={"yes": "GWPHE"})
+        DXIB = pd.get_dummies(data_mdl['coolingsystem_directexpansion']) + 1  # DX=1
+        DXIB = DXIB.rename(columns={"no": "IBDX"})
+        ICWPHE = pd.get_dummies(data_mdl['coolingsystem_waterchillingunit']) + 1  # yes ==2
+        ICWPHE = ICWPHE.rename(columns={"yes": "ICWPHE"})
+        VSD = pd.get_dummies(data_mdl['VSD']) + 1  # yes ==2
+        VSD = VSD.rename(columns={"yes": "Parlour_VacuumPump1_VariableSpeedY_N"})
+        data_mdl = data_mdl.drop(columns=["VSD"])
+        # WH Fuel source
+        WH = data_mdl[["TotalWaterHeaterPower", "waterheating_power_gas_kw", "waterheating_power_oil_kw"]]
+        WH['TotalWaterHeaterPower'].values[WH['TotalWaterHeaterPower'] > 0] = 1
+        gasoroil = WH["waterheating_power_gas_kw"] + WH["waterheating_power_oil_kw"]
+        gasoroil.values[gasoroil > 0] = 1
+        electric = WH['TotalWaterHeaterPower']
+        electricplus = gasoroil + electric
+        ElectricAndOil = electricplus.to_frame(name = "ElectricAndOil")
+        Electric = electric + 1
+        Electric.values[electricplus == 2] = 1
+        Electric = pd.DataFrame(Electric.values, columns = ["Electric"])
+        # Dwelling
+        Dwelling = np.ones((len(ElectricAndOil), 1), dtype=int)
+        Dwelling = pd.DataFrame(Dwelling, columns = ["Dwelling"])
+        # Milking
+        Milking = np.ones((len(ElectricAndOil), 1), dtype=int)
+        Milking = pd.DataFrame(Milking, columns = ["Milking"])
+        Milking['Milking'].values[data_mdl['MilkYield'] == 0] = 2
+
+        # Form datasets for TCVH
+        df = pd.concat([data_mdl, hzhw[['OAD', "OAM", "OAW", "E2ndD"]],
+                        milkpump[['Diaphram','High Speed','Double Diaphram','Single Speed', 'VSD']],
+                        PHE['GWPHE'], DXIB['IBDX'], ICWPHE['ICWPHE'], VSD['Parlour_VacuumPump1_VariableSpeedY_N'],
+                        ElectricAndOil["ElectricAndOil"], Electric["Electric"], Dwelling["Dwelling"], Milking["Milking"]], axis=1)
+        df.columns = df.columns.str.lower()
+        df.columns = df.columns.str.replace(' ', '')
+
+        # Create datasets for each DV, with required vars in correct order.
+        total_vars = ['farm_id', 'month', 'dairycows_milking', 'dairycows_total', 'milkyield','ibdx', 'gwphe', 'icwphe', 'totalbulktankvolume', 'parlour_vacuumpump1_variablespeedy_n', 'oad', 'oam', 'oaw', 'parlour_solarthermaly_n', 'totalwaterheatervolume','totalwaterheaterpower', 'electricandoil', 'diaphram', 'doublediaphram','highspeed','vsd','dwelling','milking']
+        total_vars = [each.lower() for each in total_vars]
+        total_db = df[total_vars]
+        total_db = total_db.fillna(total_db.mean())
+
+        cooling_vars = ['farm_id', 'Month',	'DairyCows_Total',	'MilkYield',	'NoOfParlourUnits',	'IBDX',	'GWPHE',	'ICWPHE',	'TotalBulkTankVolume']
+        cooling_vars = [each.lower() for each in cooling_vars]
+        cooling_db = df[cooling_vars]
+
+        vacuum_vars = ['farm_id', 'Month', 'DairyCows_Total',	'MilkYield',	'NoOfParlourUnits',	'TotalVacuumPower',	'Parlour_VacuumPump1_VariableSpeedY_N']
+        vacuum_vars = [each.lower() for each in vacuum_vars]
+        vacuum_db = df[vacuum_vars]
+
+        heating_vars = ['farm_id', 'Month', 'DairyCows_Milking',	'DairyCows_Total',	'MilkYield',	'E2ndD',	'OAD',	'OAM',	'OAW',	'Parlour_SolarThermalY_N',	'TotalWaterHeaterVolume',	'TotalWaterHeaterPower',	'Electric',	'ElectricAndOil']
+        heating_vars = [each.lower() for each in heating_vars]
+        heating_db = df[heating_vars]
+
+        return total_db, cooling_db, vacuum_db, heating_db
+
+    def predict_total(self, data, wandb):
+        # data = total_db.iloc[0, 1:23]
+        # wandb = pd.read_csv('wandbtotal.csv')
+        data["dairycows_milking"] = np.sqrt(data["dairycows_milking"])
+        data["dairycows_total"] = np.log(data["dairycows_total"])
+        data["milkyield"] = np.sqrt(data["milkyield"])
+        data["totalbulktankvolume"] = np.log(data["totalbulktankvolume"])
+        data["totalwaterheatervolume"] = np.reciprocal(data["totalwaterheatervolume"])
+        data["totalwaterheaterpower"] = np.sqrt(data["totalwaterheaterpower"])
+        minmax = wandb.iloc[wandb.shape[0]-2:wandb.shape[0], 1:wandb.shape[1]-3]
+        data_std = pd.DataFrame(2 * np.subtract(data, minmax.iloc[0].values.tolist()) / np.subtract(minmax.iloc[1].values.tolist(), minmax.iloc[0].values.tolist()) -1)
+        # wandbtotal = pd.to_pickle(wandb, 'wandbtotal.pkl')
+        # wandbtotal = pd.read_pickle('wandbtotal.pkl')
+
+        # https://stackoverflow.com/questions/45830206/pyinstaller-created-exe-file-can-not-load-a-keras-nn-model
+        weights = wandb.iloc[0:wandb.shape[0]-2, 1:wandb.shape[1]-3]
+        innerbias = wandb["Bias"][0:wandb.shape[0]-2]
+        outerlayerbias = wandb["Outputlayerweights"][0:wandb.shape[0]-2]
+        outerbias = wandb["Outputbias"][0]
+        minkWh = wandb["Bias"].iloc[-2]
+        maxkWh = wandb["Bias"].iloc[-1]
+        # print(maxkWh)
+
+        # explode input data
+        input_trans_minmax = pd.DataFrame(data_std)
+        input_trans_minmax = input_trans_minmax.transpose()
+        input_trans_minmax = input_trans_minmax.append([input_trans_minmax] * (weights.shape[0] - 1), ignore_index=True)
+
+        inputxweights = np.multiply(weights.to_numpy(), input_trans_minmax)
+        hiddensum = inputxweights.sum(axis=1)
+        transfcnplusbias = np.tanh(hiddensum + innerbias)
+        TFBplusbias = transfcnplusbias * outerlayerbias
+        outerlayersum = sum(TFBplusbias)
+        outerlayersumTF = np.tanh(outerlayersum + outerbias)
+
+        predictionvalue = (((outerlayersumTF + 1) * (maxkWh - minkWh)) / 2) + minkWh
+        return predictionvalue
+
+    def predict_cooling(self, data, wandb):
+        # data = cooling_db.iloc[0, 1:9]
+        # wandb = pd.read_csv('wandbcooling.csv')
+        data["dairycows_total"] = np.log(data["dairycows_total"])
+        data["milkyield"] = np.cbrt(data["milkyield"])
+        data["totalbulktankvolume"] = np.log(data["totalbulktankvolume"])
+        data["noofparlourunits"] = np.log(data["noofparlourunits"])
+        minmax = wandb.iloc[wandb.shape[0]-2:wandb.shape[0], 1:wandb.shape[1]-3]
+        data_std = pd.DataFrame(2 * np.subtract(data, minmax.iloc[0].values.tolist()) / np.subtract(minmax.iloc[1].values.tolist(), minmax.iloc[0].values.tolist()) -1)
+        # wandbtotal = pd.to_pickle(wandb, 'wandbtotal.pkl')
+        # wandbtotal = pd.read_pickle('wandbtotal.pkl')
+
+        # https://stackoverflow.com/questions/45830206/pyinstaller-created-exe-file-can-not-load-a-keras-nn-model
+        weights = wandb.iloc[0:wandb.shape[0]-2, 1:wandb.shape[1]-3]
+        innerbias = wandb["Bias"][0:wandb.shape[0]-2]
+        outerlayerbias = wandb["Outputlayerweights"][0:wandb.shape[0]-2]
+        outerbias = wandb["Outputbias"][0]
+        minkWh = wandb["Bias"].iloc[-2]
+        maxkWh = wandb["Bias"].iloc[-1]
+        # print(maxkWh)
+
+        # explode input data
+        input_trans_minmax = pd.DataFrame(data_std)
+        input_trans_minmax = input_trans_minmax.transpose()
+        input_trans_minmax = input_trans_minmax.append([input_trans_minmax] * (weights.shape[0] - 1), ignore_index=True)
+
+        inputxweights = np.multiply(weights.to_numpy(), input_trans_minmax)
+        hiddensum = inputxweights.sum(axis=1)
+        transfcnplusbias = np.tanh(hiddensum + innerbias)
+        TFBplusbias = transfcnplusbias * outerlayerbias
+        outerlayersum = sum(TFBplusbias)
+        outerlayersumTF = np.tanh(outerlayersum + outerbias)
+
+        predictionvalue = (((outerlayersumTF + 1) * (maxkWh - minkWh)) / 2) + minkWh
+        return predictionvalue
+
+    def predict_vacuum(self, data, wandb):
+        # data = cooling_db.iloc[0, 1:9]
+        # wandb = pd.read_csv('wandbcooling.csv')
+        data["dairycows_total"] = np.log(data["dairycows_total"])
+        data["milkyield"] = np.cbrt(data["milkyield"])
+        data["totalvacuumpower"] = np.log(data["totalvacuumpower"])
+        data["noofparlourunits"] = np.log(data["noofparlourunits"])
+        minmax = wandb.iloc[wandb.shape[0]-2:wandb.shape[0], 1:wandb.shape[1]-3]
+        data_std = pd.DataFrame(2 * np.subtract(data, minmax.iloc[0].values.tolist()) / np.subtract(minmax.iloc[1].values.tolist(), minmax.iloc[0].values.tolist()) -1)
+        # wandbtotal = pd.to_pickle(wandb, 'wandbtotal.pkl')
+        # wandbtotal = pd.read_pickle('wandbtotal.pkl')
+
+        # https://stackoverflow.com/questions/45830206/pyinstaller-created-exe-file-can-not-load-a-keras-nn-model
+        weights = wandb.iloc[0:wandb.shape[0]-2, 1:wandb.shape[1]-3]
+        innerbias = wandb["Bias"][0:wandb.shape[0]-2]
+        outerlayerbias = wandb["Outputlayerweights"][0:wandb.shape[0]-2]
+        outerbias = wandb["Outputbias"][0]
+        minkWh = wandb["Bias"].iloc[-2]
+        maxkWh = wandb["Bias"].iloc[-1]
+        # print(maxkWh)
+
+        # explode input data
+        input_trans_minmax = pd.DataFrame(data_std)
+        input_trans_minmax = input_trans_minmax.transpose()
+        input_trans_minmax = input_trans_minmax.append([input_trans_minmax] * (weights.shape[0] - 1), ignore_index=True)
+
+        inputxweights = np.multiply(weights.to_numpy(), input_trans_minmax)
+        hiddensum = inputxweights.sum(axis=1)
+        transfcnplusbias = np.tanh(hiddensum + innerbias)
+        TFBplusbias = transfcnplusbias * outerlayerbias
+        outerlayersum = sum(TFBplusbias)
+        outerlayersumTF = np.tanh(outerlayersum + outerbias)
+
+        predictionvalue = (((outerlayersumTF + 1) * (maxkWh - minkWh)) / 2) + minkWh
+        return predictionvalue
+
+    def predict_heating(self, data, wandb):
+        # data = cooling_db.iloc[0, 1:9]
+        # wandb = pd.read_csv('wandbcooling.csv')
+        data["dairycows_milking"] = np.sqrt(data["dairycows_milking"])
+        data["dairycows_total"] = np.log(data["dairycows_total"])
+        data["milkyield"] = np.sqrt(data["milkyield"])
+        data["totalwaterheatervolume"] = np.reciprocal(data["totalwaterheatervolume"])
+        data["totalwaterheaterpower"] = np.sqrt(data["totalwaterheaterpower"])
+        minmax = wandb.iloc[wandb.shape[0]-2:wandb.shape[0], 1:wandb.shape[1]-3]
+        data_std = pd.DataFrame(2 * np.subtract(data, minmax.iloc[0].values.tolist()) / np.subtract(minmax.iloc[1].values.tolist(), minmax.iloc[0].values.tolist()) -1)
+        # wandbtotal = pd.to_pickle(wandb, 'wandbtotal.pkl')
+        # wandbtotal = pd.read_pickle('wandbtotal.pkl')
+
+        # https://stackoverflow.com/questions/45830206/pyinstaller-created-exe-file-can-not-load-a-keras-nn-model
+        weights = wandb.iloc[0:wandb.shape[0]-2, 1:wandb.shape[1]-3]
+        innerbias = wandb["Bias"][0:wandb.shape[0]-2]
+        outerlayerbias = wandb["Outputlayerweights"][0:wandb.shape[0]-2]
+        outerbias = wandb["Outputbias"][0]
+        minkWh = wandb["Bias"].iloc[-2]
+        maxkWh = wandb["Bias"].iloc[-1]
+        # print(maxkWh)
+
+        # explode input data
+        input_trans_minmax = pd.DataFrame(data_std)
+        input_trans_minmax = input_trans_minmax.transpose()
+        input_trans_minmax = input_trans_minmax.append([input_trans_minmax] * (weights.shape[0] - 1), ignore_index=True)
+
+        inputxweights = np.multiply(weights.to_numpy(), input_trans_minmax)
+        hiddensum = inputxweights.sum(axis=1)
+        transfcnplusbias = np.tanh(hiddensum + innerbias)
+        TFBplusbias = transfcnplusbias * outerlayerbias
+        outerlayersum = sum(TFBplusbias)
+        outerlayersumTF = np.tanh(outerlayersum + outerbias)
+
+        predictionvalue = (((outerlayersumTF + 1) * (maxkWh - minkWh)) / 2) + minkWh
+        return predictionvalue
+
 
     @QtCore.pyqtSlot()
     def on_filterButtonLoad_clicked(self):
@@ -354,7 +591,7 @@ class FirstTab(QWidget):
         self.setLayout(layout)
 
     def info(self, data):  # function defining characteristics of each group/grid object
-        groupBox = QGroupBox("NAIDEA Information")
+        groupBox = QGroupBox("Terms + Conditions")
         label = QTextEdit()
         label.setFrameStyle(0)
         label.setReadOnly(True)
