@@ -845,7 +845,8 @@ class FirstTab(QWidget):
             summed = round(kwhdata.sum(axis=0))
             fig = go.Pie(labels=["Milk Cooling", "Milk Harvesting", "Water Heating", "Other Use"], values=summed.values,  hovertemplate = "%{label}: <br>Sum: %{value} kWh <extra></extra>")
         elif self.radioButton6.isChecked():
-            importedfile.to_csv('IF.csv')
+            # Fix DER Chart here
+            # importedfile.to_csv('IF.csv')
             # importedfile = importedfile[["farm_id", "DER"]].drop_duplicates()
             # print(importedfile)
             # fig = go.Pie(labels=importedfile["DER"], hovertemplate = "%{label}: <br>No. Farms: %{value} <extra></extra>")
