@@ -1,14 +1,21 @@
-from PyQt5.QtWidgets import QTableWidgetItem, QMainWindow, QFileDialog, QPushButton, QHBoxLayout, QRadioButton, QGridLayout,QApplication, \
+from PyQt5.QtWidgets import QDesktopWidget, QTableWidgetItem, QMainWindow, QFileDialog, QPushButton, QHBoxLayout, QRadioButton, QGridLayout,QApplication, \
     QLabel, QListWidget, QGroupBox, QCheckBox, QComboBox,QDialog, QDialogButtonBox, QTabWidget, QWidget, QVBoxLayout, QButtonGroup, QTextEdit
 import sys
 from qtrangeslider import QLabeledRangeSlider
 from qtrangeslider.qtcompat.QtCore import Qt
-from PyQt5.QtGui import QIcon, QPixmap, QStandardItem, QFont
+from PyQt5.QtGui import QIcon, QPixmap, QStandardItem, QFont, QMovie
 from PyQt5 import QtCore, QtWebEngineWidgets, QtGui, QtWidgets
+from PyQt5.QtCore import QTimer
 import pandas as pd
 import plotly.graph_objs as go
 import numpy as np
 import time
+import math
+from PyQt5 import QtCore, QtGui, QtWidgets
+# from pyqtspinner.spinner import WaitingSpinner
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+from PyQt5.QtWidgets import *
 
 class mainwindow(QDialog):
     def __init__(self, data):
@@ -19,11 +26,18 @@ class mainwindow(QDialog):
         self.setWindowIcon(QIcon('icon.png'))
         self.showMaximized()
 
+        self.spinner = WaitingSpinner(self, roundness=100.0, opacity=15.0, fade=75.0, radius=50.0, lines=25,
+                                      line_length=25.0, line_width=5.0,speed=0.5, color=(0, 0, 0),
+                                      disableParentWhenSpinning=False, centerOnParent=True)
+        # self.spinner = WaitingSpinner(self, True, True, Qt.ApplicationModal)
+
+
         #create filter object
         FilterLayout = QHBoxLayout()
         FilterLayout.addWidget(self.createHeader1a(), 1)#import/export
         FilterLayout.addWidget(self.createHeader2a(), 4)# filters
-        FilterLayout.addWidget(self.Header3(), 4)# images
+        # FilterLayout.addWidget(self.loading_screen, 1)# Loading
+        FilterLayout.addWidget(self.Header3(), 4)  # images
         self.firstTab = FirstTab(self)
 
         #The key to plotting Treeview information
@@ -35,9 +49,6 @@ class mainwindow(QDialog):
         self.tableView.setEditTriggers(QtWidgets.QTableWidget.NoEditTriggers)
         self.tableView.setObjectName("tableView")
 
-        # KPI Tableview
-
-
         #create tab widget object
         tabs = QTabWidget()
         tabs.addTab(self.firstTab, "Macro-Level")
@@ -48,6 +59,7 @@ class mainwindow(QDialog):
 
         buttonbox.accepted.connect(self.accept)
         buttonbox.rejected.connect(self.reject)
+
 
         vbox = QVBoxLayout()
         vbox.addLayout(FilterLayout)
@@ -61,6 +73,7 @@ class mainwindow(QDialog):
 
         inputfilebtn = QPushButton("Import")
         inputfilebtn.resize(150, 50)
+        inputfilebtn.clicked.connect(self.start_spinner)
         inputfilebtn.clicked.connect(self.on_pushButtonLoad_clicked)
 
         exportfilebtn = QPushButton("Export")
@@ -83,6 +96,12 @@ class mainwindow(QDialog):
         HeaderBox.setFlat(True)
 
         return HeaderBox
+
+    @QtCore.pyqtSlot()
+    def start_spinner(self):
+        self.spinner.start()
+        self.spinner.raise_()
+        self.spinner.show()
 
     def createHeader2a(self): # function defining characteristics of each group/grid object
 
@@ -288,7 +307,7 @@ class mainwindow(QDialog):
         df1['VacuumKWh'] = df1['CombinedKWh']*(sum(df1['VacuumKWh'])/sum(CVW))
         df1['WaterHeatKWh'] = df1['CombinedKWh']*(sum(df1['WaterHeatKWh'])/sum(CVW))
         df1["OtherKWh"] = df1["TotalKWh"] - df1["CombinedKWh"] #- df1["CoolingKWh"] - df1["VacuumKWh"]
-        df1.to_csv('predict_df.csv')
+        # df1.to_csv('predict_df.csv')
         # "CoolingKWh", "VacuumKWh", "WaterHeatKWh", "CombinedKWh", "OtherKWh"
         df2 = df1[["farm_id", "milk_yield_litres", "TotalKWh"]].groupby("farm_id", as_index=False).sum().round()
         df2["wh_lm"] = df2["TotalKWh"]/ df2["milk_yield_litres"] * 1000
@@ -307,6 +326,8 @@ class mainwindow(QDialog):
                        "milking_duration_hours", "hotwash_freq", "milkpump_type", "vacuumpump_power_kw", "VSD", "bulktank_capacity_litres",
                        "waterheating_power_elec_kw", "waterheating_power_gas_kw", "waterheating_power_oil_kw", "hotwatertank_capacity_litres",
                        "coolingsystem_directexpansion", "coolingsystem_platecooler", "coolingsystem_icebank", "coolingsystem_waterchillingunit"]].drop_duplicates(subset='farm_id', keep="first")
+        # conditional if farm has PC system installed.
+        # df2['DER'].iloc[df4['re_solarpv_kw'] > 0] = 'A'
         df2 = pd.merge(left=df2, right=df4, left_on='farm_id', right_on='farm_id')
         self.tvdatabase = df2
         self.model = PandasModel(df2)
@@ -315,9 +336,12 @@ class mainwindow(QDialog):
         if fname:
             return df1, df2
 
+
     @QtCore.pyqtSlot()
     def on_pushButtonLoad_clicked(self):
+        #https://github.com/fbjorn/QtWaitingSpinner/blob/master/README.md
         importedfile, annfile = self.getfile()
+
         if importedfile is None:
             return
         self.firstTab.MRChart(importedfile)
@@ -325,6 +349,7 @@ class mainwindow(QDialog):
         self.firstTab.energychart(importedfile, annfile)
         self.importedfile = importedfile
         self.on_filterButtonLoad_clicked()
+        self.spinner.stop()
 
     def printgetslider1(self):
 
@@ -873,7 +898,6 @@ class FirstTab(QWidget):
             fig = go.Pie(labels=derdata["DER"], hovertemplate = "%{label}: <br>No. Farms: %{value} <extra></extra>", sort=False)
         elif self.radioButton7.isChecked():
             summed = round(kwhdata.sum(axis=0)*0.324)
-            print(summed)
             fig = go.Pie(labels=["Milk Cooling", "Milk Harvesting", "Water Heating", "Other Use"], values=summed.values,  hovertemplate = "%{label}: <br>Sum: %{value} kg CO\u2082 <extra></extra>", sort=False)
 
         layout = go.Layout(autosize=True, legend=dict(orientation="h",xanchor='center', x=0.5))
@@ -1003,7 +1027,6 @@ class ThirdTab(QWidget):
         layout.addWidget(checkbox)
         self.setLayout(layout)
 
-
 class PandasModel(QtCore.QAbstractTableModel):
     """
     Class to populate a table view with a pandas dataframe
@@ -1033,6 +1056,209 @@ class AlignDelegate(QtWidgets.QStyledItemDelegate):
     def initStyleOption(self, option, index):
         super(AlignDelegate, self).initStyleOption(option, index)
         option.displayAlignment = QtCore.Qt.AlignCenter
+
+class WaitingSpinner(QWidget):
+
+    def __init__(self, parent, centerOnParent=True, disableParentWhenSpinning=False,
+                 modality=Qt.NonModal, roundness=100., opacity=None, fade=80., lines=20,
+                 line_length=10, line_width=2, radius=10, speed=math.pi / 2, color=(0, 0, 0)):
+        super().__init__(parent)
+
+        self._centerOnParent = centerOnParent
+        self._disableParentWhenSpinning = disableParentWhenSpinning
+
+        self._color = QColor(*color)
+        self._roundness = roundness
+        self._minimumTrailOpacity = math.pi
+        self._trailFadePercentage = fade
+        self._revolutionsPerSecond = speed
+        self._numberOfLines = lines
+        self._lineLength = line_length
+        self._lineWidth = line_width
+        self._innerRadius = radius
+        self._currentCounter = 0
+        self._isSpinning = False
+
+        self._timer = QTimer(self)
+        self._timer.timeout.connect(self.rotate)
+        self.updateSize()
+        self.updateTimer()
+        self.hide()
+
+        self.setWindowModality(modality)
+        self.setAttribute(Qt.WA_TranslucentBackground)
+
+    def paintEvent(self, QPaintEvent):
+        self.updatePosition()
+        painter = QPainter(self)
+        painter.fillRect(self.rect(), Qt.transparent)
+        painter.setRenderHint(QPainter.Antialiasing, True)
+
+        if self._currentCounter >= self._numberOfLines:
+            self._currentCounter = 0
+
+        painter.setPen(Qt.NoPen)
+        for i in range(self._numberOfLines):
+            painter.save()
+            painter.translate(self._innerRadius + self._lineLength, self._innerRadius + self._lineLength)
+            rotateAngle = float(360 * i) / float(self._numberOfLines)
+            painter.rotate(rotateAngle)
+            painter.translate(self._innerRadius, 0)
+            distance = self.lineCountDistanceFromPrimary(i, self._currentCounter, self._numberOfLines)
+            color = self.currentLineColor(
+                distance,
+                self._numberOfLines,
+                self._trailFadePercentage,
+                self._minimumTrailOpacity,
+                self._color
+            )
+            painter.setBrush(color)
+            painter.drawRoundedRect(
+                QRect(0, -self._lineWidth / 2, self._lineLength, self._lineWidth),
+                self._roundness,
+                self._roundness,
+                Qt.RelativeSize
+            )
+            painter.restore()
+
+    def start(self):
+        self.updatePosition()
+        self._isSpinning = True
+        self.show()
+
+        if self.parentWidget and self._disableParentWhenSpinning:
+            self.parentWidget().setEnabled(False)
+
+        if not self._timer.isActive():
+            self._timer.start()
+            self._currentCounter = 0
+
+    def stop(self):
+        self._isSpinning = False
+        self.hide()
+
+        if self.parentWidget() and self._disableParentWhenSpinning:
+            self.parentWidget().setEnabled(True)
+
+        if self._timer.isActive():
+            self._timer.stop()
+            self._currentCounter = 0
+
+    def setNumberOfLines(self, lines):
+        self._numberOfLines = lines
+        self._currentCounter = 0
+        self.updateTimer()
+
+    def setLineLength(self, length):
+        self._lineLength = length
+        self.updateSize()
+
+    def setLineWidth(self, width):
+        self._lineWidth = width
+        self.updateSize()
+
+    def setInnerRadius(self, radius):
+        self._innerRadius = radius
+        self.updateSize()
+
+    @property
+    def color(self):
+        return self._color
+
+    @property
+    def roundness(self):
+        return self._roundness
+
+    @property
+    def minimumTrailOpacity(self):
+        return self._minimumTrailOpacity
+
+    @property
+    def trailFadePercentage(self):
+        return self._trailFadePercentage
+
+    @property
+    def revolutionsPersSecond(self):
+        return self._revolutionsPerSecond
+
+    @property
+    def numberOfLines(self):
+        return self._numberOfLines
+
+    @property
+    def lineLength(self):
+        return self._lineLength
+
+    @property
+    def lineWidth(self):
+        return self._lineWidth
+
+    @property
+    def innerRadius(self):
+        return self._innerRadius
+
+    @property
+    def isSpinning(self):
+        return self._isSpinning
+
+    def setRoundness(self, roundness):
+        self._roundness = max(0.0, min(100.0, roundness))
+
+    def setColor(self, color=Qt.black):
+        self._color = QColor(color)
+
+    def setRevolutionsPerSecond(self, revolutionsPerSecond):
+        self._revolutionsPerSecond = revolutionsPerSecond
+        self.updateTimer()
+
+    def setTrailFadePercentage(self, trail):
+        self._trailFadePercentage = trail
+
+    def setMinimumTrailOpacity(self, minimumTrailOpacity):
+        self._minimumTrailOpacity = minimumTrailOpacity
+
+    def rotate(self):
+        self._currentCounter += 1
+        if self._currentCounter >= self._numberOfLines:
+            self._currentCounter = 0
+        self.update()
+
+    def updateSize(self):
+        size = (self._innerRadius + self._lineLength) * 2
+        self.setFixedSize(size, size)
+
+    def updateTimer(self):
+        self._timer.setInterval(1000 / (self._numberOfLines * self._revolutionsPerSecond))
+
+    def updatePosition(self):
+        if self.parentWidget() and self._centerOnParent:
+            self.move(
+                self.parentWidget().width() / 2 - self.width() / 2,
+                self.parentWidget().height() / 2 - self.height() / 2
+            )
+
+    def lineCountDistanceFromPrimary(self, current, primary, totalNrOfLines):
+        distance = primary - current
+        if distance < 0:
+            distance += totalNrOfLines
+        return distance
+
+    def currentLineColor(self, countDistance, totalNrOfLines, trailFadePerc, minOpacity, colorinput):
+        color = QColor(colorinput)
+        if countDistance == 0:
+            return color
+        minAlphaF = minOpacity / 100.0
+        distanceThreshold = int(math.ceil((totalNrOfLines - 1) * trailFadePerc / 100.0))
+        if countDistance > distanceThreshold:
+            color.setAlphaF(minAlphaF)
+        else:
+            alphaDiff = color.alphaF() - minAlphaF
+            gradient = alphaDiff / float(distanceThreshold + 1)
+            resultAlpha = color.alphaF() - gradient * countDistance
+            # If alpha is out of bounds, clip it.
+            resultAlpha = min(1.0, max(0.0, resultAlpha))
+            color.setAlphaF(resultAlpha)
+        return color
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
