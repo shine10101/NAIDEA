@@ -8,6 +8,7 @@ from PyQt5 import QtCore, QtWebEngineWidgets, QtGui, QtWidgets
 import pandas as pd
 import plotly.graph_objs as go
 import numpy as np
+import time
 
 class mainwindow(QDialog):
     def __init__(self, data):
@@ -249,16 +250,33 @@ class mainwindow(QDialog):
         # database for treeview
         df1 = pd.read_csv(fname[0])
         total_db, cooling_db, vacuum_db, heating_db, combined_db = self.processimportedfile(df1)
+        #Load weights and biases
         wandb_total = pd.read_csv('wandbtotalkwh.csv')
-        df1["TotalKWh"] = pd.DataFrame([self.predict_total(data=total_db.iloc[i, 1:total_db.shape[1]], wandb=wandb_total) for i in range(len(total_db))], columns=['TotalKWh'])
         wandb_cooling = pd.read_csv('wandbcoolingkwh.csv')
-        df1["CoolingKWh"] = pd.DataFrame([self.predict_cooling(data=cooling_db.iloc[i, 1:cooling_db.shape[1]], wandb=wandb_cooling) for i in range(len(cooling_db))], columns=['CoolingKWh'])
         wandb_vacuum = pd.read_csv('wandbvacuumkwh.csv')
-        df1["VacuumKWh"] = pd.DataFrame([self.predict_vacuum(data=vacuum_db.iloc[i, 1:vacuum_db.shape[1]], wandb=wandb_vacuum) for i in range(len(vacuum_db))], columns=['VacuumKWh'])
         wandb_heating = pd.read_csv('wandbwaterheatkwh.csv')
-        df1["WaterHeatKWh"] = pd.DataFrame([self.predict_heating(data=heating_db.iloc[i, 1:heating_db.shape[1]], wandb=wandb_heating) for i in range(len(heating_db))], columns=['WaterHeatKWh'])
         wandb_combined = pd.read_csv('wandbcombinedkwh.csv')
-        df1["CombinedKWh"] = pd.DataFrame([self.predict_combined(data=combined_db.iloc[i, 1:combined_db.shape[1]], wandb=wandb_combined) for i in range(len(combined_db))], columns=['CombinedKWh'])
+        # iterrows
+        t = time.time()
+        total = total_db.iloc[:, 1:total_db.shape[1]]
+        df1["TotalKWh"] = pd.DataFrame([self.predict_total(data=row, wandb=wandb_total) for idx, row in total.iterrows()], columns=['TotalKWh'])
+        cooling = cooling_db.iloc[:, 1:cooling_db.shape[1]]
+        df1["CoolingKWh"] = pd.DataFrame([self.predict_cooling(data=row, wandb=wandb_cooling) for idx, row in cooling.iterrows()], columns=['CoolingKWh'])
+        vacuum = vacuum_db.iloc[:, 1:vacuum_db.shape[1]]
+        df1["VacuumKWh"] = pd.DataFrame([self.predict_vacuum(data=row, wandb=wandb_vacuum) for idx, row in vacuum.iterrows()], columns=['VacuumKWh'])
+        heating = heating_db.iloc[:, 1:heating_db.shape[1]]
+        df1["WaterHeatKWh"] = pd.DataFrame([self.predict_heating(data=row, wandb=wandb_heating) for idx, row in heating.iterrows()], columns=['WaterHeatKWh'])
+        combined = combined_db.iloc[:, 1:combined_db.shape[1]]
+        df1["CombinedKWh"] = pd.DataFrame([self.predict_combined(data=row, wandb=wandb_combined) for idx, row in combined.iterrows()], columns=['CombinedKWh'])
+        print(time.time()-t)
+        # # List Comprehension
+        # t = time.time()
+        # df1["TotalKWh"] = pd.DataFrame([self.predict_total(data=total_db.iloc[i, 1:total_db.shape[1]], wandb=wandb_total) for i in range(len(total_db))], columns=['TotalKWh'])
+        # df1["CoolingKWh"] = pd.DataFrame([self.predict_cooling(data=cooling_db.iloc[i, 1:cooling_db.shape[1]], wandb=wandb_cooling) for i in range(len(cooling_db))], columns=['CoolingKWh'])
+        # df1["VacuumKWh"] = pd.DataFrame([self.predict_vacuum(data=vacuum_db.iloc[i, 1:vacuum_db.shape[1]], wandb=wandb_vacuum) for i in range(len(vacuum_db))], columns=['VacuumKWh'])
+        # df1["WaterHeatKWh"] = pd.DataFrame([self.predict_heating(data=heating_db.iloc[i, 1:heating_db.shape[1]], wandb=wandb_heating) for i in range(len(heating_db))], columns=['WaterHeatKWh'])
+        # df1["CombinedKWh"] = pd.DataFrame([self.predict_combined(data=combined_db.iloc[i, 1:combined_db.shape[1]], wandb=wandb_combined) for i in range(len(combined_db))], columns=['CombinedKWh'])
+        # print(time.time() - t)
         # df1["WaterHeatKWh"] = df1["CombinedKWh"] - df1["CoolingKWh"] - df1["VacuumKWh"]
         # Manual processing
         df1['CoolingKWh'].values[df1['milk_yield_litres'] == 0] = 0
@@ -296,6 +314,7 @@ class mainwindow(QDialog):
 
         if fname:
             return df1
+
 
     @QtCore.pyqtSlot()
     def on_pushButtonLoad_clicked(self):
@@ -371,6 +390,7 @@ class mainwindow(QDialog):
 
         # Create datasets for each DV, with required vars in correct order.
         total_vars = ['farm_id', 'month', 'dairycows_milking', 'dairycows_total', 'milkyield','ibdx', 'gwphe', 'icwphe', 'totalbulktankvolume', 'parlour_vacuumpump1_variablespeedy_n', 'oad', 'oam', 'oaw', 'parlour_solarthermaly_n', 'totalwaterheatervolume','totalwaterheaterpower', 'electricandoil', 'diaphram', 'doublediaphram','highspeed','vsd','dwelling','milking']
+        # total_vars = ['farm_id', 'month', 'dairycows_milking', 'dairycows_total', 'milkyield',	'NoOfParlourUnits',	'TotalBulkTankVolume', 'TotalVacuumPower',	'OAD', 'TotalWaterHeaterVolume',	'TotalWaterHeaterPower',	'HighSpeed', 'dwelling', 'milking']
         total_vars = [each.lower() for each in total_vars]
         total_db = df[total_vars]
         total_db = total_db.fillna(total_db.mean().round())
