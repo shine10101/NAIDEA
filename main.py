@@ -313,17 +313,16 @@ class mainwindow(QDialog):
         self.tableView.setModel(self.model)
 
         if fname:
-            return df1
-
+            return df1, df2
 
     @QtCore.pyqtSlot()
     def on_pushButtonLoad_clicked(self):
-        importedfile = self.getfile()
+        importedfile, annfile = self.getfile()
         if importedfile is None:
             return
         self.firstTab.MRChart(importedfile)
         self.firstTab.BLChart(importedfile)
-        self.firstTab.energychart(importedfile)
+        self.firstTab.energychart(importedfile, annfile)
         self.importedfile = importedfile
         self.on_filterButtonLoad_clicked()
 
@@ -651,7 +650,7 @@ class mainwindow(QDialog):
 
         self.firstTab.MRChart(current_charts)
         self.firstTab.BLChart(current_charts)
-        self.firstTab.energychart(current_charts)
+        self.firstTab.energychart(current_charts, current_tv)
         self.model = PandasModel(current_tv)
         self.tableView.setModel(self.model)
         self.filtereddatabase_ann = current_tv
@@ -806,16 +805,20 @@ class FirstTab(QWidget):
         # https://pythonbasics.org/pyqt-radiobutton/
         if self.radioButton1.isChecked():
             importedfile = importedfile[["farm_id", self.radioButton1.label]].drop_duplicates()
-            fig = go.Pie(labels=importedfile[self.radioButton1.label],  hovertemplate = "%{label}: <br>No. Farms: %{value} <extra></extra>")
+            importedfile = importedfile.sort_values(by=[self.radioButton1.label], ascending=True)
+            fig = go.Pie(labels=importedfile[self.radioButton1.label],  hovertemplate = "%{label}: <br>No. Farms: %{value} <extra></extra>", sort=False)
         elif self.radioButton2.isChecked():
             importedfile = importedfile[["farm_id", self.radioButton2.label]].drop_duplicates()
-            fig = go.Pie(labels=importedfile[self.radioButton2.label],  hovertemplate = "%{label}: <br>No. Farms: %{value} <extra></extra>")
+            importedfile = importedfile.sort_values(by=[self.radioButton2.label], ascending=True)
+            fig = go.Pie(labels=importedfile[self.radioButton2.label],  hovertemplate = "%{label}: <br>No. Farms: %{value} <extra></extra>", sort=False)
         elif self.radioButton3.isChecked():
             importedfile = importedfile[["farm_id", self.radioButton3.label]].drop_duplicates()
-            fig = go.Pie(labels=importedfile[self.radioButton3.label],  hovertemplate = "%{label}: <br>No. Farms: %{value} <extra></extra>")
+            importedfile = importedfile.sort_values(by=[self.radioButton3.label], ascending=True)
+            fig = go.Pie(labels=importedfile[self.radioButton3.label],  hovertemplate = "%{label}: <br>No. Farms: %{value} <extra></extra>", sort=False)
         elif self.radioButton4.isChecked():
             importedfile = importedfile[["farm_id", self.radioButton4.label]].drop_duplicates()
-            fig = go.Pie(labels=importedfile[self.radioButton4.label],  hovertemplate = "%{label}: <br>No. Farms: %{value} <extra></extra>")
+            importedfile = importedfile.sort_values(by=[self.radioButton4.label], ascending=True)
+            fig = go.Pie(labels=importedfile[self.radioButton4.label],  hovertemplate = "%{label}: <br>No. Farms: %{value} <extra></extra>", sort=False)
 
         layout = go.Layout(autosize=True, legend=dict(orientation="h",xanchor='center', x=0.5))
         fig = go.Figure(data=fig, layout=layout)
@@ -858,26 +861,20 @@ class FirstTab(QWidget):
 
         return groupBox
 
-    def energychart(self, importedfile):
+    def energychart(self, importedfile, ann_file):
         kwhdata = importedfile[["CoolingKWh", "VacuumKWh", "WaterHeatKWh", "OtherKWh"]]
         if self.radioButton5.isChecked():
             kwhdata = importedfile[["CoolingKWh", "VacuumKWh", "WaterHeatKWh", "OtherKWh"]]
             summed = round(kwhdata.sum(axis=0))
-            fig = go.Pie(labels=["Milk Cooling", "Milk Harvesting", "Water Heating", "Other Use"], values=summed.values,  hovertemplate = "%{label}: <br>Sum: %{value} kWh <extra></extra>")
+            fig = go.Pie(labels=["Milk Cooling", "Milk Harvesting", "Water Heating", "Other Use"], values=summed.values,  hovertemplate = "%{label}: <br>Sum: %{value} kWh <extra></extra>", sort=False)
         elif self.radioButton6.isChecked():
-            # Fix DER Chart here
-            # importedfile.to_csv('IF.csv')
-            # importedfile = importedfile[["farm_id", "DER"]].drop_duplicates()
-            # print(importedfile)
-            # fig = go.Pie(labels=importedfile["DER"], hovertemplate = "%{label}: <br>No. Farms: %{value} <extra></extra>")
-            kwhdata = importedfile[["CoolingKWh", "VacuumKWh", "WaterHeatKWh", "OtherKWh"]]
-            summed = round(kwhdata.sum(axis=0))
-            fig = go.Pie(labels=["Milk Cooling", "Milk Harvesting", "Water Heating", "Other Use"], values=summed.values,
-                         hovertemplate="%{label}: <br>Sum: %{value} kWh <extra></extra>")
-
+            derdata = ann_file[["farm_id", "DER"]]
+            derdata = derdata.sort_values(by=['DER'], ascending=True)
+            fig = go.Pie(labels=derdata["DER"], hovertemplate = "%{label}: <br>No. Farms: %{value} <extra></extra>", sort=False)
         elif self.radioButton7.isChecked():
             summed = round(kwhdata.sum(axis=0)*0.324)
-            fig = go.Pie(labels=["Milk Cooling", "Milk Harvesting", "Water Heating", "Other Use"], values=summed.values,  hovertemplate = "%{label}: <br>Sum: %{value} kg CO\u2082 <extra></extra>")
+            print(summed)
+            fig = go.Pie(labels=["Milk Cooling", "Milk Harvesting", "Water Heating", "Other Use"], values=summed.values,  hovertemplate = "%{label}: <br>Sum: %{value} kg CO\u2082 <extra></extra>", sort=False)
 
         layout = go.Layout(autosize=True, legend=dict(orientation="h",xanchor='center', x=0.5))
         fig = go.Figure(data=fig, layout=layout)
@@ -890,16 +887,16 @@ class FirstTab(QWidget):
         right = QVBoxLayout()
 
         self.radioButton5 = QRadioButton("Energy Breakdown")
-        self.radioButton5.toggled.connect(lambda: self.energychart(self.tabwidget.filtereddatabase_mth))
+        self.radioButton5.toggled.connect(lambda: self.energychart(self.tabwidget.filtereddatabase_mth, self.tabwidget.filtereddatabase_ann))
         right.addWidget(self.radioButton5)
 
         self.radioButton6 = QRadioButton("Dairy Energy Rating")
         self.radioButton6.setChecked(True)
-        self.radioButton6.toggled.connect(lambda: self.energychart(self.tabwidget.filtereddatabase_mth))
+        self.radioButton6.toggled.connect(lambda: self.energychart(self.tabwidget.filtereddatabase_mth, self.tabwidget.filtereddatabase_ann))
         right.addWidget(self.radioButton6)
 
         self.radioButton7 = QRadioButton("Carbon Dioxide")
-        self.radioButton7.toggled.connect(lambda: self.energychart(self.tabwidget.filtereddatabase_mth))
+        self.radioButton7.toggled.connect(lambda: self.energychart(self.tabwidget.filtereddatabase_mth, self.tabwidget.filtereddatabase_ann))
         right.addWidget(self.radioButton7)
 
         self.browserEn = QtWebEngineWidgets.QWebEngineView(self)
@@ -925,8 +922,6 @@ class FirstTab(QWidget):
                                   go.Bar(name='Milk Harvesting', x=smonth, y=round(kwhdata["VacuumKWh"], 1)),
                                   go.Bar(name='Water Heating', x=smonth, y=round(kwhdata["WaterHeatKWh"], 1)),
                                   go.Bar(name='Other Use', x=smonth, y=round(kwhdata["OtherKWh"], 1))])
-                            # hovertemplate="%{x}: <br>%{y} kWh <extra></extra>")
-
 
         elif self.radioButton9.isChecked(): # total / litre milk
             kwhdata_perlitre = importedfile[["month", "milk_yield_litres", "CoolingKWh", "VacuumKWh", "WaterHeatKWh", "OtherKWh"]].groupby("month", as_index = False).sum()
@@ -942,8 +937,6 @@ class FirstTab(QWidget):
                                   go.Bar(name='Milk Harvesting', x=smonth, y=round(kwhdata["VacuumKWh"], 1)),
                                   go.Bar(name='Water Heating', x=smonth, y=round(kwhdata["WaterHeatKWh"], 1)),
                                   go.Bar(name='Other Use', x=smonth, y=round(kwhdata["OtherKWh"], 1))])
-                            # hovertemplate="%{label}: <br>%{value} Wh/Litre <extra></extra>")
-
 
         elif self.radioButton10.isChecked(): # total / cow
             kwhdata_percow = importedfile[["CoolingKWh", "VacuumKWh", "WaterHeatKWh", "OtherKWh"]].div(importedfile.herd_size, axis=0)
@@ -955,11 +948,12 @@ class FirstTab(QWidget):
                                   go.Bar(name='Milk Harvesting', x=smonth, y=round(kwhdata["VacuumKWh"], 1)),
                                   go.Bar(name='Water Heating', x=smonth, y=round(kwhdata["WaterHeatKWh"], 1)),
                                   go.Bar(name='Other Use', x=smonth, y=round(kwhdata["OtherKWh"], 1))])
-                            # hovertemplate="%{label}: <br>%{value} kWh/Cow <extra></extra>")
+
 
         fig.update_traces(hovertemplate=hovertext)
         fig.update_layout(barmode='stack',
                         legend=dict(orientation="h", xanchor='center', x=0.5), margin=dict(t=0, b=0, l=0, r=0))
+        fig.update_layout(legend={'traceorder':'normal'})
 
         fig.update_yaxes(title=y_axislabel, title_font_size=10)
         self.browserBL.setHtml(fig.to_html(include_plotlyjs='cdn'))
