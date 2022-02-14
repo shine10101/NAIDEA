@@ -1,35 +1,30 @@
-from PyQt5.QtWidgets import QDesktopWidget, QTableWidgetItem, QMainWindow, QFileDialog, QPushButton, QHBoxLayout, QRadioButton, QGridLayout,QApplication, \
-    QLabel, QListWidget, QGroupBox, QCheckBox, QComboBox,QDialog, QDialogButtonBox, QTabWidget, QWidget, QVBoxLayout, QButtonGroup, QTextEdit
+from fbs_runtime.application_context.PyQt5 import ApplicationContext
+from PyQt5.QtWidgets import QFileDialog, QPushButton, QHBoxLayout, QRadioButton, QGridLayout, \
+    QLabel, QGroupBox, QCheckBox, QDialogButtonBox, QTabWidget, QVBoxLayout, QButtonGroup, QTextEdit, QDialog, QWidget, QApplication
 import sys
 from qtrangeslider import QLabeledRangeSlider
-from qtrangeslider.qtcompat.QtCore import Qt
-from PyQt5.QtGui import QIcon, QPixmap, QStandardItem, QFont, QMovie
-from PyQt5 import QtCore, QtWebEngineWidgets, QtGui, QtWidgets
-from PyQt5.QtCore import QTimer
+from PyQt5.QtGui import QStandardItem, QIcon
+from PyQt5 import QtWebEngineWidgets, QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import *
 import pandas as pd
 import plotly.graph_objs as go
 import numpy as np
 import time
 import statistics
-from PyQt5 import QtCore, QtGui, QtWidgets
 from pyqtspinner.spinner import WaitingSpinner
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
-from PyQt5.QtWidgets import *
+
+
+# pip install fbs PyQt5 pandas plotly numpy statistics
 
 class mainwindow(QDialog):
     def __init__(self, data):
         super(mainwindow, self).__init__()
         self.data = data
 
-        self.setWindowTitle("NAIDEA")
-        self.setWindowIcon(QIcon('icon.png'))
-        self.showMaximized()
 
         self.spinner = WaitingSpinner(self, roundness=100.0, opacity=15.0, fade=75.0, radius=50.0, lines=25,
                                       line_length=25.0, line_width=5.0,speed=0.5, color=(0, 0, 0),
                                       disableParentWhenSpinning=False, centerOnParent=True)
-        # self.spinner = WaitingSpinner(self, True, True, Qt.ApplicationModal)
 
 
         #create filter object
@@ -62,8 +57,8 @@ class mainwindow(QDialog):
 
 
         vbox = QVBoxLayout()
-        vbox.addLayout(FilterLayout)
-        vbox.addWidget(tabs)
+        vbox.addLayout(FilterLayout, 1)
+        vbox.addWidget(tabs, 5)
         vbox.addWidget(buttonbox)
 
         self.setLayout(vbox)
@@ -112,7 +107,7 @@ class mainwindow(QDialog):
         QSlider {
             min-height: 10px;
         }
-        
+
         QSlider::groove:horizontal {
             border: 0px;
             background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #888, stop:1 #ddd);
@@ -272,12 +267,24 @@ class mainwindow(QDialog):
         # database for treeview
         df1 = pd.read_csv(fname[0])
         total_db, cooling_db, vacuum_db, heating_db, combined_db = self.processimportedfile(df1)
-        #Load weights and biases
-        wandb_total = pd.read_csv('wandbtotalkwh.csv')
-        wandb_cooling = pd.read_csv('wandbcoolingkwh.csv')
-        wandb_vacuum = pd.read_csv('wandbvacuumkwh.csv')
-        wandb_heating = pd.read_csv('wandbwaterheatkwh.csv')
-        wandb_combined = pd.read_csv('wandbcombinedkwh.csv')
+        # Load csv files
+        # wandb_total = pd.read_csv('wandbtotalkwh.csv')
+        # wandb_cooling = pd.read_csv('wandbcoolingkwh.csv')
+        # wandb_vacuum = pd.read_csv('wandbvacuumkwh.csv')
+        # wandb_heating = pd.read_csv('wandbwaterheatkwh.csv')
+        # wandb_combined = pd.read_csv('wandbcombinedkwh.csv')
+        # # Convert to pickle files
+        # wandbtotal = pd.to_pickle(wandb_total, 'wandbtotalkwh.pkl')
+        # wandb_cooling = pd.to_pickle(wandb_cooling, 'wandbcoolingkwh.pkl')
+        # wandb_vacuum = pd.to_pickle(wandb_vacuum, 'wandbvacuumkwh.pkl')
+        # wandb_heating = pd.to_pickle(wandb_heating, 'wandbwaterheatkwh.pkl')
+        # wandb_combined = pd.to_pickle(wandb_combined, 'wandbcombinedkwh.pkl')
+        # Read pickle files
+        wandb_total = pd.read_pickle('wandbtotalkwh.pkl')
+        wandb_cooling = pd.read_pickle('wandbcoolingkwh.pkl')
+        wandb_vacuum = pd.read_pickle('wandbvacuumkwh.pkl')
+        wandb_heating = pd.read_pickle('wandbwaterheatkwh.pkl')
+        wandb_combined = pd.read_pickle('wandbcombinedkwh.pkl')
         # iterrows
         t = time.time()
         total = total_db.iloc[:, 1:total_db.shape[1]]
@@ -349,7 +356,7 @@ class mainwindow(QDialog):
         df4['retech'] = retech['retech']
 
         df2 = pd.merge(left=df2, right=df4, left_on='farm_id', right_on='farm_id')
-        self.tvdatabase = df2
+        self.tvdatabase = df2 # annual database
         self.model = PandasModel(df2)
         self.tableView.setModel(self.model)
 
@@ -365,7 +372,7 @@ class mainwindow(QDialog):
 
         if importedfile is None:
             return
-        self.firstTab.MRChart(importedfile)
+        self.firstTab.MRChart(annfile)
         self.firstTab.BLChart(importedfile)
         self.firstTab.energychart(importedfile, annfile)
         self.importedfile = importedfile
@@ -373,9 +380,6 @@ class mainwindow(QDialog):
         self.window().spinner.stop()
         # self.spinner.stop()
 
-    def printgetslider1(self):
-
-        return self.slider1.value()
 
     def processimportedfile(self, data):
         # fname = "C:/NAIDEADATA2.csv"
@@ -655,12 +659,14 @@ class mainwindow(QDialog):
 
     @QtCore.pyqtSlot()
     def on_filterButtonLoad_clicked(self):
-        current_tv = self.tvdatabase
-        current_charts = self.importedfile
+        current_tv = self.tvdatabase # annual
+        current_charts = self.importedfile # monthly
 
         #farm size
         minsize = self.slider1.value()[0]
         maxsize = self.slider1.value()[1]
+        # minsize = 5
+        # maxsize = 500
 
         #VSD
         if self.VSD_yes.isChecked():
@@ -699,7 +705,7 @@ class mainwindow(QDialog):
         if current_charts is None:
             return
 
-        self.firstTab.MRChart(current_charts)
+        self.firstTab.MRChart(current_tv)
         self.firstTab.BLChart(current_charts)
         self.firstTab.energychart(current_charts, current_tv)
         self.model = PandasModel(current_tv)
@@ -758,7 +764,7 @@ class FirstTab(QWidget):
             if val == 0:
                 self.modelkpi.setItem(0, 0, QStandardItem(str("")))
             else:
-                self.modelkpi.setItem(0, 0, QStandardItem(str(f'{round(val+1):,}')))
+                self.modelkpi.setItem(0, 0, QStandardItem(str(f'{round(val):,}')))
         except:
             self.modelkpi.setItem(0, 0, QStandardItem(str("")))
 
@@ -825,7 +831,7 @@ class FirstTab(QWidget):
         self.tableViewkpi = QtWidgets.QTableView(self)
         self.tableViewkpi.setFixedHeight(62) # height of available space
         self.tableViewkpi.setShowGrid(False) # removes horizontal lines
-        self.tableViewkpi.setStyleSheet('QTableView::item {border-right: 1px solid #d6d9dc; QTableView::item {border-bottom: 1px solid #d6d9dc;}')
+        # self.tableViewkpi.setStyleSheet('QTableView::item {border-right: 1px solid #d6d9dc; QTableView::item {border-bottom: 1px solid #d6d9dc;}')
         self.tableViewkpi.setFrameStyle(0)
         self.tableViewkpi.setEditTriggers(QtWidgets.QTableWidget.NoEditTriggers)
         self.tableViewkpi.setObjectName("tableViewkpi")
@@ -855,27 +861,22 @@ class FirstTab(QWidget):
     def MRChart(self, importedfile): # pie
         # https://pythonbasics.org/pyqt-radiobutton/
         if self.radioButton1.isChecked():
-            importedfile = importedfile[["farm_id", self.radioButton1.label]].drop_duplicates()
             importedfile = importedfile.sort_values(by=[self.radioButton1.label], ascending=True)
             fig = go.Pie(labels=importedfile[self.radioButton1.label],  hovertemplate = "%{label}: <br>No. Farms: %{value} <extra></extra>", sort=False)
             layout = go.Layout(autosize=True, legend=dict(orientation="h", xanchor='center', x=0.5))
         elif self.radioButton2.isChecked():
-            importedfile = importedfile[["farm_id", self.radioButton2.label]].drop_duplicates()
             importedfile = importedfile.sort_values(by=[self.radioButton2.label], ascending=True)
             fig = go.Pie(labels=importedfile[self.radioButton2.label],  hovertemplate = "%{label}: <br>No. Farms: %{value} <extra></extra>", sort=False)
             layout = go.Layout(autosize=True, legend=dict(orientation="h", xanchor='center', x=0.5))
         elif self.radioButton3.isChecked():
-            importedfile = importedfile[["farm_id", self.radioButton3.label]].drop_duplicates()
             importedfile = importedfile.sort_values(by=[self.radioButton3.label], ascending=True)
             fig = go.Pie(labels=importedfile[self.radioButton3.label],  hovertemplate = "%{label}: <br>No. Farms: %{value} <extra></extra>", sort=False)
             layout = go.Layout(autosize=True, legend=dict(orientation="h", xanchor='center', x=0.5))
         elif self.radioButton4.isChecked():
-            importedfile = importedfile[["farm_id", self.radioButton4.label]].drop_duplicates()
             importedfile = importedfile.sort_values(by=[self.radioButton4.label], ascending=True)
             fig = go.Pie(labels=importedfile[self.radioButton4.label],  hovertemplate = "%{label}: <br>No. Farms: %{value} <extra></extra>", sort=False)
             layout = go.Layout(autosize=True, legend=dict(orientation="h", xanchor='center', x=0.5))
         elif self.radioButton11.isChecked():
-            importedfile = importedfile[["farm_id", self.radioButton11.label]].drop_duplicates()
             importedfile = importedfile.sort_values(by=[self.radioButton11.label], ascending=True)
             fig = go.Pie(labels=importedfile[self.radioButton11.label],  hovertemplate = "%{label}: <br>No. Farms: %{value} <extra></extra>", sort=False)
             layout = go.Layout(autosize=True)
@@ -918,8 +919,8 @@ class FirstTab(QWidget):
         right.addWidget(self.radioButton11)
 
         middleright = QHBoxLayout()
-        middleright.addWidget(self.browser)
-        middleright.addLayout(right)
+        middleright.addWidget(self.browser, 3)
+        middleright.addLayout(right, 1)
         groupBox.setLayout(middleright)
         groupBox.setFlat(True)
 
@@ -965,8 +966,8 @@ class FirstTab(QWidget):
 
         self.browserEn = QtWebEngineWidgets.QWebEngineView(self)
         middleright = QHBoxLayout()
-        middleright.addWidget(self.browserEn)
-        middleright.addLayout(right)
+        middleright.addWidget(self.browserEn, 3)
+        middleright.addLayout(right, 1)
         groupBox.setLayout(middleright)
         groupBox.setFlat(True)
 
@@ -986,6 +987,7 @@ class FirstTab(QWidget):
                                   go.Bar(name='Milk Harvesting', x=smonth, y=round(kwhdata["VacuumKWh"], 1)),
                                   go.Bar(name='Water Heating', x=smonth, y=round(kwhdata["WaterHeatKWh"], 1)),
                                   go.Bar(name='Other Use', x=smonth, y=round(kwhdata["OtherKWh"], 1))])
+            fig.update_layout(legend=dict(orientation="h", xanchor='center', x=0.5))
 
         elif self.radioButton9.isChecked(): # total / litre milk
             kwhdata_perlitre = importedfile[["month", "milk_yield_litres", "CoolingKWh", "VacuumKWh", "WaterHeatKWh", "OtherKWh"]].groupby("month", as_index = False).sum()
@@ -1042,8 +1044,8 @@ class FirstTab(QWidget):
 
         self.browserBL = QtWebEngineWidgets.QWebEngineView(self)
         middleright = QHBoxLayout()
-        middleright.addWidget(self.browserBL)
-        middleright.addLayout(right)
+        middleright.addWidget(self.browserBL, 3)
+        middleright.addLayout(right, 1)
         groupBox.setLayout(middleright)
         groupBox.setFlat(True)
 
@@ -1057,14 +1059,12 @@ class ThirdTab(QWidget):
         label = QTextEdit()
         label.setFrameStyle(0)
         label.setReadOnly(True)
-        label.textCursor().insertHtml("Helpful Information.")
+        label.textCursor().insertHtml("User Manual (to be added...).")
 
-        checkbox = QCheckBox("Agree the T&C's")
 
         #create layout
         layout = QVBoxLayout()
         layout.addWidget(label)
-        layout.addWidget(checkbox)
         self.setLayout(layout)
 
 class PandasModel(QtCore.QAbstractTableModel):
@@ -1099,8 +1099,17 @@ class AlignDelegate(QtWidgets.QStyledItemDelegate):
 
 
 if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    app.setStyle('Breeze')
+    appctxt = ApplicationContext()
+    # app = QApplication(sys.argv)
+    appctxt.app.setStyle('Breeze')
+    # app.setStyle('Breeze')
     window = mainwindow(data=None)
-    window.show()
-    app.exec()
+    # Formatting
+    window.showMaximized()
+    window.setWindowTitle("NAIDEA")
+    window.setWindowIcon(QIcon('icon.ico'))
+    # window.setWindowIcon(QIcon(appctxt.get_resource('icon.ico')))
+
+    #Exit
+    # app.exec()
+    sys.exit(appctxt.app.exec())
