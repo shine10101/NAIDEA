@@ -200,7 +200,7 @@ class mainwindow(QDialog):
         self.slider1.setSingleStep(step=25)
         self.slider1.setEdgeLabelMode(opt=0)
         self.slider1.setHandleLabelPosition(opt=2)
-        self.slider1.setRange(5, 500)
+        self.slider1.setRange(5, 501)
         self.slider1.setTickInterval(25)
         self.slider1.setValue((5, 500))
         self.slider1.setStyleSheet(QSS)
@@ -250,7 +250,7 @@ class mainwindow(QDialog):
         HeaderBox = QGroupBox("A Collaboration of:")
 
         label_collab = QLabel()
-        pixmap = QPixmap("collab_trans.png")
+        pixmap = QPixmap("collab2_trans.png")
         pixmap2 = pixmap.scaled(600, 600, Qt.KeepAspectRatio, Qt.SmoothTransformation)
         label_collab.setPixmap(pixmap2)
 
@@ -266,7 +266,6 @@ class mainwindow(QDialog):
         option = QFileDialog.Options()
         fname = QFileDialog.getOpenFileName(self, 'Open file',
                                             'c:\\', "CSV files (*.csv)", options=option)
-        # fname = "C:/NAIDEADATA2.csv"
         # database for treeview
         df1 = pd.read_csv(fname[0])
         total_db, cooling_db, vacuum_db, heating_db, combined_db = self.processimportedfile(df1)
@@ -301,7 +300,7 @@ class mainwindow(QDialog):
         combined = combined_db.iloc[:, 1:combined_db.shape[1]]
         df1["CombinedKWh"] = pd.DataFrame([self.predict_combined(data=row, wandb=wandb_combined) for idx, row in combined.iterrows()], columns=['CombinedKWh'])
         print(time.time()-t)
-        # # List Comprehension
+        # # List Comprehension (assess to speed up calculations)
         # t = time.time()
         # df1["TotalKWh"] = pd.DataFrame([self.predict_total(data=total_db.iloc[i, 1:total_db.shape[1]], wandb=wandb_total) for i in range(len(total_db))], columns=['TotalKWh'])
         # df1["CoolingKWh"] = pd.DataFrame([self.predict_cooling(data=cooling_db.iloc[i, 1:cooling_db.shape[1]], wandb=wandb_cooling) for i in range(len(cooling_db))], columns=['CoolingKWh'])
@@ -309,7 +308,6 @@ class mainwindow(QDialog):
         # df1["WaterHeatKWh"] = pd.DataFrame([self.predict_heating(data=heating_db.iloc[i, 1:heating_db.shape[1]], wandb=wandb_heating) for i in range(len(heating_db))], columns=['WaterHeatKWh'])
         # df1["CombinedKWh"] = pd.DataFrame([self.predict_combined(data=combined_db.iloc[i, 1:combined_db.shape[1]], wandb=wandb_combined) for i in range(len(combined_db))], columns=['CombinedKWh'])
         # print(time.time() - t)
-        # df1["WaterHeatKWh"] = df1["CombinedKWh"] - df1["CoolingKWh"] - df1["VacuumKWh"]
         # Manual processing
         df1['CoolingKWh'].values[df1['milk_yield_litres'] == 0] = 0
         df1['VacuumKWh'].values[df1['milk_yield_litres'] == 0] = 0
@@ -320,18 +318,8 @@ class mainwindow(QDialog):
         df1['VacuumKWh'] = df1['CombinedKWh']*(sum(df1['VacuumKWh'])/sum(CVW))
         df1['WaterHeatKWh'] = df1['CombinedKWh']*(sum(df1['WaterHeatKWh'])/sum(CVW))
         df1["OtherKWh"] = df1["TotalKWh"] - df1["CombinedKWh"] #- df1["CoolingKWh"] - df1["VacuumKWh"]
-        # df1.to_csv('predict_df.csv')
         df2 = df1[["farm_id", "milk_yield_litres", "TotalKWh"]].groupby("farm_id", as_index=False).sum().round()
-        df2["wh_lm"] = round(df2["TotalKWh"]/ df2["milk_yield_litres"] * 1000,2)
-        df2["global_diff_%"] = round((df2["wh_lm"] - statistics.mean(df2["wh_lm"])) / statistics.mean(df2["wh_lm"]) * 100,2)
-        self.bins = [0, 23,	36,	49,	62,	1000]
-        df2["DER"] = pd.DataFrame(np.digitize(df2["wh_lm"], self.bins), columns=["DER"])
-        df2['DER'] = df2['DER'].astype(str)
-        df2['DER'] = df2['DER'].replace(str(1), 'A')
-        df2['DER'] = df2['DER'].replace(str(2), 'B')
-        df2['DER'] = df2['DER'].replace(str(3), 'C')
-        df2['DER'] = df2['DER'].replace(str(4), 'D')
-        df2['DER'] = df2['DER'].replace(str(5), 'E')
+        # merge datasets
         df3_size = df1[["farm_id", "herd_size", "milking_cows"]].groupby("farm_id").mean().round()
         df2 = pd.merge(left=df3_size, right=df2, left_on='farm_id', right_on='farm_id')
         df4 = df1[["farm_id", "re_thermal_m3", "re_solarpv_kw", "re_wind_kw", "res_capacity_kw", "low_energy_lighting",
@@ -339,9 +327,7 @@ class mainwindow(QDialog):
                        "milking_duration_hours", "hotwash_freq", "milkpump_type", "vacuumpump_power_kw", "VSD", "bulktank_capacity_litres",
                        "waterheating_power_elec_kw", "waterheating_power_gas_kw", "waterheating_power_oil_kw", "hotwatertank_capacity_litres",
                        "coolingsystem_directexpansion", "coolingsystem_platecooler", "coolingsystem_icebank", "coolingsystem_waterchillingunit"]].drop_duplicates(subset='farm_id', keep="first")
-        # rule of thumb solar pV calculation
-        # df2['DER'].iloc[df4['re_solarpv_kw'] > 0] = 'A'
-        # Renewable Energy Technologies
+        # Renewable Energy Technologies (binary for pie chart)
         retech = df4[["re_thermal_m3", "re_solarpv_kw", "re_wind_kw"]]
         retech.values[retech > 0] = 1
         retech['retech'] = retech['re_thermal_m3'].astype(str) + '_' + retech['re_solarpv_kw'].astype(str)\
@@ -357,8 +343,31 @@ class mainwindow(QDialog):
 
         #merge
         df4['retech'] = retech['retech']
-
         df2 = pd.merge(left=df2, right=df4, left_on='farm_id', right_on='farm_id')
+        # rule of thumb solar pV calculation
+        df2['pv_kwh'] = round(0.8 * df2["re_solarpv_kw"] * 1074 * 1, 1)  # constant x kWp x kWh/m2 x overshdowing factor
+        df2["TotalKWh"] = df2["TotalKWh"] - df2['pv_kwh']
+        # https://www.seai.ie/home-energy/building-energy-rating-ber/support-for-ber-assessors/domestic-ber-resources/
+        # https://www.rexelenergysolutions.ie/solar-electricity/part-l-using-solar-pv/
+        # rule of thumb wind kWh calculation (DEAP Appendix H)
+        # df2['therm_kwh'] = round(df2["re_thermal_m3"] * 1074 * 1 * ,1)  # Qs = S × Zpanel × Aap × η0 × UF × f(a1/η0) × f(Veff/Vd)
+        # https://www.seai.ie/home-energy/building-energy-rating-ber/support-for-ber-assessors/domestic-ber-resources/deap4-software/
+        df2["TotalKWh"] = df2["TotalKWh"] - df2['pv_kwh']
+        #process wh/lm & bins
+        df2["wh_lm"] = round(df2["TotalKWh"]/ df2["milk_yield_litres"] * 1000,2)
+        df2["global_diff_%"] = round((df2["wh_lm"] - statistics.mean(df2["wh_lm"])) / statistics.mean(df2["wh_lm"]) * 100,2)
+        self.bins = [0, 23,	36,	49,	62,	1000]
+        df2["DER"] = pd.DataFrame(np.digitize(df2["wh_lm"], self.bins), columns=["DER"])
+        df2['DER'] = df2['DER'].astype(str)
+        df2['DER'] = df2['DER'].replace(str(1), 'A')
+        df2['DER'] = df2['DER'].replace(str(2), 'B')
+        df2['DER'] = df2['DER'].replace(str(3), 'C')
+        df2['DER'] = df2['DER'].replace(str(4), 'D')
+        df2['DER'] = df2['DER'].replace(str(5), 'E')
+        print(df2.columns)
+        first_column = df2.pop('DER')
+        df2.insert(1, 'DER', first_column)
+
         self.tvdatabase = df2 # annual database
         self.model = PandasModel(df2)
         self.tableView.setModel(self.model)
@@ -711,6 +720,7 @@ class mainwindow(QDialog):
         self.firstTab.MRChart(current_tv)
         self.firstTab.BLChart(current_charts)
         self.firstTab.energychart(current_charts, current_tv)
+        # current_tv_removed = current_tv.drop(["TotalKWh", "wh_lm", "global_diff_%", "subset_diff_%"], axis=1)
         self.model = PandasModel(current_tv)
         self.tableView.setModel(self.model)
         self.filtereddatabase_ann = current_tv
