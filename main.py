@@ -1,17 +1,18 @@
 from fbs_runtime.application_context.PyQt5 import ApplicationContext
 from PyQt5.QtWidgets import QFileDialog, QPushButton, QHBoxLayout, QRadioButton, QGridLayout, \
     QLabel, QGroupBox, QCheckBox, QDialogButtonBox, QTabWidget, QVBoxLayout, QButtonGroup, QTextEdit, QDialog, QWidget, QApplication
-import sys
 from qtrangeslider import QLabeledRangeSlider
-from PyQt5.QtGui import QStandardItem, QIcon
+from PyQt5.QtGui import QStandardItem, QIcon, QPixmap
 from PyQt5 import QtWebEngineWidgets, QtCore, QtGui, QtWidgets
+from pyqtspinner.spinner import WaitingSpinner
 from PyQt5.QtCore import *
+import sys
 import pandas as pd
 import plotly.graph_objs as go
 import numpy as np
 import time
 import statistics
-from pyqtspinner.spinner import WaitingSpinner
+
 
 
 # pip install fbs PyQt5 pandas plotly numpy statistics
@@ -58,7 +59,7 @@ class mainwindow(QDialog):
 
         vbox = QVBoxLayout()
         vbox.addLayout(FilterLayout, 1)
-        vbox.addWidget(tabs, 5)
+        vbox.addWidget(tabs, 7)
         vbox.addWidget(buttonbox)
 
         self.setLayout(vbox)
@@ -248,13 +249,15 @@ class mainwindow(QDialog):
     def Header3(self): # function defining characteristics of each group/grid object
         HeaderBox = QGroupBox("A Collaboration of:")
 
-        # im = QPixmap("icon.png")
-        # label = QLabel()
-        # label.setPixmap(im)
-        # # label = im.scaled(64, 64)
-        # grid = QGridLayout()
-        # grid.addWidget(label, 1, 1)
-        # HeaderBox.setLayout(grid)
+        label_collab = QLabel()
+        pixmap = QPixmap("collab_trans.png")
+        pixmap2 = pixmap.scaled(600, 600, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+        label_collab.setPixmap(pixmap2)
+
+
+        grid = QHBoxLayout()
+        grid.addWidget(label_collab)
+        HeaderBox.setLayout(grid)
 
         HeaderBox.setFlat(True)
         return HeaderBox
