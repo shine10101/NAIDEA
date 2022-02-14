@@ -59,7 +59,7 @@ class mainwindow(QDialog):
 
         vbox = QVBoxLayout()
         vbox.addLayout(FilterLayout, 1)
-        vbox.addWidget(tabs, 7)
+        vbox.addWidget(tabs, 6)
         vbox.addWidget(buttonbox)
 
         self.setLayout(vbox)
