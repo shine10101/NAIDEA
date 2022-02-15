@@ -77,6 +77,7 @@ class mainwindow(QDialog):
 
         exportfilebtn = QPushButton("Export")
         exportfilebtn.setGeometry(200, 150, 100, 40)
+        exportfilebtn.clicked.connect(self.export_clicked)
         #import box layout
 
         #importrow1
@@ -265,7 +266,7 @@ class mainwindow(QDialog):
     def getfile(self):
         option = QFileDialog.Options()
         fname = QFileDialog.getOpenFileName(self, 'Open file',
-                                            CURRENT_DIR, "CSV files (*.csv)", options=option)
+                                                CURRENT_DIR, "CSV files (*.csv)", options=option)
 
         # database for treeview
         df1 = pd.read_csv(fname[0])
@@ -366,7 +367,7 @@ class mainwindow(QDialog):
         df2['DER'] = df2['DER'].replace(str(3), 'C')
         df2['DER'] = df2['DER'].replace(str(4), 'D')
         df2['DER'] = df2['DER'].replace(str(5), 'E')
-        print(df2.columns)
+        # print(df2.columns)
         first_column = df2.pop('DER')
         df2.insert(1, 'DER', first_column)
 
@@ -393,6 +394,24 @@ class mainwindow(QDialog):
         self.on_filterButtonLoad_clicked()
         self.window().spinner.stop()
         # self.spinner.stop()
+
+    @QtCore.pyqtSlot()
+    def export_clicked(self):
+        # export treeview file as csv
+
+
+        fileforexport = self.filtereddatabase_ann
+
+
+        if fileforexport is None:
+            return
+
+        option = QFileDialog.Options()
+        fname, _ = QFileDialog.getSaveFileName(self, 'Save file',
+                                            CURRENT_DIR, "CSV files (*.csv)", options=option)
+        if fname:
+            fileforexport.to_csv(fname, index=False)
+
 
 
     def processimportedfile(self, data):
