@@ -412,8 +412,6 @@ class mainwindow(QDialog):
         if fname:
             fileforexport.to_csv(fname, index=False)
 
-
-
     def processimportedfile(self, data):
         # fname = "C:/NAIDEADATA2.csv"
         # df1 = pd.read_csv(fname)
@@ -920,10 +918,20 @@ class FirstTab(QWidget):
         fig.update_layout(margin=dict(t=0, b=0, l=0, r=0))
         self.browser.setHtml(fig.to_html(include_plotlyjs='cdn'))
 
+    def _on_downloaFunc(self, download):
+        # save_file_name_dialog is a function to show the windows file window
+        option = QFileDialog.Options()
+        image_path, _ = QFileDialog.getSaveFileName(self, 'Save file',
+                                            CURRENT_DIR, "Png files (*.png)", options=option)
+        if image_path:
+            download.setPath(image_path)
+            download.accept()
+
     def infrastructure(self, importedfile):
         groupBox = QGroupBox("Infrastructure Breakdown")
 
         self.browser = QtWebEngineWidgets.QWebEngineView(self)
+        self.browser.page().profile().downloadRequested.connect(self._on_downloaFunc)
         right = QVBoxLayout()
 
         self.radioButton1 = QRadioButton("Low-Energy Lighting")
