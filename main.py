@@ -12,6 +12,9 @@ import plotly.graph_objs as go
 import numpy as np
 import time
 import statistics
+import os
+
+CURRENT_DIR = os.path.dirname(os.path.realpath(__file__))
 
 
 
@@ -51,7 +54,7 @@ class mainwindow(QDialog):
         tabs.addTab(self.tableView, "Farm-Level")
         tabs.addTab(ThirdTab(), "Help")
 
-        buttonbox = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
+        buttonbox = QDialogButtonBox(QDialogButtonBox.Close)
 
         buttonbox.accepted.connect(self.accept)
         buttonbox.rejected.connect(self.reject)
@@ -95,9 +98,6 @@ class mainwindow(QDialog):
 
     @QtCore.pyqtSlot()
     def start_spinner(self):
-        # self.parentWidget().window().spinner.start()
-        # self.parentWidget().window().spinner.raise_()
-        # self.parentWidget().window().spinner.show()
         self.spinner.start()
         self.spinner.raise_()
         self.spinner.show()
@@ -265,7 +265,8 @@ class mainwindow(QDialog):
     def getfile(self):
         option = QFileDialog.Options()
         fname = QFileDialog.getOpenFileName(self, 'Open file',
-                                            'c:\\', "CSV files (*.csv)", options=option)
+                                            CURRENT_DIR, "CSV files (*.csv)", options=option)
+
         # database for treeview
         df1 = pd.read_csv(fname[0])
         total_db, cooling_db, vacuum_db, heating_db, combined_db = self.processimportedfile(df1)
@@ -352,7 +353,8 @@ class mainwindow(QDialog):
         # rule of thumb wind kWh calculation (DEAP Appendix H)
         # df2['therm_kwh'] = round(df2["re_thermal_m3"] * 1074 * 1 * ,1)  # Qs = S × Zpanel × Aap × η0 × UF × f(a1/η0) × f(Veff/Vd)
         # https://www.seai.ie/home-energy/building-energy-rating-ber/support-for-ber-assessors/domestic-ber-resources/deap4-software/
-        df2["TotalKWh"] = df2["TotalKWh"] - df2['pv_kwh']
+        df2["TotalKWh"] = round(df2["TotalKWh"] - df2['pv_kwh'],1)
+        df2['TotalKWh'].values[df2['TotalKWh'] < 0] = 0
         #process wh/lm & bins
         df2["wh_lm"] = round(df2["TotalKWh"]/ df2["milk_yield_litres"] * 1000,2)
         df2["global_diff_%"] = round((df2["wh_lm"] - statistics.mean(df2["wh_lm"])) / statistics.mean(df2["wh_lm"]) * 100,2)
@@ -375,7 +377,6 @@ class mainwindow(QDialog):
         if fname:
             return df1, df2
 
-
     @QtCore.pyqtSlot()
     def on_pushButtonLoad_clicked(self):
         # self.parentWidget().window().spinner.start()
@@ -384,6 +385,7 @@ class mainwindow(QDialog):
 
         if importedfile is None:
             return
+
         self.firstTab.MRChart(annfile)
         self.firstTab.BLChart(importedfile)
         self.firstTab.energychart(importedfile, annfile)
@@ -1069,16 +1071,18 @@ class ThirdTab(QWidget):
         super().__init__()
 
         groupBox = QGroupBox("Help Section")
-        label = QTextEdit()
-        label.setFrameStyle(0)
-        label.setReadOnly(True)
-        label.textCursor().insertHtml("User Manual (to be added...).")
 
+        view = QtWebEngineWidgets.QWebEngineView()
+        settings = view.settings()
+        settings.setAttribute(QtWebEngineWidgets.QWebEngineSettings.PluginsEnabled, True)
+        url = QtCore.QUrl.fromLocalFile(os.path.join(CURRENT_DIR, "NAIDEA User Manual.pdf"))
+        view.load(url)
+        view.resize(640, 480)
+        view.show()
 
         #create layout
-        layout = QVBoxLayout()
-        layout.addWidget(label)
-        self.setLayout(layout)
+        layout = QVBoxLayout(self)
+        layout.addWidget(view)
 
 class PandasModel(QtCore.QAbstractTableModel):
     """
