@@ -1,0 +1,1009 @@
+Year,farm_id,month,month_str,milking_cows,herd_size,milk_yield_litres,num_parlour_units,milkpump_type,vacuumpump_power_kw,VSD,coolingsystem_directexpansion,coolingsystem_icebank,coolingsystem_platecooler,coolingsystem_waterchillingunit,hotwash_freq,re_thermal_m3,hotwatertank_capacity_litres,bulktank_capacity_litres,waterheating_power_elec_kw,waterheating_power_gas_kw,waterheating_power_oil_kw,quantity_diesel_litres,quantity_petrol_litres,quantity_elec_kwh,re_solarpv_kw,re_wind_kw,res_capacity_kw,low_energy_lighting,night_rate_electricity,heat_recovery,green_electricity,milking_duration_hours,milking_frequency
+2015,20,1,Jan,0,104,0,10,High Speed,3,no,yes,no,no,no,OAM,0,150,6900,NaN,0,6,1000,200,NaN,0,0,NaN,yes,yes,yes,yes,1,once a day milking
+2015,20,2,Feb,71,110,10855,10,High Speed,3,no,yes,no,no,no,OAM,0,150,6900,NaN,0,6,1000,200,NaN,0,0,NaN,yes,yes,yes,yes,1,once a day milking
+2015,20,3,Mar,89,102,53832,10,High Speed,3,no,yes,no,no,no,OAM,0,150,6900,NaN,0,6,1000,200,NaN,0,0,NaN,yes,yes,yes,yes,1,once a day milking
+2015,20,4,Apr,98,100,67312,10,High Speed,3,no,yes,no,no,no,OAM,0,150,6900,NaN,0,6,1000,200,NaN,0,0,NaN,yes,yes,yes,yes,1,once a day milking
+2015,20,5,May,100,100,89062,10,High Speed,3,no,yes,no,no,no,OAM,0,150,6900,NaN,0,6,1000,200,NaN,0,0,NaN,yes,yes,yes,yes,1,once a day milking
+2015,20,6,Jun,100,100,64225,10,High Speed,3,no,yes,no,no,no,OAM,0,150,6900,NaN,0,6,1000,200,NaN,0,0,NaN,yes,yes,yes,yes,1,once a day milking
+2015,20,7,Jul,100,100,58229,10,High Speed,3,no,yes,no,no,no,OAM,0,150,6900,NaN,0,6,1000,200,NaN,0,0,NaN,yes,yes,yes,yes,1,once a day milking
+2015,20,8,Aug,100,100,65235,10,High Speed,3,no,yes,no,no,no,OAM,0,150,6900,NaN,0,6,1000,200,NaN,0,0,NaN,yes,yes,yes,yes,1,once a day milking
+2015,20,9,Sep,100,100,44081,10,High Speed,3,no,yes,no,no,no,OAM,0,150,6900,NaN,0,6,1000,200,NaN,0,0,NaN,yes,yes,yes,yes,1,once a day milking
+2015,20,10,Oct,100,100,40365,10,High Speed,3,no,yes,no,no,no,OAM,0,150,6900,NaN,0,6,1000,200,NaN,0,0,NaN,yes,yes,yes,yes,1,once a day milking
+2015,20,11,nov,65,100,41489,10,High Speed,3,no,yes,no,no,no,OAM,0,150,6900,NaN,0,6,1000,200,NaN,0,0,NaN,yes,yes,yes,yes,1,once a day milking
+2015,20,12,Dec,0,96,12778,10,High Speed,3,no,yes,no,no,no,OAM,0,150,6900,NaN,0,6,1000,200,NaN,0,0,NaN,yes,yes,yes,yes,1,once a day milking
+2015,1,1,Jan,29,73,0,13,High Speed,2.6,no,yes,no,yes,no,OAD,0,300,5000,3,0,0,932,53,11793,7,0,11,no,no,no,no,2,twice a day milking
+2015,1,2,Feb,55,83,12477,13,High Speed,2.6,no,yes,no,yes,no,OAD,0,300,5000,3,0,0,932,53,11793,7,0,11,no,no,no,no,2,twice a day milking
+2015,1,3,Mar,68,78,19893,13,High Speed,2.6,no,yes,no,yes,no,OAD,0,300,5000,3,0,0,932,53,11793,7,0,11,no,no,no,no,2,twice a day milking
+2015,1,4,Apr,94,100,54578,13,High Speed,2.6,no,yes,no,yes,no,OAD,0,300,5000,3,0,0,932,53,11793,7,0,11,no,no,no,no,2,twice a day milking
+2015,1,5,May,97,100,62820,13,High Speed,2.6,no,yes,no,yes,no,OAD,0,300,5000,3,0,0,932,53,11793,7,0,11,no,no,no,no,2,twice a day milking
+2015,1,6,Jun,101,101,62648,13,High Speed,2.6,no,yes,no,yes,no,OAD,0,300,5000,3,0,0,932,53,11793,7,0,11,no,no,no,no,2,twice a day milking
+2015,1,7,Jul,99,99,55822,13,High Speed,2.6,no,yes,no,yes,no,OAD,0,300,5000,3,0,0,932,53,11793,7,0,11,no,no,no,no,2,twice a day milking
+2015,1,8,Aug,99,99,50082,13,High Speed,2.6,no,yes,no,yes,no,OAD,0,300,5000,3,0,0,932,53,11793,7,0,11,no,no,no,no,2,twice a day milking
+2015,1,9,Sep,99,99,44381,13,High Speed,2.6,no,yes,no,yes,no,OAD,0,300,5000,3,0,0,932,53,11793,7,0,11,no,no,no,no,2,twice a day milking
+2015,1,10,Oct,99,99,44048,13,High Speed,2.6,no,yes,no,yes,no,OAD,0,300,5000,3,0,0,932,53,11793,7,0,11,no,no,no,no,2,twice a day milking
+2015,1,11,nov,21,99,21251,13,High Speed,2.6,no,yes,no,yes,no,OAD,0,300,5000,3,0,0,932,53,11793,7,0,11,no,no,no,no,2,twice a day milking
+2015,1,12,Dec,1,99,7499,13,High Speed,2.6,no,yes,no,yes,no,OAD,0,300,5000,3,0,0,932,53,11793,7,0,11,no,no,no,no,2,twice a day milking
+2015,2,1,Jan,1,120,0,16,VSD,6,no,yes,no,yes,no,OAW,0,300,12750,3,0,0,48,166,13421,2,0,NaN,no,no,no,n/a,1.5,once a day milking
+2015,2,2,Feb,67,127,1158,16,VSD,6,no,yes,no,yes,no,OAW,0,300,12750,3,0,0,48,166,13421,2,0,NaN,no,no,no,n/a,1.5,once a day milking
+2015,2,3,Mar,121,141,42530,16,VSD,6,no,yes,no,yes,no,OAW,0,300,12750,3,0,0,48,166,13421,2,0,NaN,no,no,no,n/a,1.5,once a day milking
+2015,2,4,Apr,136,145,94827,16,VSD,6,no,yes,no,yes,no,OAW,0,300,12750,3,0,0,48,166,13421,2,0,NaN,no,no,no,n/a,1.5,once a day milking
+2015,2,5,May,146,148,95251,16,VSD,6,no,yes,no,yes,no,OAW,0,300,12750,3,0,0,48,166,13421,2,0,NaN,no,no,no,n/a,1.5,once a day milking
+2015,2,6,Jun,145,147,93985,16,VSD,6,no,yes,no,yes,no,OAW,0,300,12750,3,0,0,48,166,13421,2,0,NaN,no,no,no,n/a,1.5,once a day milking
+2015,2,7,Jul,145,147,87071,16,VSD,6,no,yes,no,yes,no,OAW,0,300,12750,3,0,0,48,166,13421,2,0,NaN,no,no,no,n/a,1.5,once a day milking
+2015,2,8,Aug,146,148,69525,16,VSD,6,no,yes,no,yes,no,OAW,0,300,12750,3,0,0,48,166,13421,2,0,NaN,no,no,no,n/a,1.5,once a day milking
+2015,2,9,Sep,145,147,67540,16,VSD,6,no,yes,no,yes,no,OAW,0,300,12750,3,0,0,48,166,13421,2,0,NaN,no,no,no,n/a,1.5,once a day milking
+2015,2,10,Oct,145,147,55468,16,VSD,6,no,yes,no,yes,no,OAW,0,300,12750,3,0,0,48,166,13421,2,0,NaN,no,no,no,n/a,1.5,once a day milking
+2015,2,11,nov,129,147,32157,16,VSD,6,no,yes,no,yes,no,OAW,0,300,12750,3,0,0,48,166,13421,2,0,NaN,no,no,no,n/a,1.5,once a day milking
+2015,2,12,Dec,0,147,7679,16,VSD,6,no,yes,no,yes,no,OAW,0,300,12750,3,0,0,48,166,13421,2,0,NaN,no,no,no,n/a,1.5,once a day milking
+2015,3,1,Jan,2,83,0,12,VSD,3,no,yes,no,yes,no,OAW,0,200,8968,3,0,0,NaN,58,NaN,3,0,12,yes,yes,yes,yes,2.5,twice a day milking
+2015,3,2,Feb,40,90,3111,12,VSD,3,no,yes,no,yes,no,OAW,0,200,8968,3,0,0,NaN,58,NaN,3,0,12,yes,yes,yes,yes,2.5,twice a day milking
+2015,3,3,Mar,57,91,25817,12,VSD,3,no,yes,no,yes,no,OAW,0,200,8968,3,0,0,NaN,58,NaN,3,0,12,yes,yes,yes,yes,2.5,twice a day milking
+2015,3,4,Apr,71,94,44918,12,VSD,3,no,yes,no,yes,no,OAW,0,200,8968,3,0,0,NaN,58,NaN,3,0,12,yes,yes,yes,yes,2.5,twice a day milking
+2015,3,5,May,75,87,51192,12,VSD,3,no,yes,no,yes,no,OAW,0,200,8968,3,0,0,NaN,58,NaN,3,0,12,yes,yes,yes,yes,2.5,twice a day milking
+2015,3,6,Jun,86,87,47490,12,VSD,3,no,yes,no,yes,no,OAW,0,200,8968,3,0,0,NaN,58,NaN,3,0,12,yes,yes,yes,yes,2.5,twice a day milking
+2015,3,7,Jul,87,87,40817,12,VSD,3,no,yes,no,yes,no,OAW,0,200,8968,3,0,0,NaN,58,NaN,3,0,12,yes,yes,yes,yes,2.5,twice a day milking
+2015,3,8,Aug,84,84,42336,12,VSD,3,no,yes,no,yes,no,OAW,0,200,8968,3,0,0,NaN,58,NaN,3,0,12,yes,yes,yes,yes,2.5,twice a day milking
+2015,3,9,Sep,72,72,33782,12,VSD,3,no,yes,no,yes,no,OAW,0,200,8968,3,0,0,NaN,58,NaN,3,0,12,yes,yes,yes,yes,2.5,twice a day milking
+2015,3,10,Oct,72,72,26656,12,VSD,3,no,yes,no,yes,no,OAW,0,200,8968,3,0,0,NaN,58,NaN,3,0,12,yes,yes,yes,yes,2.5,twice a day milking
+2015,3,11,nov,53,72,16419,12,VSD,3,no,yes,no,yes,no,OAW,0,200,8968,3,0,0,NaN,58,NaN,3,0,12,yes,yes,yes,yes,2.5,twice a day milking
+2015,3,12,Dec,30,72,8958,12,VSD,3,no,yes,no,yes,no,OAW,0,200,8968,3,0,0,NaN,58,NaN,3,0,12,yes,yes,yes,yes,2.5,twice a day milking
+2015,4,1,Jan,9,116,0,16,High Speed,3,no,yes,no,yes,no,E2ndD,0,300,13500,3,0,0,664,17,12999,1,0,17,yes,yes,yes,yes,1,once a day milking
+2015,4,2,Feb,105,130,18778,16,High Speed,3,no,yes,no,yes,no,E2ndD,0,300,13500,3,0,0,664,17,12999,1,0,17,yes,yes,yes,yes,1,once a day milking
+2015,4,3,Mar,128,134,61896,16,High Speed,3,no,yes,no,yes,no,E2ndD,0,300,13500,3,0,0,664,17,12999,1,0,17,yes,yes,yes,yes,1,once a day milking
+2015,4,4,Apr,134,134,100764,16,High Speed,3,no,yes,no,yes,no,E2ndD,0,300,13500,3,0,0,664,17,12999,1,0,17,yes,yes,yes,yes,1,once a day milking
+2015,4,5,May,132,132,100321,16,High Speed,3,no,yes,no,yes,no,E2ndD,0,300,13500,3,0,0,664,17,12999,1,0,17,yes,yes,yes,yes,1,once a day milking
+2015,4,6,Jun,132,132,94226,16,High Speed,3,no,yes,no,yes,no,E2ndD,0,300,13500,3,0,0,664,17,12999,1,0,17,yes,yes,yes,yes,1,once a day milking
+2015,4,7,Jul,132,132,81883,16,High Speed,3,no,yes,no,yes,no,E2ndD,0,300,13500,3,0,0,664,17,12999,1,0,17,yes,yes,yes,yes,1,once a day milking
+2015,4,8,Aug,131,131,67185,16,High Speed,3,no,yes,no,yes,no,E2ndD,0,300,13500,3,0,0,664,17,12999,1,0,17,yes,yes,yes,yes,1,once a day milking
+2015,4,9,Sep,130,131,62119,16,High Speed,3,no,yes,no,yes,no,E2ndD,0,300,13500,3,0,0,664,17,12999,1,0,17,yes,yes,yes,yes,1,once a day milking
+2015,4,10,Oct,128,131,53949,16,High Speed,3,no,yes,no,yes,no,E2ndD,0,300,13500,3,0,0,664,17,12999,1,0,17,yes,yes,yes,yes,1,once a day milking
+2015,4,11,nov,94,131,33736,16,High Speed,3,no,yes,no,yes,no,E2ndD,0,300,13500,3,0,0,664,17,12999,1,0,17,yes,yes,yes,yes,1,once a day milking
+2015,4,12,Dec,0,131,15872,16,High Speed,3,no,yes,no,yes,no,E2ndD,0,300,13500,3,0,0,664,17,12999,1,0,17,yes,yes,yes,yes,1,once a day milking
+2015,5,1,Jan,2,106,0,20,VSD,7.5,no,yes,no,yes,no,OAM,0,350,12000,3,3,0,1000,200,NaN,0,0,NaN,yes,yes,yes,yes,2,once a day milking
+2015,5,2,Feb,83,129,11108,20,VSD,7.5,no,yes,no,yes,no,OAM,0,350,12000,3,3,0,1000,200,NaN,0,0,NaN,yes,yes,yes,yes,2,once a day milking
+2015,5,3,Mar,114,131,49592,20,VSD,7.5,no,yes,no,yes,no,OAM,0,350,12000,3,3,0,1000,200,NaN,0,0,NaN,yes,yes,yes,yes,2,once a day milking
+2015,5,4,Apr,128,131,90292,20,VSD,7.5,no,yes,no,yes,no,OAM,0,350,12000,3,3,0,1000,200,NaN,0,0,NaN,yes,yes,yes,yes,2,once a day milking
+2015,5,5,May,131,131,102630,20,VSD,7.5,no,yes,no,yes,no,OAM,0,350,12000,3,3,0,1000,200,NaN,0,0,NaN,yes,yes,yes,yes,2,once a day milking
+2015,5,6,Jun,131,131,88030,20,VSD,7.5,no,yes,no,yes,no,OAM,0,350,12000,3,3,0,1000,200,NaN,0,0,NaN,yes,yes,yes,yes,2,once a day milking
+2015,5,7,Jul,131,131,73728,20,VSD,7.5,no,yes,no,yes,no,OAM,0,350,12000,3,3,0,1000,200,NaN,0,0,NaN,yes,yes,yes,yes,2,once a day milking
+2015,5,8,Aug,131,131,64931,20,VSD,7.5,no,yes,no,yes,no,OAM,0,350,12000,3,3,0,1000,200,NaN,0,0,NaN,yes,yes,yes,yes,2,once a day milking
+2015,5,9,Sep,131,131,59197,20,VSD,7.5,no,yes,no,yes,no,OAM,0,350,12000,3,3,0,1000,200,NaN,0,0,NaN,yes,yes,yes,yes,2,once a day milking
+2015,5,10,Oct,129,129,52818,20,VSD,7.5,no,yes,no,yes,no,OAM,0,350,12000,3,3,0,1000,200,NaN,0,0,NaN,yes,yes,yes,yes,2,once a day milking
+2015,5,11,nov,112,129,31481,20,VSD,7.5,no,yes,no,yes,no,OAM,0,350,12000,3,3,0,1000,200,NaN,0,0,NaN,yes,yes,yes,yes,2,once a day milking
+2015,5,12,Dec,8,129,10696,20,VSD,7.5,no,yes,no,yes,no,OAM,0,350,12000,3,3,0,1000,200,NaN,0,0,NaN,yes,yes,yes,yes,2,once a day milking
+2015,6,1,Jan,155,158,50062,20,VSD,5.5,no,yes,no,yes,no,E2ndD,0,150,16000,3,0,0,932,53,11793,7,0,11,no,no,no,no,1.5,n/a
+2015,6,2,Feb,175,183,58358,20,VSD,5.5,no,yes,no,yes,no,E2ndD,0,150,16000,3,0,0,932,53,11793,7,0,11,no,no,no,no,1.5,n/a
+2015,6,3,Mar,182,182,46270,20,VSD,5.5,no,yes,no,yes,no,E2ndD,0,150,16000,3,0,0,932,53,11793,7,0,11,no,no,no,no,1.5,n/a
+2015,6,4,Apr,170,170,122564,20,VSD,5.5,no,yes,no,yes,no,E2ndD,0,150,16000,3,0,0,932,53,11793,7,0,11,no,no,no,no,1.5,n/a
+2015,6,5,May,167,169,115706,20,VSD,5.5,no,yes,no,yes,no,E2ndD,0,150,16000,3,0,0,932,53,11793,7,0,11,no,no,no,no,1.5,n/a
+2015,6,6,Jun,172,172,108302,20,VSD,5.5,no,yes,no,yes,no,E2ndD,0,150,16000,3,0,0,932,53,11793,7,0,11,no,no,no,no,1.5,n/a
+2015,6,7,Jul,172,172,101834,20,VSD,5.5,no,yes,no,yes,no,E2ndD,0,150,16000,3,0,0,932,53,11793,7,0,11,no,no,no,no,1.5,n/a
+2015,6,8,Aug,172,172,87165,20,VSD,5.5,no,yes,no,yes,no,E2ndD,0,150,16000,3,0,0,932,53,11793,7,0,11,no,no,no,no,1.5,n/a
+2015,6,9,Sep,167,167,78290,20,VSD,5.5,no,yes,no,yes,no,E2ndD,0,150,16000,3,0,0,932,53,11793,7,0,11,no,no,no,no,1.5,n/a
+2015,6,10,Oct,167,167,66157,20,VSD,5.5,no,yes,no,yes,no,E2ndD,0,150,16000,3,0,0,932,53,11793,7,0,11,no,no,no,no,1.5,n/a
+2015,6,11,nov,167,167,56201,20,VSD,5.5,no,yes,no,yes,no,E2ndD,0,150,16000,3,0,0,932,53,11793,7,0,11,no,no,no,no,1.5,n/a
+2015,6,12,Dec,167,167,53045,20,VSD,5.5,no,yes,no,yes,no,E2ndD,0,150,16000,3,0,0,932,53,11793,7,0,11,no,no,no,no,1.5,n/a
+2015,7,1,Jan,54,103,26990,8,High Speed,NaN,no,yes,no,yes,no,E2ndD,3,400,8800,NaN,0,6,48,166,13421,2,0,NaN,no,no,no,n/a,2.5,once a day milking
+2015,7,2,Feb,79,110,30763,8,High Speed,NaN,no,yes,no,yes,no,E2ndD,3,400,8800,NaN,0,6,48,166,13421,2,0,NaN,no,no,no,n/a,2.5,once a day milking
+2015,7,3,Mar,72,85,30714,8,High Speed,NaN,no,yes,no,yes,no,E2ndD,3,400,8800,NaN,0,6,48,166,13421,2,0,NaN,no,no,no,n/a,2.5,once a day milking
+2015,7,4,Apr,81,85,57457,8,High Speed,NaN,no,yes,no,yes,no,E2ndD,3,400,8800,NaN,0,6,48,166,13421,2,0,NaN,no,no,no,n/a,2.5,once a day milking
+2015,7,5,May,84,84,59943,8,High Speed,NaN,no,yes,no,yes,no,E2ndD,3,400,8800,NaN,0,6,48,166,13421,2,0,NaN,no,no,no,n/a,2.5,once a day milking
+2015,7,6,Jun,83,84,56848,8,High Speed,NaN,no,yes,no,yes,no,E2ndD,3,400,8800,NaN,0,6,48,166,13421,2,0,NaN,no,no,no,n/a,2.5,once a day milking
+2015,7,7,Jul,69,84,48864,8,High Speed,NaN,no,yes,no,yes,no,E2ndD,3,400,8800,NaN,0,6,48,166,13421,2,0,NaN,no,no,no,n/a,2.5,once a day milking
+2015,7,8,Aug,64,84,37601,8,High Speed,NaN,no,yes,no,yes,no,E2ndD,3,400,8800,NaN,0,6,48,166,13421,2,0,NaN,no,no,no,n/a,2.5,once a day milking
+2015,7,9,Sep,69,88,35380,8,High Speed,NaN,no,yes,no,yes,no,E2ndD,3,400,8800,NaN,0,6,48,166,13421,2,0,NaN,no,no,no,n/a,2.5,once a day milking
+2015,7,10,Oct,65,93,36348,8,High Speed,NaN,no,yes,no,yes,no,E2ndD,3,400,8800,NaN,0,6,48,166,13421,2,0,NaN,no,no,no,n/a,2.5,once a day milking
+2015,7,11,nov,59,95,33741,8,High Speed,NaN,no,yes,no,yes,no,E2ndD,3,400,8800,NaN,0,6,48,166,13421,2,0,NaN,no,no,no,n/a,2.5,once a day milking
+2015,7,12,Dec,56,95,34949,8,High Speed,NaN,no,yes,no,yes,no,E2ndD,3,400,8800,NaN,0,6,48,166,13421,2,0,NaN,no,no,no,n/a,2.5,once a day milking
+2015,8,1,Jan,2,55,0,10,High Speed,3,no,yes,no,yes,no,E2ndD,0,150,9080,2.4,0,0,NaN,58,NaN,3,0,12,yes,yes,yes,yes,1,once a day milking
+2015,8,2,Feb,37,60,9164,10,High Speed,3,no,yes,no,yes,no,E2ndD,0,150,9080,2.4,0,0,NaN,58,NaN,3,0,12,yes,yes,yes,yes,1,once a day milking
+2015,8,3,Mar,56,62,28390,10,High Speed,3,no,yes,no,yes,no,E2ndD,0,150,9080,2.4,0,0,NaN,58,NaN,3,0,12,yes,yes,yes,yes,1,once a day milking
+2015,8,4,Apr,60,63,51456,10,High Speed,3,no,yes,no,yes,no,E2ndD,0,150,9080,2.4,0,0,NaN,58,NaN,3,0,12,yes,yes,yes,yes,1,once a day milking
+2015,8,5,May,60,61,46225,10,High Speed,3,no,yes,no,yes,no,E2ndD,0,150,9080,2.4,0,0,NaN,58,NaN,3,0,12,yes,yes,yes,yes,1,once a day milking
+2015,8,6,Jun,60,61,43103,10,High Speed,3,no,yes,no,yes,no,E2ndD,0,150,9080,2.4,0,0,NaN,58,NaN,3,0,12,yes,yes,yes,yes,1,once a day milking
+2015,8,7,Jul,60,61,42792,10,High Speed,3,no,yes,no,yes,no,E2ndD,0,150,9080,2.4,0,0,NaN,58,NaN,3,0,12,yes,yes,yes,yes,1,once a day milking
+2015,8,8,Aug,58,58,36721,10,High Speed,3,no,yes,no,yes,no,E2ndD,0,150,9080,2.4,0,0,NaN,58,NaN,3,0,12,yes,yes,yes,yes,1,once a day milking
+2015,8,9,Sep,56,57,32948,10,High Speed,3,no,yes,no,yes,no,E2ndD,0,150,9080,2.4,0,0,NaN,58,NaN,3,0,12,yes,yes,yes,yes,1,once a day milking
+2015,8,10,Oct,56,57,28625,10,High Speed,3,no,yes,no,yes,no,E2ndD,0,150,9080,2.4,0,0,NaN,58,NaN,3,0,12,yes,yes,yes,yes,1,once a day milking
+2015,8,11,nov,36,57,16009,10,High Speed,3,no,yes,no,yes,no,E2ndD,0,150,9080,2.4,0,0,NaN,58,NaN,3,0,12,yes,yes,yes,yes,1,once a day milking
+2015,8,12,Dec,0,57,1664,10,High Speed,3,no,yes,no,yes,no,E2ndD,0,150,9080,2.4,0,0,NaN,58,NaN,3,0,12,yes,yes,yes,yes,1,once a day milking
+2015,9,1,Jan,24,97,0,15,VSD,4.4,no,yes,no,yes,no,OAM,0,200,9000,2.2,3,0,664,17,12999,1,0,17,yes,yes,yes,yes,2,once a day milking
+2015,9,2,Feb,90,121,27511,15,VSD,4.4,no,yes,no,yes,no,OAM,0,200,9000,2.2,3,0,664,17,12999,1,0,17,yes,yes,yes,yes,2,once a day milking
+2015,9,3,Mar,113,124,50140,15,VSD,4.4,no,yes,no,yes,no,OAM,0,200,9000,2.2,3,0,664,17,12999,1,0,17,yes,yes,yes,yes,2,once a day milking
+2015,9,4,Apr,115,124,90400,15,VSD,4.4,no,yes,no,yes,no,OAM,0,200,9000,2.2,3,0,664,17,12999,1,0,17,yes,yes,yes,yes,2,once a day milking
+2015,9,5,May,114,124,86941,15,VSD,4.4,no,yes,no,yes,no,OAM,0,200,9000,2.2,3,0,664,17,12999,1,0,17,yes,yes,yes,yes,2,once a day milking
+2015,9,6,Jun,114,115,77942,15,VSD,4.4,no,yes,no,yes,no,OAM,0,200,9000,2.2,3,0,664,17,12999,1,0,17,yes,yes,yes,yes,2,once a day milking
+2015,9,7,Jul,114,114,70702,15,VSD,4.4,no,yes,no,yes,no,OAM,0,200,9000,2.2,3,0,664,17,12999,1,0,17,yes,yes,yes,yes,2,once a day milking
+2015,9,8,Aug,114,114,70377,15,VSD,4.4,no,yes,no,yes,no,OAM,0,200,9000,2.2,3,0,664,17,12999,1,0,17,yes,yes,yes,yes,2,once a day milking
+2015,9,9,Sep,111,114,57833,15,VSD,4.4,no,yes,no,yes,no,OAM,0,200,9000,2.2,3,0,664,17,12999,1,0,17,yes,yes,yes,yes,2,once a day milking
+2015,9,10,Oct,109,114,45300,15,VSD,4.4,no,yes,no,yes,no,OAM,0,200,9000,2.2,3,0,664,17,12999,1,0,17,yes,yes,yes,yes,2,once a day milking
+2015,9,11,nov,71,114,29201,15,VSD,4.4,no,yes,no,yes,no,OAM,0,200,9000,2.2,3,0,664,17,12999,1,0,17,yes,yes,yes,yes,2,once a day milking
+2015,9,12,Dec,0,114,9530,15,VSD,4.4,no,yes,no,yes,no,OAM,0,200,9000,2.2,3,0,664,17,12999,1,0,17,yes,yes,yes,yes,2,once a day milking
+2015,10,1,Jan,0,79,0,10,VSD,3,no,yes,no,yes,no,OAW,0,150,6100,2.5,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2015,10,2,Feb,55,98,5365,10,VSD,3,no,yes,no,yes,no,OAW,0,150,6100,2.5,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2015,10,3,Mar,90,103,32171,10,VSD,3,no,yes,no,yes,no,OAW,0,150,6100,2.5,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2015,10,4,Apr,98,104,72182,10,VSD,3,no,yes,no,yes,no,OAW,0,150,6100,2.5,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2015,10,5,May,99,101,80631,10,VSD,3,no,yes,no,yes,no,OAW,0,150,6100,2.5,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2015,10,6,Jun,99,99,68973,10,VSD,3,no,yes,no,yes,no,OAW,0,150,6100,2.5,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2015,10,7,Jul,99,99,59353,10,VSD,3,no,yes,no,yes,no,OAW,0,150,6100,2.5,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2015,10,8,Aug,99,99,54616,10,VSD,3,no,yes,no,yes,no,OAW,0,150,6100,2.5,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2015,10,9,Sep,99,99,49662,10,VSD,3,no,yes,no,yes,no,OAW,0,150,6100,2.5,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2015,10,10,Oct,97,97,47113,10,VSD,3,no,yes,no,yes,no,OAW,0,150,6100,2.5,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2015,10,11,nov,60,93,24375,10,VSD,3,no,yes,no,yes,no,OAW,0,150,6100,2.5,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2015,10,12,Dec,0,91,7937,10,VSD,3,no,yes,no,yes,no,OAW,0,150,6100,2.5,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2015,11,1,Jan,1,52,0,10,Diaphram,3,no,yes,no,yes,no,E2ndD,0,200,7000,NaN,0,6,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2015,11,2,Feb,56,69,9387,10,Diaphram,3,no,yes,no,yes,no,E2ndD,0,200,7000,NaN,0,6,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2015,11,3,Mar,68,71,34231,10,Diaphram,3,no,yes,no,yes,no,E2ndD,0,200,7000,NaN,0,6,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2015,11,4,Apr,69,71,53139,10,Diaphram,3,no,yes,no,yes,no,E2ndD,0,200,7000,NaN,0,6,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2015,11,5,May,71,71,54755,10,Diaphram,3,no,yes,no,yes,no,E2ndD,0,200,7000,NaN,0,6,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2015,11,6,Jun,69,69,48930,10,Diaphram,3,no,yes,no,yes,no,E2ndD,0,200,7000,NaN,0,6,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2015,11,7,Jul,68,68,43066,10,Diaphram,3,no,yes,no,yes,no,E2ndD,0,200,7000,NaN,0,6,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2015,11,8,Aug,68,68,41015,10,Diaphram,3,no,yes,no,yes,no,E2ndD,0,200,7000,NaN,0,6,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2015,11,9,Sep,68,68,36626,10,Diaphram,3,no,yes,no,yes,no,E2ndD,0,200,7000,NaN,0,6,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2015,11,10,Oct,68,68,31437,10,Diaphram,3,no,yes,no,yes,no,E2ndD,0,200,7000,NaN,0,6,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2015,11,11,nov,39,67,22264,10,Diaphram,3,no,yes,no,yes,no,E2ndD,0,200,7000,NaN,0,6,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2015,11,12,Dec,0,67,4394,10,Diaphram,3,no,yes,no,yes,no,E2ndD,0,200,7000,NaN,0,6,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2015,12,1,Jan,11,128,0,18,High Speed,6,no,no,yes,yes,no,OAD,3,395,8200,NaN,0,6,48,166,13421,2,11,NaN,no,no,no,n/a,1,twice a day milking
+2015,12,2,Feb,102,148,19966,18,High Speed,6,no,no,yes,yes,no,OAD,3,395,8200,NaN,0,6,48,166,13421,2,11,NaN,no,no,no,n/a,1,twice a day milking
+2015,12,3,Mar,135,153,47867,18,High Speed,6,no,no,yes,yes,no,OAD,3,395,8200,NaN,0,6,48,166,13421,2,11,NaN,no,no,no,n/a,1,twice a day milking
+2015,12,4,Apr,154,155,111698,18,High Speed,6,no,no,yes,yes,no,OAD,3,395,8200,NaN,0,6,48,166,13421,2,11,NaN,no,no,no,n/a,1,twice a day milking
+2015,12,5,May,155,156,123200,18,High Speed,6,no,no,yes,yes,no,OAD,3,395,8200,NaN,0,6,48,166,13421,2,11,NaN,no,no,no,n/a,1,twice a day milking
+2015,12,6,Jun,155,156,108771,18,High Speed,6,no,no,yes,yes,no,OAD,3,395,8200,NaN,0,6,48,166,13421,2,11,NaN,no,no,no,n/a,1,twice a day milking
+2015,12,7,Jul,155,155,93184,18,High Speed,6,no,no,yes,yes,no,OAD,3,395,8200,NaN,0,6,48,166,13421,2,11,NaN,no,no,no,n/a,1,twice a day milking
+2015,12,8,Aug,155,155,91810,18,High Speed,6,no,no,yes,yes,no,OAD,3,395,8200,NaN,0,6,48,166,13421,2,11,NaN,no,no,no,n/a,1,twice a day milking
+2015,12,9,Sep,154,154,76024,18,High Speed,6,no,no,yes,yes,no,OAD,3,395,8200,NaN,0,6,48,166,13421,2,11,NaN,no,no,no,n/a,1,twice a day milking
+2015,12,10,Oct,145,151,69220,18,High Speed,6,no,no,yes,yes,no,OAD,3,395,8200,NaN,0,6,48,166,13421,2,11,NaN,no,no,no,n/a,1,twice a day milking
+2015,12,11,nov,125,142,46079,18,High Speed,6,no,no,yes,yes,no,OAD,3,395,8200,NaN,0,6,48,166,13421,2,11,NaN,no,no,no,n/a,1,twice a day milking
+2015,12,12,Dec,47,139,29914,18,High Speed,6,no,no,yes,yes,no,OAD,3,395,8200,NaN,0,6,48,166,13421,2,11,NaN,no,no,no,n/a,1,twice a day milking
+2015,13,1,Jan,34,65,16876,10,High Speed,3,no,yes,no,yes,no,OAW,0,150,3100,2.4,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2,once a day milking
+2015,13,2,Feb,67,77,24427,10,High Speed,3,no,yes,no,yes,no,OAW,0,150,3100,2.4,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2,once a day milking
+2015,13,3,Mar,79,84,27023,10,High Speed,3,no,yes,no,yes,no,OAW,0,150,3100,2.4,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2,once a day milking
+2015,13,4,Apr,84,84,58136,10,High Speed,3,no,yes,no,yes,no,OAW,0,150,3100,2.4,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2,once a day milking
+2015,13,5,May,84,84,60229,10,High Speed,3,no,yes,no,yes,no,OAW,0,150,3100,2.4,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2,once a day milking
+2015,13,6,Jun,82,82,57405,10,High Speed,3,no,yes,no,yes,no,OAW,0,150,3100,2.4,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2,once a day milking
+2015,13,7,Jul,79,79,47665,10,High Speed,3,no,yes,no,yes,no,OAW,0,150,3100,2.4,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2,once a day milking
+2015,13,8,Aug,79,79,36660,10,High Speed,3,no,yes,no,yes,no,OAW,0,150,3100,2.4,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2,once a day milking
+2015,13,9,Sep,87,93,33993,10,High Speed,3,no,yes,no,yes,no,OAW,0,150,3100,2.4,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2,once a day milking
+2015,13,10,Oct,90,94,37887,10,High Speed,3,no,yes,no,yes,no,OAW,0,150,3100,2.4,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2,once a day milking
+2015,13,11,nov,92,94,34495,10,High Speed,3,no,yes,no,yes,no,OAW,0,150,3100,2.4,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2,once a day milking
+2015,13,12,Dec,70,93,33285,10,High Speed,3,no,yes,no,yes,no,OAW,0,150,3100,2.4,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2,once a day milking
+2015,14,1,Jan,102,191,58571,20,VSD,6,no,no,yes,yes,no,OAD,0,200,12000,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1.5,once a day milking
+2015,14,2,Feb,143,197,75700,20,VSD,6,no,no,yes,yes,no,OAD,0,200,12000,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1.5,once a day milking
+2015,14,3,Mar,172,189,95584,20,VSD,6,no,no,yes,yes,no,OAD,0,200,12000,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1.5,once a day milking
+2015,14,4,Apr,184,187,146632,20,VSD,6,no,no,yes,yes,no,OAD,0,200,12000,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1.5,once a day milking
+2015,14,5,May,184,186,140777,20,VSD,6,no,no,yes,yes,no,OAD,0,200,12000,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1.5,once a day milking
+2015,14,6,Jun,184,184,121325,20,VSD,6,no,no,yes,yes,no,OAD,0,200,12000,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1.5,once a day milking
+2015,14,7,Jul,175,184,99216,20,VSD,6,no,no,yes,yes,no,OAD,0,200,12000,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1.5,once a day milking
+2015,14,8,Aug,131,183,79797,20,VSD,6,no,no,yes,yes,no,OAD,0,200,12000,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1.5,once a day milking
+2015,14,9,Sep,126,185,56202,20,VSD,6,no,no,yes,yes,no,OAD,0,200,12000,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1.5,once a day milking
+2015,14,10,Oct,185,202,89517,20,VSD,6,no,no,yes,yes,no,OAD,0,200,12000,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1.5,once a day milking
+2015,14,11,nov,154,206,95618,20,VSD,6,no,no,yes,yes,no,OAD,0,200,12000,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1.5,once a day milking
+2015,14,12,Dec,103,204,94580,20,VSD,6,no,no,yes,yes,no,OAD,0,200,12000,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1.5,once a day milking
+2015,15,1,Jan,15,143,0,20,High Speed,7.4,no,yes,no,yes,no,E2ndD,0,150,11000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2.5,twice a day milking
+2015,15,2,Feb,112,162,32842,20,High Speed,7.4,no,yes,no,yes,no,E2ndD,0,150,11000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2.5,twice a day milking
+2015,15,3,Mar,149,165,90166,20,High Speed,7.4,no,yes,no,yes,no,E2ndD,0,150,11000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2.5,twice a day milking
+2015,15,4,Apr,162,165,132146,20,High Speed,7.4,no,yes,no,yes,no,E2ndD,0,150,11000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2.5,twice a day milking
+2015,15,5,May,161,164,139321,20,High Speed,7.4,no,yes,no,yes,no,E2ndD,0,150,11000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2.5,twice a day milking
+2015,15,6,Jun,161,164,118584,20,High Speed,7.4,no,yes,no,yes,no,E2ndD,0,150,11000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2.5,twice a day milking
+2015,15,7,Jul,159,162,104786,20,High Speed,7.4,no,yes,no,yes,no,E2ndD,0,150,11000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2.5,twice a day milking
+2015,15,8,Aug,159,161,102665,20,High Speed,7.4,no,yes,no,yes,no,E2ndD,0,150,11000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2.5,twice a day milking
+2015,15,9,Sep,159,160,86963,20,High Speed,7.4,no,yes,no,yes,no,E2ndD,0,150,11000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2.5,twice a day milking
+2015,15,10,Oct,159,160,71453,20,High Speed,7.4,no,yes,no,yes,no,E2ndD,0,150,11000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2.5,twice a day milking
+2015,15,11,nov,132,141,40083,20,High Speed,7.4,no,yes,no,yes,no,E2ndD,0,150,11000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2.5,twice a day milking
+2015,15,12,Dec,0,141,13848,20,High Speed,7.4,no,yes,no,yes,no,E2ndD,0,150,11000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2.5,twice a day milking
+2015,16,1,Jan,112,158,60693,24,High Speed,11,yes,yes,no,yes,yes,OAD,0,450,15000,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,1,twice a day milking
+2015,16,2,Feb,141,164,80176,24,High Speed,11,yes,yes,no,yes,yes,OAD,0,450,15000,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,1,twice a day milking
+2015,16,3,Mar,146,163,86567,24,High Speed,11,yes,yes,no,yes,yes,OAD,0,450,15000,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,1,twice a day milking
+2015,16,4,Apr,166,168,125318,24,High Speed,11,yes,yes,no,yes,yes,OAD,0,450,15000,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,1,twice a day milking
+2015,16,5,May,169,169,104583,24,High Speed,11,yes,yes,no,yes,yes,OAD,0,450,15000,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,1,twice a day milking
+2015,16,6,Jun,168,168,99444,24,High Speed,11,yes,yes,no,yes,yes,OAD,0,450,15000,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,1,twice a day milking
+2015,16,7,Jul,163,168,85712,24,High Speed,11,yes,yes,no,yes,yes,OAD,0,450,15000,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,1,twice a day milking
+2015,16,8,Aug,144,168,63821,24,High Speed,11,yes,yes,no,yes,yes,OAD,0,450,15000,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,1,twice a day milking
+2015,16,9,Sep,142,175,52097,24,High Speed,11,yes,yes,no,yes,yes,OAD,0,450,15000,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,1,twice a day milking
+2015,16,10,Oct,162,189,85451,24,High Speed,11,yes,yes,no,yes,yes,OAD,0,450,15000,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,1,twice a day milking
+2015,16,11,nov,139,196,72778,24,High Speed,11,yes,yes,no,yes,yes,OAD,0,450,15000,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,1,twice a day milking
+2015,16,12,Dec,115,195,78995,24,High Speed,11,yes,yes,no,yes,yes,OAD,0,450,15000,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,1,twice a day milking
+2015,17,1,Jan,0,115,0,20,High Speed,6,no,yes,no,yes,no,OAD,0,200,8183,NaN,0,6,48,166,13421,2,11,NaN,no,no,no,n/a,2,twice a day milking
+2015,17,2,Feb,91,148,18161,20,High Speed,6,no,yes,no,yes,no,OAD,0,200,8183,NaN,0,6,48,166,13421,2,11,NaN,no,no,no,n/a,2,twice a day milking
+2015,17,3,Mar,114,132,46044,20,High Speed,6,no,yes,no,yes,no,OAD,0,200,8183,NaN,0,6,48,166,13421,2,11,NaN,no,no,no,n/a,2,twice a day milking
+2015,17,4,Apr,126,132,106296,20,High Speed,6,no,yes,no,yes,no,OAD,0,200,8183,NaN,0,6,48,166,13421,2,11,NaN,no,no,no,n/a,2,twice a day milking
+2015,17,5,May,126,132,92932,20,High Speed,6,no,yes,no,yes,no,OAD,0,200,8183,NaN,0,6,48,166,13421,2,11,NaN,no,no,no,n/a,2,twice a day milking
+2015,17,6,Jun,125,126,82274,20,High Speed,6,no,yes,no,yes,no,OAD,0,200,8183,NaN,0,6,48,166,13421,2,11,NaN,no,no,no,n/a,2,twice a day milking
+2015,17,7,Jul,124,125,77218,20,High Speed,6,no,yes,no,yes,no,OAD,0,200,8183,NaN,0,6,48,166,13421,2,11,NaN,no,no,no,n/a,2,twice a day milking
+2015,17,8,Aug,124,125,75796,20,High Speed,6,no,yes,no,yes,no,OAD,0,200,8183,NaN,0,6,48,166,13421,2,11,NaN,no,no,no,n/a,2,twice a day milking
+2015,17,9,Sep,122,122,66621,20,High Speed,6,no,yes,no,yes,no,OAD,0,200,8183,NaN,0,6,48,166,13421,2,11,NaN,no,no,no,n/a,2,twice a day milking
+2015,17,10,Oct,94,122,57082,20,High Speed,6,no,yes,no,yes,no,OAD,0,200,8183,NaN,0,6,48,166,13421,2,11,NaN,no,no,no,n/a,2,twice a day milking
+2015,17,11,nov,20,122,38702,20,High Speed,6,no,yes,no,yes,no,OAD,0,200,8183,NaN,0,6,48,166,13421,2,11,NaN,no,no,no,n/a,2,twice a day milking
+2015,17,12,Dec,0,122,8204,20,High Speed,6,no,yes,no,yes,no,OAD,0,200,8183,NaN,0,6,48,166,13421,2,11,NaN,no,no,no,n/a,2,twice a day milking
+2015,18,1,Jan,0,116,0,16,High Speed,5.2,no,yes,no,yes,no,E2ndD,0,300,13000,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2015,18,2,Feb,52,127,10429,16,High Speed,5.2,no,yes,no,yes,no,E2ndD,0,300,13000,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2015,18,3,Mar,100,132,31027,16,High Speed,5.2,no,yes,no,yes,no,E2ndD,0,300,13000,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2015,18,4,Apr,119,127,84590,16,High Speed,5.2,no,yes,no,yes,no,E2ndD,0,300,13000,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2015,18,5,May,122,125,101711,16,High Speed,5.2,no,yes,no,yes,no,E2ndD,0,300,13000,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2015,18,6,Jun,122,125,86148,16,High Speed,5.2,no,yes,no,yes,no,E2ndD,0,300,13000,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2015,18,7,Jul,121,124,75212,16,High Speed,5.2,no,yes,no,yes,no,E2ndD,0,300,13000,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2015,18,8,Aug,121,124,62520,16,High Speed,5.2,no,yes,no,yes,no,E2ndD,0,300,13000,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2015,18,9,Sep,122,123,61908,16,High Speed,5.2,no,yes,no,yes,no,E2ndD,0,300,13000,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2015,18,10,Oct,123,124,53377,16,High Speed,5.2,no,yes,no,yes,no,E2ndD,0,300,13000,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2015,18,11,nov,67,124,26636,16,High Speed,5.2,no,yes,no,yes,no,E2ndD,0,300,13000,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2015,18,12,Dec,50,124,20624,16,High Speed,5.2,no,yes,no,yes,no,E2ndD,0,300,13000,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2015,19,1,Jan,34,152,0,22,High Speed,7.5,no,yes,no,yes,no,E2ndD,0,200,10500,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2015,19,2,Feb,136,190,27192,22,High Speed,7.5,no,yes,no,yes,no,E2ndD,0,200,10500,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2015,19,3,Mar,175,196,100200,22,High Speed,7.5,no,yes,no,yes,no,E2ndD,0,200,10500,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2015,19,4,Apr,194,198,124796,22,High Speed,7.5,no,yes,no,yes,no,E2ndD,0,200,10500,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2015,19,5,May,192,196,127705,22,High Speed,7.5,no,yes,no,yes,no,E2ndD,0,200,10500,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2015,19,6,Jun,179,183,114671,22,High Speed,7.5,no,yes,no,yes,no,E2ndD,0,200,10500,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2015,19,7,Jul,178,180,112414,22,High Speed,7.5,no,yes,no,yes,no,E2ndD,0,200,10500,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2015,19,8,Aug,181,181,97468,22,High Speed,7.5,no,yes,no,yes,no,E2ndD,0,200,10500,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2015,19,9,Sep,171,180,93138,22,High Speed,7.5,no,yes,no,yes,no,E2ndD,0,200,10500,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2015,19,10,Oct,170,180,84146,22,High Speed,7.5,no,yes,no,yes,no,E2ndD,0,200,10500,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2015,19,11,nov,97,178,42983,22,High Speed,7.5,no,yes,no,yes,no,E2ndD,0,200,10500,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2015,19,12,Dec,43,175,24255,22,High Speed,7.5,no,yes,no,yes,no,E2ndD,0,200,10500,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2015,21,1,Jan,7,80,0,14,Diaphram,5.2,no,yes,no,yes,no,OAW,0,200,10000,2.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,1,once a day milking
+2015,21,2,Feb,51,93,14014,14,Diaphram,5.2,no,yes,no,yes,no,OAW,0,200,10000,2.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,1,once a day milking
+2015,21,3,Mar,76,96,42944,14,Diaphram,5.2,no,yes,no,yes,no,OAW,0,200,10000,2.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,1,once a day milking
+2015,21,4,Apr,92,99,82758,14,Diaphram,5.2,no,yes,no,yes,no,OAW,0,200,10000,2.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,1,once a day milking
+2015,21,5,May,97,99,81484,14,Diaphram,5.2,no,yes,no,yes,no,OAW,0,200,10000,2.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,1,once a day milking
+2015,21,6,Jun,98,98,76559,14,Diaphram,5.2,no,yes,no,yes,no,OAW,0,200,10000,2.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,1,once a day milking
+2015,21,7,Jul,98,98,71843,14,Diaphram,5.2,no,yes,no,yes,no,OAW,0,200,10000,2.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,1,once a day milking
+2015,21,8,Aug,98,98,68995,14,Diaphram,5.2,no,yes,no,yes,no,OAW,0,200,10000,2.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,1,once a day milking
+2015,21,9,Sep,91,91,57997,14,Diaphram,5.2,no,yes,no,yes,no,OAW,0,200,10000,2.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,1,once a day milking
+2015,21,10,Oct,90,90,50246,14,Diaphram,5.2,no,yes,no,yes,no,OAW,0,200,10000,2.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,1,once a day milking
+2015,21,11,nov,51,90,28107,14,Diaphram,5.2,no,yes,no,yes,no,OAW,0,200,10000,2.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,1,once a day milking
+2015,21,12,Dec,4,90,7764,14,Diaphram,5.2,no,yes,no,yes,no,OAW,0,200,10000,2.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,1,once a day milking
+2015,22,1,Jan,0,80,0,12,High Speed,3,no,yes,no,yes,no,OAD,0,150,9000,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2,twice a day milking
+2015,22,2,Feb,48,94,4132,12,High Speed,3,no,yes,no,yes,no,OAD,0,150,9000,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2,twice a day milking
+2015,22,3,Mar,88,98,37506,12,High Speed,3,no,yes,no,yes,no,OAD,0,150,9000,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2,twice a day milking
+2015,22,4,Apr,99,99,60038,12,High Speed,3,no,yes,no,yes,no,OAD,0,150,9000,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2,twice a day milking
+2015,22,5,May,99,99,81896,12,High Speed,3,no,yes,no,yes,no,OAD,0,150,9000,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2,twice a day milking
+2015,22,6,Jun,99,99,60819,12,High Speed,3,no,yes,no,yes,no,OAD,0,150,9000,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2,twice a day milking
+2015,22,7,Jul,98,98,57201,12,High Speed,3,no,yes,no,yes,no,OAD,0,150,9000,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2,twice a day milking
+2015,22,8,Aug,98,98,61385,12,High Speed,3,no,yes,no,yes,no,OAD,0,150,9000,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2,twice a day milking
+2015,22,9,Sep,95,95,41595,12,High Speed,3,no,yes,no,yes,no,OAD,0,150,9000,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2,twice a day milking
+2015,22,10,Oct,94,94,35048,12,High Speed,3,no,yes,no,yes,no,OAD,0,150,9000,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2,twice a day milking
+2015,22,11,nov,72,94,33305,12,High Speed,3,no,yes,no,yes,no,OAD,0,150,9000,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2,twice a day milking
+2015,22,12,Dec,0,94,4709,12,High Speed,3,no,yes,no,yes,no,OAD,0,150,9000,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2,twice a day milking
+2015,23,1,Jan,8,101,0,24,VSD,7.5,yes,yes,no,yes,no,E2ndD,0,600,18300,6,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1.5,once a day milking
+2015,23,2,Feb,113,140,23066,24,VSD,7.5,yes,yes,no,yes,no,E2ndD,0,600,18300,6,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1.5,once a day milking
+2015,23,3,Mar,143,146,64915,24,VSD,7.5,yes,yes,no,yes,no,E2ndD,0,600,18300,6,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1.5,once a day milking
+2015,23,4,Apr,144,144,127692,24,VSD,7.5,yes,yes,no,yes,no,E2ndD,0,600,18300,6,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1.5,once a day milking
+2015,23,5,May,143,143,105625,24,VSD,7.5,yes,yes,no,yes,no,E2ndD,0,600,18300,6,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1.5,once a day milking
+2015,23,6,Jun,142,142,89331,24,VSD,7.5,yes,yes,no,yes,no,E2ndD,0,600,18300,6,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1.5,once a day milking
+2015,23,7,Jul,142,142,77006,24,VSD,7.5,yes,yes,no,yes,no,E2ndD,0,600,18300,6,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1.5,once a day milking
+2015,23,8,Aug,142,142,72410,24,VSD,7.5,yes,yes,no,yes,no,E2ndD,0,600,18300,6,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1.5,once a day milking
+2015,23,9,Sep,142,142,65837,24,VSD,7.5,yes,yes,no,yes,no,E2ndD,0,600,18300,6,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1.5,once a day milking
+2015,23,10,Oct,142,142,62124,24,VSD,7.5,yes,yes,no,yes,no,E2ndD,0,600,18300,6,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1.5,once a day milking
+2015,23,11,nov,107,140,42921,24,VSD,7.5,yes,yes,no,yes,no,E2ndD,0,600,18300,6,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1.5,once a day milking
+2015,23,12,Dec,1,127,12698,24,VSD,7.5,yes,yes,no,yes,no,E2ndD,0,600,18300,6,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1.5,once a day milking
+2015,24,1,Jan,0,75,0,14,VSD,6,no,no,yes,no,yes,OAW,0,150,5000,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2.5,once a day milking
+2015,24,2,Feb,46,90,5272,14,VSD,6,no,no,yes,no,yes,OAW,0,150,5000,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2.5,once a day milking
+2015,24,3,Mar,69,95,27763,14,VSD,6,no,no,yes,no,yes,OAW,0,150,5000,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2.5,once a day milking
+2015,24,4,Apr,86,97,59539,14,VSD,6,no,no,yes,no,yes,OAW,0,150,5000,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2.5,once a day milking
+2015,24,5,May,88,93,60699,14,VSD,6,no,no,yes,no,yes,OAW,0,150,5000,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2.5,once a day milking
+2015,24,6,Jun,92,93,66691,14,VSD,6,no,no,yes,no,yes,OAW,0,150,5000,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2.5,once a day milking
+2015,24,7,Jul,90,90,58489,14,VSD,6,no,no,yes,no,yes,OAW,0,150,5000,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2.5,once a day milking
+2015,24,8,Aug,90,90,56593,14,VSD,6,no,no,yes,no,yes,OAW,0,150,5000,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2.5,once a day milking
+2015,24,9,Sep,89,90,48704,14,VSD,6,no,no,yes,no,yes,OAW,0,150,5000,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2.5,once a day milking
+2015,24,10,Oct,89,90,43130,14,VSD,6,no,no,yes,no,yes,OAW,0,150,5000,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2.5,once a day milking
+2015,24,11,nov,64,90,27045,14,VSD,6,no,no,yes,no,yes,OAW,0,150,5000,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2.5,once a day milking
+2015,24,12,Dec,32,90,8095,14,VSD,6,no,no,yes,no,yes,OAW,0,150,5000,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2.5,once a day milking
+2015,25,1,Jan,0,102,0,18,VSD,NaN,no,no,yes,yes,no,OAD,0,300,10000,0,6,0,932,53,11793,7,11,11,no,no,no,no,1,n/a
+2015,25,2,Feb,85,119,11852,18,VSD,NaN,no,no,yes,yes,no,OAD,0,300,10000,0,6,0,932,53,11793,7,11,11,no,no,no,no,1,n/a
+2015,25,3,Mar,118,125,54775,18,VSD,NaN,no,no,yes,yes,no,OAD,0,300,10000,0,6,0,932,53,11793,7,11,11,no,no,no,no,1,n/a
+2015,25,4,Apr,122,125,97173,18,VSD,NaN,no,no,yes,yes,no,OAD,0,300,10000,0,6,0,932,53,11793,7,11,11,no,no,no,no,1,n/a
+2015,25,5,May,122,122,95916,18,VSD,NaN,no,no,yes,yes,no,OAD,0,300,10000,0,6,0,932,53,11793,7,11,11,no,no,no,no,1,n/a
+2015,25,6,Jun,122,122,78983,18,VSD,NaN,no,no,yes,yes,no,OAD,0,300,10000,0,6,0,932,53,11793,7,11,11,no,no,no,no,1,n/a
+2015,25,7,Jul,122,122,64576,18,VSD,NaN,no,no,yes,yes,no,OAD,0,300,10000,0,6,0,932,53,11793,7,11,11,no,no,no,no,1,n/a
+2015,25,8,Aug,122,122,64807,18,VSD,NaN,no,no,yes,yes,no,OAD,0,300,10000,0,6,0,932,53,11793,7,11,11,no,no,no,no,1,n/a
+2015,25,9,Sep,112,112,57072,18,VSD,NaN,no,no,yes,yes,no,OAD,0,300,10000,0,6,0,932,53,11793,7,11,11,no,no,no,no,1,n/a
+2015,25,10,Oct,112,112,49147,18,VSD,NaN,no,no,yes,yes,no,OAD,0,300,10000,0,6,0,932,53,11793,7,11,11,no,no,no,no,1,n/a
+2015,25,11,nov,50,111,27311,18,VSD,NaN,no,no,yes,yes,no,OAD,0,300,10000,0,6,0,932,53,11793,7,11,11,no,no,no,no,1,n/a
+2015,25,12,Dec,0,111,1600,18,VSD,NaN,no,no,yes,yes,no,OAD,0,300,10000,0,6,0,932,53,11793,7,11,11,no,no,no,no,1,n/a
+2015,26,1,Jan,20,90,962,16,VSD,5.2,no,yes,no,yes,no,OAD,0,198,9100,3,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2,once a day milking
+2015,26,2,Feb,75,104,18999,16,VSD,5.2,no,yes,no,yes,no,OAD,0,198,9100,3,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2,once a day milking
+2015,26,3,Mar,90,101,49011,16,VSD,5.2,no,yes,no,yes,no,OAD,0,198,9100,3,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2,once a day milking
+2015,26,4,Apr,96,100,77955,16,VSD,5.2,no,yes,no,yes,no,OAD,0,198,9100,3,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2,once a day milking
+2015,26,5,May,96,97,67607,16,VSD,5.2,no,yes,no,yes,no,OAD,0,198,9100,3,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2,once a day milking
+2015,26,6,Jun,96,97,76842,16,VSD,5.2,no,yes,no,yes,no,OAD,0,198,9100,3,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2,once a day milking
+2015,26,7,Jul,96,97,51572,16,VSD,5.2,no,yes,no,yes,no,OAD,0,198,9100,3,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2,once a day milking
+2015,26,8,Aug,96,97,48817,16,VSD,5.2,no,yes,no,yes,no,OAD,0,198,9100,3,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2,once a day milking
+2015,26,9,Sep,96,97,54970,16,VSD,5.2,no,yes,no,yes,no,OAD,0,198,9100,3,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2,once a day milking
+2015,26,10,Oct,96,97,41158,16,VSD,5.2,no,yes,no,yes,no,OAD,0,198,9100,3,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2,once a day milking
+2015,26,11,nov,62,98,31529,16,VSD,5.2,no,yes,no,yes,no,OAD,0,198,9100,3,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2,once a day milking
+2015,26,12,Dec,32,98,15295,16,VSD,5.2,no,yes,no,yes,no,OAD,0,198,9100,3,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2,once a day milking
+2015,27,1,Jan,48,104,4757,14,High Speed,3,no,yes,no,yes,no,OAD,0,150,6000,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,1.5,once a day milking
+2015,27,2,Feb,87,106,37476,14,High Speed,3,no,yes,no,yes,no,OAD,0,150,6000,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,1.5,once a day milking
+2015,27,3,Mar,104,116,62620,14,High Speed,3,no,yes,no,yes,no,OAD,0,150,6000,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,1.5,once a day milking
+2015,27,4,Apr,117,120,93559,14,High Speed,3,no,yes,no,yes,no,OAD,0,150,6000,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,1.5,once a day milking
+2015,27,5,May,120,120,80346,14,High Speed,3,no,yes,no,yes,no,OAD,0,150,6000,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,1.5,once a day milking
+2015,27,6,Jun,120,120,94342,14,High Speed,3,no,yes,no,yes,no,OAD,0,150,6000,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,1.5,once a day milking
+2015,27,7,Jul,120,120,63974,14,High Speed,3,no,yes,no,yes,no,OAD,0,150,6000,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,1.5,once a day milking
+2015,27,8,Aug,120,120,57706,14,High Speed,3,no,yes,no,yes,no,OAD,0,150,6000,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,1.5,once a day milking
+2015,27,9,Sep,119,120,73767,14,High Speed,3,no,yes,no,yes,no,OAD,0,150,6000,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,1.5,once a day milking
+2015,27,10,Oct,117,120,51399,14,High Speed,3,no,yes,no,yes,no,OAD,0,150,6000,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,1.5,once a day milking
+2015,27,11,nov,70,120,34487,14,High Speed,3,no,yes,no,yes,no,OAD,0,150,6000,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,1.5,once a day milking
+2015,27,12,Dec,22,120,16121,14,High Speed,3,no,yes,no,yes,no,OAD,0,150,6000,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,1.5,once a day milking
+2015,28,1,Jan,6,171,0,20,Diaphram,3,no,no,yes,yes,yes,E2ndD,0,400,25800,4.8,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,2.5,once a day milking
+2015,28,2,Feb,149,209,42073,20,Diaphram,3,no,no,yes,yes,yes,E2ndD,0,400,25800,4.8,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,2.5,once a day milking
+2015,28,3,Mar,204,215,114156,20,Diaphram,3,no,no,yes,yes,yes,E2ndD,0,400,25800,4.8,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,2.5,once a day milking
+2015,28,4,Apr,218,219,204756,20,Diaphram,3,no,no,yes,yes,yes,E2ndD,0,400,25800,4.8,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,2.5,once a day milking
+2015,28,5,May,217,217,148678,20,Diaphram,3,no,no,yes,yes,yes,E2ndD,0,400,25800,4.8,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,2.5,once a day milking
+2015,28,6,Jun,217,217,188386,20,Diaphram,3,no,no,yes,yes,yes,E2ndD,0,400,25800,4.8,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,2.5,once a day milking
+2015,28,7,Jul,217,217,126437,20,Diaphram,3,no,no,yes,yes,yes,E2ndD,0,400,25800,4.8,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,2.5,once a day milking
+2015,28,8,Aug,217,217,125039,20,Diaphram,3,no,no,yes,yes,yes,E2ndD,0,400,25800,4.8,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,2.5,once a day milking
+2015,28,9,Sep,205,207,124594,20,Diaphram,3,no,no,yes,yes,yes,E2ndD,0,400,25800,4.8,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,2.5,once a day milking
+2015,28,10,Oct,205,207,92357,20,Diaphram,3,no,no,yes,yes,yes,E2ndD,0,400,25800,4.8,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,2.5,once a day milking
+2015,28,11,nov,154,205,68942,20,Diaphram,3,no,no,yes,yes,yes,E2ndD,0,400,25800,4.8,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,2.5,once a day milking
+2015,28,12,Dec,0,205,19212,20,Diaphram,3,no,no,yes,yes,yes,E2ndD,0,400,25800,4.8,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,2.5,once a day milking
+2015,29,1,Jan,43,105,0,16,VSD,6,no,yes,no,yes,no,OAD,0,150,8000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1,once a day milking
+2015,29,2,Feb,89,114,31115,16,VSD,6,no,yes,no,yes,no,OAD,0,150,8000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1,once a day milking
+2015,29,3,Mar,114,116,73875,16,VSD,6,no,yes,no,yes,no,OAD,0,150,8000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1,once a day milking
+2015,29,4,Apr,114,114,93405,16,VSD,6,no,yes,no,yes,no,OAD,0,150,8000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1,once a day milking
+2015,29,5,May,112,112,79278,16,VSD,6,no,yes,no,yes,no,OAD,0,150,8000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1,once a day milking
+2015,29,6,Jun,112,112,83699,16,VSD,6,no,yes,no,yes,no,OAD,0,150,8000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1,once a day milking
+2015,29,7,Jul,112,112,63385,16,VSD,6,no,yes,no,yes,no,OAD,0,150,8000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1,once a day milking
+2015,29,8,Aug,112,112,60629,16,VSD,6,no,yes,no,yes,no,OAD,0,150,8000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1,once a day milking
+2015,29,9,Sep,112,112,70483,16,VSD,6,no,yes,no,yes,no,OAD,0,150,8000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1,once a day milking
+2015,29,10,Oct,112,112,51217,16,VSD,6,no,yes,no,yes,no,OAD,0,150,8000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1,once a day milking
+2015,29,11,nov,99,99,37632,16,VSD,6,no,yes,no,yes,no,OAD,0,150,8000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1,once a day milking
+2015,29,12,Dec,17,99,16699,16,VSD,6,no,yes,no,yes,no,OAD,0,150,8000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1,once a day milking
+2015,30,1,Jan,11,71,0,10,High Speed,3,no,yes,no,yes,no,OAW,0,100,5680,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,2,twice a day milking
+2015,30,2,Feb,57,77,12381,10,High Speed,3,no,yes,no,yes,no,OAW,0,100,5680,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,2,twice a day milking
+2015,30,3,Mar,72,79,38317,10,High Speed,3,no,yes,no,yes,no,OAW,0,100,5680,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,2,twice a day milking
+2015,30,4,Apr,79,79,67342,10,High Speed,3,no,yes,no,yes,no,OAW,0,100,5680,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,2,twice a day milking
+2015,30,5,May,79,79,60300,10,High Speed,3,no,yes,no,yes,no,OAW,0,100,5680,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,2,twice a day milking
+2015,30,6,Jun,79,79,66795,10,High Speed,3,no,yes,no,yes,no,OAW,0,100,5680,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,2,twice a day milking
+2015,30,7,Jul,79,79,47584,10,High Speed,3,no,yes,no,yes,no,OAW,0,100,5680,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,2,twice a day milking
+2015,30,8,Aug,79,79,46873,10,High Speed,3,no,yes,no,yes,no,OAW,0,100,5680,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,2,twice a day milking
+2015,30,9,Sep,79,79,48554,10,High Speed,3,no,yes,no,yes,no,OAW,0,100,5680,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,2,twice a day milking
+2015,30,10,Oct,79,79,38415,10,High Speed,3,no,yes,no,yes,no,OAW,0,100,5680,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,2,twice a day milking
+2015,30,11,nov,0,79,15306,10,High Speed,3,no,yes,no,yes,no,OAW,0,100,5680,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,2,twice a day milking
+2015,30,12,Dec,0,78,0,10,High Speed,3,no,yes,no,yes,no,OAW,0,100,5680,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,2,twice a day milking
+2015,31,1,Jan,10,77,0,10,Diaphram,4.4,no,yes,no,yes,no,E2ndD,0,300,5000,3,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,1.5,twice a day milking
+2015,31,2,Feb,39,84,3989,10,Diaphram,4.4,no,yes,no,yes,no,E2ndD,0,300,5000,3,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,1.5,twice a day milking
+2015,31,3,Mar,80,91,29041,10,Diaphram,4.4,no,yes,no,yes,no,E2ndD,0,300,5000,3,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,1.5,twice a day milking
+2015,31,4,Apr,85,92,46898,10,Diaphram,4.4,no,yes,no,yes,no,E2ndD,0,300,5000,3,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,1.5,twice a day milking
+2015,31,5,May,90,90,64974,10,Diaphram,4.4,no,yes,no,yes,no,E2ndD,0,300,5000,3,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,1.5,twice a day milking
+2015,31,6,Jun,87,87,46957,10,Diaphram,4.4,no,yes,no,yes,no,E2ndD,0,300,5000,3,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,1.5,twice a day milking
+2015,31,7,Jul,87,87,42663,10,Diaphram,4.4,no,yes,no,yes,no,E2ndD,0,300,5000,3,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,1.5,twice a day milking
+2015,31,8,Aug,87,87,55151,10,Diaphram,4.4,no,yes,no,yes,no,E2ndD,0,300,5000,3,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,1.5,twice a day milking
+2015,31,9,Sep,87,87,37953,10,Diaphram,4.4,no,yes,no,yes,no,E2ndD,0,300,5000,3,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,1.5,twice a day milking
+2015,31,10,Oct,87,87,36820,10,Diaphram,4.4,no,yes,no,yes,no,E2ndD,0,300,5000,3,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,1.5,twice a day milking
+2015,31,11,nov,17,85,36418,10,Diaphram,4.4,no,yes,no,yes,no,E2ndD,0,300,5000,3,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,1.5,twice a day milking
+2015,31,12,Dec,17,85,12256,10,Diaphram,4.4,no,yes,no,yes,no,E2ndD,0,300,5000,3,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,1.5,twice a day milking
+2015,32,1,Jan,6,81,0,8,Diaphram,2.6,no,no,yes,no,yes,E2ndD,0,150,5000,2,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2.5,once a day milking
+2015,32,2,Feb,48,86,16643,8,Diaphram,2.6,no,no,yes,no,yes,E2ndD,0,150,5000,2,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2.5,once a day milking
+2015,32,3,Mar,72,89,35314,8,Diaphram,2.6,no,no,yes,no,yes,E2ndD,0,150,5000,2,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2.5,once a day milking
+2015,32,4,Apr,75,75,53801,8,Diaphram,2.6,no,no,yes,no,yes,E2ndD,0,150,5000,2,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2.5,once a day milking
+2015,32,5,May,75,75,59914,8,Diaphram,2.6,no,no,yes,no,yes,E2ndD,0,150,5000,2,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2.5,once a day milking
+2015,32,6,Jun,75,75,54502,8,Diaphram,2.6,no,no,yes,no,yes,E2ndD,0,150,5000,2,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2.5,once a day milking
+2015,32,7,Jul,75,75,50515,8,Diaphram,2.6,no,no,yes,no,yes,E2ndD,0,150,5000,2,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2.5,once a day milking
+2015,32,8,Aug,74,74,42920,8,Diaphram,2.6,no,no,yes,no,yes,E2ndD,0,150,5000,2,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2.5,once a day milking
+2015,32,9,Sep,74,74,35562,8,Diaphram,2.6,no,no,yes,no,yes,E2ndD,0,150,5000,2,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2.5,once a day milking
+2015,32,10,Oct,69,74,27177,8,Diaphram,2.6,no,no,yes,no,yes,E2ndD,0,150,5000,2,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2.5,once a day milking
+2015,32,11,nov,42,74,13604,8,Diaphram,2.6,no,no,yes,no,yes,E2ndD,0,150,5000,2,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2.5,once a day milking
+2015,32,12,Dec,0,74,3555,8,Diaphram,2.6,no,no,yes,no,yes,E2ndD,0,150,5000,2,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2.5,once a day milking
+2015,33,1,Jan,0,78,0,10,High Speed,3,no,yes,no,yes,no,E2ndD,0,150,12258,NaN,0,6,664,17,12999,1,9,17,yes,yes,yes,yes,1,once a day milking
+2015,33,2,Feb,50,99,10818,10,High Speed,3,no,yes,no,yes,no,E2ndD,0,150,12258,NaN,0,6,664,17,12999,1,9,17,yes,yes,yes,yes,1,once a day milking
+2015,33,3,Mar,90,105,28502,10,High Speed,3,no,yes,no,yes,no,E2ndD,0,150,12258,NaN,0,6,664,17,12999,1,9,17,yes,yes,yes,yes,1,once a day milking
+2015,33,4,Apr,106,106,70875,10,High Speed,3,no,yes,no,yes,no,E2ndD,0,150,12258,NaN,0,6,664,17,12999,1,9,17,yes,yes,yes,yes,1,once a day milking
+2015,33,5,May,106,106,104138,10,High Speed,3,no,yes,no,yes,no,E2ndD,0,150,12258,NaN,0,6,664,17,12999,1,9,17,yes,yes,yes,yes,1,once a day milking
+2015,33,6,Jun,106,106,73816,10,High Speed,3,no,yes,no,yes,no,E2ndD,0,150,12258,NaN,0,6,664,17,12999,1,9,17,yes,yes,yes,yes,1,once a day milking
+2015,33,7,Jul,106,106,73181,10,High Speed,3,no,yes,no,yes,no,E2ndD,0,150,12258,NaN,0,6,664,17,12999,1,9,17,yes,yes,yes,yes,1,once a day milking
+2015,33,8,Aug,106,106,70099,10,High Speed,3,no,yes,no,yes,no,E2ndD,0,150,12258,NaN,0,6,664,17,12999,1,9,17,yes,yes,yes,yes,1,once a day milking
+2015,33,9,Sep,106,106,61230,10,High Speed,3,no,yes,no,yes,no,E2ndD,0,150,12258,NaN,0,6,664,17,12999,1,9,17,yes,yes,yes,yes,1,once a day milking
+2015,33,10,Oct,93,93,44952,10,High Speed,3,no,yes,no,yes,no,E2ndD,0,150,12258,NaN,0,6,664,17,12999,1,9,17,yes,yes,yes,yes,1,once a day milking
+2015,33,11,nov,43,92,35284,10,High Speed,3,no,yes,no,yes,no,E2ndD,0,150,12258,NaN,0,6,664,17,12999,1,9,17,yes,yes,yes,yes,1,once a day milking
+2015,33,12,Dec,1,92,8743,10,High Speed,3,no,yes,no,yes,no,E2ndD,0,150,12258,NaN,0,6,664,17,12999,1,9,17,yes,yes,yes,yes,1,once a day milking
+2015,34,1,Jan,0,39,0,6,Diaphram,1.5,no,no,yes,yes,yes,OAM,0,198,3334,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2,twice a day milking
+2015,34,2,Feb,36,51,8166,6,Diaphram,1.5,no,no,yes,yes,yes,OAM,0,198,3334,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2,twice a day milking
+2015,34,3,Mar,43,51,24182,6,Diaphram,1.5,no,no,yes,yes,yes,OAM,0,198,3334,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2,twice a day milking
+2015,34,4,Apr,49,51,35246,6,Diaphram,1.5,no,no,yes,yes,yes,OAM,0,198,3334,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2,twice a day milking
+2015,34,5,May,50,51,44422,6,Diaphram,1.5,no,no,yes,yes,yes,OAM,0,198,3334,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2,twice a day milking
+2015,34,6,Jun,51,51,36000,6,Diaphram,1.5,no,no,yes,yes,yes,OAM,0,198,3334,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2,twice a day milking
+2015,34,7,Jul,51,51,29356,6,Diaphram,1.5,no,no,yes,yes,yes,OAM,0,198,3334,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2,twice a day milking
+2015,34,8,Aug,51,51,33190,6,Diaphram,1.5,no,no,yes,yes,yes,OAM,0,198,3334,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2,twice a day milking
+2015,34,9,Sep,51,51,23280,6,Diaphram,1.5,no,no,yes,yes,yes,OAM,0,198,3334,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2,twice a day milking
+2015,34,10,Oct,51,51,21538,6,Diaphram,1.5,no,no,yes,yes,yes,OAM,0,198,3334,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2,twice a day milking
+2015,34,11,nov,0,43,16722,6,Diaphram,1.5,no,no,yes,yes,yes,OAM,0,198,3334,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2,twice a day milking
+2015,34,12,Dec,0,43,0,6,Diaphram,1.5,no,no,yes,yes,yes,OAM,0,198,3334,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2,twice a day milking
+2015,35,1,Jan,16,74,0,10,VSD,3.7,no,yes,no,no,yes,OAD,0,198,12000,3,0,0,932,53,11793,7,11,11,no,no,no,no,1.5,twice a day milking
+2015,35,2,Feb,57,86,8255,10,VSD,3.7,no,yes,no,no,yes,OAD,0,198,12000,3,0,0,932,53,11793,7,11,11,no,no,no,no,1.5,twice a day milking
+2015,35,3,Mar,68,79,23122,10,VSD,3.7,no,yes,no,no,yes,OAD,0,198,12000,3,0,0,932,53,11793,7,11,11,no,no,no,no,1.5,twice a day milking
+2015,35,4,Apr,77,80,56775,10,VSD,3.7,no,yes,no,no,yes,OAD,0,198,12000,3,0,0,932,53,11793,7,11,11,no,no,no,no,1.5,twice a day milking
+2015,35,5,May,80,80,67565,10,VSD,3.7,no,yes,no,no,yes,OAD,0,198,12000,3,0,0,932,53,11793,7,11,11,no,no,no,no,1.5,twice a day milking
+2015,35,6,Jun,80,80,56762,10,VSD,3.7,no,yes,no,no,yes,OAD,0,198,12000,3,0,0,932,53,11793,7,11,11,no,no,no,no,1.5,twice a day milking
+2015,35,7,Jul,80,80,46601,10,VSD,3.7,no,yes,no,no,yes,OAD,0,198,12000,3,0,0,932,53,11793,7,11,11,no,no,no,no,1.5,twice a day milking
+2015,35,8,Aug,80,80,50388,10,VSD,3.7,no,yes,no,no,yes,OAD,0,198,12000,3,0,0,932,53,11793,7,11,11,no,no,no,no,1.5,twice a day milking
+2015,35,9,Sep,80,80,31328,10,VSD,3.7,no,yes,no,no,yes,OAD,0,198,12000,3,0,0,932,53,11793,7,11,11,no,no,no,no,1.5,twice a day milking
+2015,35,10,Oct,80,80,31763,10,VSD,3.7,no,yes,no,no,yes,OAD,0,198,12000,3,0,0,932,53,11793,7,11,11,no,no,no,no,1.5,twice a day milking
+2015,35,11,nov,80,80,27518,10,VSD,3.7,no,yes,no,no,yes,OAD,0,198,12000,3,0,0,932,53,11793,7,11,11,no,no,no,no,1.5,twice a day milking
+2015,35,12,Dec,37,77,8045,10,VSD,3.7,no,yes,no,no,yes,OAD,0,198,12000,3,0,0,932,53,11793,7,11,11,no,no,no,no,1.5,twice a day milking
+2015,36,1,Jan,38,160,0,22,High Speed,6,no,yes,no,yes,yes,OAD,0,500,16000,0,6,0,48,166,13421,2,11,NaN,no,no,no,n/a,2.5,twice a day milking
+2015,36,2,Feb,182,219,42322,22,High Speed,6,no,yes,no,yes,yes,OAD,0,500,16000,0,6,0,48,166,13421,2,11,NaN,no,no,no,n/a,2.5,twice a day milking
+2015,36,3,Mar,227,234,105551,22,High Speed,6,no,yes,no,yes,yes,OAD,0,500,16000,0,6,0,48,166,13421,2,11,NaN,no,no,no,n/a,2.5,twice a day milking
+2015,36,4,Apr,225,235,161419,22,High Speed,6,no,yes,no,yes,yes,OAD,0,500,16000,0,6,0,48,166,13421,2,11,NaN,no,no,no,n/a,2.5,twice a day milking
+2015,36,5,May,224,233,149416,22,High Speed,6,no,yes,no,yes,yes,OAD,0,500,16000,0,6,0,48,166,13421,2,11,NaN,no,no,no,n/a,2.5,twice a day milking
+2015,36,6,Jun,224,233,162759,22,High Speed,6,no,yes,no,yes,yes,OAD,0,500,16000,0,6,0,48,166,13421,2,11,NaN,no,no,no,n/a,2.5,twice a day milking
+2015,36,7,Jul,224,229,104437,22,High Speed,6,no,yes,no,yes,yes,OAD,0,500,16000,0,6,0,48,166,13421,2,11,NaN,no,no,no,n/a,2.5,twice a day milking
+2015,36,8,Aug,222,226,108580,22,High Speed,6,no,yes,no,yes,yes,OAD,0,500,16000,0,6,0,48,166,13421,2,11,NaN,no,no,no,n/a,2.5,twice a day milking
+2015,36,9,Sep,201,206,105698,22,High Speed,6,no,yes,no,yes,yes,OAD,0,500,16000,0,6,0,48,166,13421,2,11,NaN,no,no,no,n/a,2.5,twice a day milking
+2015,36,10,Oct,198,201,71805,22,High Speed,6,no,yes,no,yes,yes,OAD,0,500,16000,0,6,0,48,166,13421,2,11,NaN,no,no,no,n/a,2.5,twice a day milking
+2015,36,11,nov,2,201,46817,22,High Speed,6,no,yes,no,yes,yes,OAD,0,500,16000,0,6,0,48,166,13421,2,11,NaN,no,no,no,n/a,2.5,twice a day milking
+2015,36,12,Dec,3,201,0,22,High Speed,6,no,yes,no,yes,yes,OAD,0,500,16000,0,6,0,48,166,13421,2,11,NaN,no,no,no,n/a,2.5,twice a day milking
+2015,37,1,Jan,72,87,1288,10,High Speed,3,no,yes,no,no,no,E2ndD,0,150,9000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1,once a day milking
+2015,37,2,Feb,89,94,25609,10,High Speed,3,no,yes,no,no,no,E2ndD,0,150,9000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1,once a day milking
+2015,37,3,Mar,91,93,34344,10,High Speed,3,no,yes,no,no,no,E2ndD,0,150,9000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1,once a day milking
+2015,37,4,Apr,96,96,62250,10,High Speed,3,no,yes,no,no,no,E2ndD,0,150,9000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1,once a day milking
+2015,37,5,May,93,93,57041,10,High Speed,3,no,yes,no,no,no,E2ndD,0,150,9000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1,once a day milking
+2015,37,6,Jun,92,92,71755,10,High Speed,3,no,yes,no,no,no,E2ndD,0,150,9000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1,once a day milking
+2015,37,7,Jul,92,92,50412,10,High Speed,3,no,yes,no,no,no,E2ndD,0,150,9000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1,once a day milking
+2015,37,8,Aug,92,92,46763,10,High Speed,3,no,yes,no,no,no,E2ndD,0,150,9000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1,once a day milking
+2015,37,9,Sep,92,92,52790,10,High Speed,3,no,yes,no,no,no,E2ndD,0,150,9000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1,once a day milking
+2015,37,10,Oct,88,88,33827,10,High Speed,3,no,yes,no,no,no,E2ndD,0,150,9000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1,once a day milking
+2015,37,11,nov,19,88,21560,10,High Speed,3,no,yes,no,no,no,E2ndD,0,150,9000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1,once a day milking
+2015,37,12,Dec,8,77,5571,10,High Speed,3,no,yes,no,no,no,E2ndD,0,150,9000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1,once a day milking
+2015,38,1,Jan,10,106,0,10,High Speed,3,no,yes,no,no,no,OAD,0,150,7000,NaN,0,6,932,53,11793,7,11,11,no,no,no,no,2,twice a day milking
+2015,38,2,Feb,93,132,18774,10,High Speed,3,no,yes,no,no,no,OAD,0,150,7000,NaN,0,6,932,53,11793,7,11,11,no,no,no,no,2,twice a day milking
+2015,38,3,Mar,123,134,45610,10,High Speed,3,no,yes,no,no,no,OAD,0,150,7000,NaN,0,6,932,53,11793,7,11,11,no,no,no,no,2,twice a day milking
+2015,38,4,Apr,130,134,95608,10,High Speed,3,no,yes,no,no,no,OAD,0,150,7000,NaN,0,6,932,53,11793,7,11,11,no,no,no,no,2,twice a day milking
+2015,38,5,May,130,133,84394,10,High Speed,3,no,yes,no,no,no,OAD,0,150,7000,NaN,0,6,932,53,11793,7,11,11,no,no,no,no,2,twice a day milking
+2015,38,6,Jun,129,132,93294,10,High Speed,3,no,yes,no,no,no,OAD,0,150,7000,NaN,0,6,932,53,11793,7,11,11,no,no,no,no,2,twice a day milking
+2015,38,7,Jul,129,132,66468,10,High Speed,3,no,yes,no,no,no,OAD,0,150,7000,NaN,0,6,932,53,11793,7,11,11,no,no,no,no,2,twice a day milking
+2015,38,8,Aug,129,132,63718,10,High Speed,3,no,yes,no,no,no,OAD,0,150,7000,NaN,0,6,932,53,11793,7,11,11,no,no,no,no,2,twice a day milking
+2015,38,9,Sep,133,134,71693,10,High Speed,3,no,yes,no,no,no,OAD,0,150,7000,NaN,0,6,932,53,11793,7,11,11,no,no,no,no,2,twice a day milking
+2015,38,10,Oct,134,134,55115,10,High Speed,3,no,yes,no,no,no,OAD,0,150,7000,NaN,0,6,932,53,11793,7,11,11,no,no,no,no,2,twice a day milking
+2015,38,11,nov,61,134,30480,10,High Speed,3,no,yes,no,no,no,OAD,0,150,7000,NaN,0,6,932,53,11793,7,11,11,no,no,no,no,2,twice a day milking
+2015,38,12,Dec,52,134,23587,10,High Speed,3,no,yes,no,no,no,OAD,0,150,7000,NaN,0,6,932,53,11793,7,11,11,no,no,no,no,2,twice a day milking
+2015,39,1,Jan,41,78,20832,12,High Speed,3,no,yes,no,no,no,OAD,0,NaN,5900,NaN,0,6,48,166,13421,2,11,NaN,no,no,no,n/a,1.5,once a day milking
+2015,39,2,Feb,57,82,28708,12,High Speed,3,no,yes,no,no,no,OAD,0,NaN,5900,NaN,0,6,48,166,13421,2,11,NaN,no,no,no,n/a,1.5,once a day milking
+2015,39,3,Mar,73,91,37823,12,High Speed,3,no,yes,no,no,no,OAD,0,NaN,5900,NaN,0,6,48,166,13421,2,11,NaN,no,no,no,n/a,1.5,once a day milking
+2015,39,4,Apr,80,92,55848,12,High Speed,3,no,yes,no,no,no,OAD,0,NaN,5900,NaN,0,6,48,166,13421,2,11,NaN,no,no,no,n/a,1.5,once a day milking
+2015,39,5,May,82,94,52499,12,High Speed,3,no,yes,no,no,no,OAD,0,NaN,5900,NaN,0,6,48,166,13421,2,11,NaN,no,no,no,n/a,1.5,once a day milking
+2015,39,6,Jun,96,96,63538,12,High Speed,3,no,yes,no,no,no,OAD,0,NaN,5900,NaN,0,6,48,166,13421,2,11,NaN,no,no,no,n/a,1.5,once a day milking
+2015,39,7,Jul,79,96,41226,12,High Speed,3,no,yes,no,no,no,OAD,0,NaN,5900,NaN,0,6,48,166,13421,2,11,NaN,no,no,no,n/a,1.5,once a day milking
+2015,39,8,Aug,69,96,30879,12,High Speed,3,no,yes,no,no,no,OAD,0,NaN,5900,NaN,0,6,48,166,13421,2,11,NaN,no,no,no,n/a,1.5,once a day milking
+2015,39,9,Sep,74,95,39286,12,High Speed,3,no,yes,no,no,no,OAD,0,NaN,5900,NaN,0,6,48,166,13421,2,11,NaN,no,no,no,n/a,1.5,once a day milking
+2015,39,10,Oct,85,96,33905,12,High Speed,3,no,yes,no,no,no,OAD,0,NaN,5900,NaN,0,6,48,166,13421,2,11,NaN,no,no,no,n/a,1.5,once a day milking
+2015,39,11,nov,77,94,32715,12,High Speed,3,no,yes,no,no,no,OAD,0,NaN,5900,NaN,0,6,48,166,13421,2,11,NaN,no,no,no,n/a,1.5,once a day milking
+2015,39,12,Dec,60,94,39102,12,High Speed,3,no,yes,no,no,no,OAD,0,NaN,5900,NaN,0,6,48,166,13421,2,11,NaN,no,no,no,n/a,1.5,once a day milking
+2015,40,1,Jan,34,123,0,16,High Speed,6,no,yes,no,yes,no,OAD,0,300,13200,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2.5,twice a day milking
+2015,40,2,Feb,99,138,28563,16,High Speed,6,no,yes,no,yes,no,OAD,0,300,13200,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2.5,twice a day milking
+2015,40,3,Mar,119,139,65086,16,High Speed,6,no,yes,no,yes,no,OAD,0,300,13200,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2.5,twice a day milking
+2015,40,4,Apr,117,130,119968,16,High Speed,6,no,yes,no,yes,no,OAD,0,300,13200,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2.5,twice a day milking
+2015,40,5,May,130,132,96890,16,High Speed,6,no,yes,no,yes,no,OAD,0,300,13200,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2.5,twice a day milking
+2015,40,6,Jun,131,132,132572,16,High Speed,6,no,yes,no,yes,no,OAD,0,300,13200,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2.5,twice a day milking
+2015,40,7,Jul,130,130,90962,16,High Speed,6,no,yes,no,yes,no,OAD,0,300,13200,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2.5,twice a day milking
+2015,40,8,Aug,130,130,82771,16,High Speed,6,no,yes,no,yes,no,OAD,0,300,13200,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2.5,twice a day milking
+2015,40,9,Sep,129,129,92098,16,High Speed,6,no,yes,no,yes,no,OAD,0,300,13200,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2.5,twice a day milking
+2015,40,10,Oct,129,129,59658,16,High Speed,6,no,yes,no,yes,no,OAD,0,300,13200,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2.5,twice a day milking
+2015,40,11,nov,117,117,31428,16,High Speed,6,no,yes,no,yes,no,OAD,0,300,13200,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2.5,twice a day milking
+2015,40,12,Dec,116,116,17832,16,High Speed,6,no,yes,no,yes,no,OAD,0,300,13200,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2.5,twice a day milking
+2015,41,1,Jan,10,115,0,14,High Speed,6,no,yes,no,yes,no,OAW,0,200,8600,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1,once a day milking
+2015,41,2,Feb,97,135,17064,14,High Speed,6,no,yes,no,yes,no,OAW,0,200,8600,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1,once a day milking
+2015,41,3,Mar,128,143,68682,14,High Speed,6,no,yes,no,yes,no,OAW,0,200,8600,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1,once a day milking
+2015,41,4,Apr,141,142,124614,14,High Speed,6,no,yes,no,yes,no,OAW,0,200,8600,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1,once a day milking
+2015,41,5,May,141,142,107545,14,High Speed,6,no,yes,no,yes,no,OAW,0,200,8600,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1,once a day milking
+2015,41,6,Jun,141,142,122744,14,High Speed,6,no,yes,no,yes,no,OAW,0,200,8600,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1,once a day milking
+2015,41,7,Jul,138,139,94896,14,High Speed,6,no,yes,no,yes,no,OAW,0,200,8600,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1,once a day milking
+2015,41,8,Aug,138,139,85996,14,High Speed,6,no,yes,no,yes,no,OAW,0,200,8600,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1,once a day milking
+2015,41,9,Sep,138,139,95981,14,High Speed,6,no,yes,no,yes,no,OAW,0,200,8600,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1,once a day milking
+2015,41,10,Oct,136,137,64734,14,High Speed,6,no,yes,no,yes,no,OAW,0,200,8600,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1,once a day milking
+2015,41,11,nov,105,137,59766,14,High Speed,6,no,yes,no,yes,no,OAW,0,200,8600,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1,once a day milking
+2015,41,12,Dec,43,137,39750,14,High Speed,6,no,yes,no,yes,no,OAW,0,200,8600,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1,once a day milking
+2015,42,1,Jan,59,127,13536,10,High Speed,3,no,yes,no,yes,no,OAW,0,150,5000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2,once a day milking
+2015,42,2,Feb,79,124,31352,10,High Speed,3,no,yes,no,yes,no,OAW,0,150,5000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2,once a day milking
+2015,42,3,Mar,103,127,36400,10,High Speed,3,no,yes,no,yes,no,OAW,0,150,5000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2,once a day milking
+2015,42,4,Apr,103,112,70041,10,High Speed,3,no,yes,no,yes,no,OAW,0,150,5000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2,once a day milking
+2015,42,5,May,101,107,65425,10,High Speed,3,no,yes,no,yes,no,OAW,0,150,5000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2,once a day milking
+2015,42,6,Jun,101,107,73919,10,High Speed,3,no,yes,no,yes,no,OAW,0,150,5000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2,once a day milking
+2015,42,7,Jul,101,107,52704,10,High Speed,3,no,yes,no,yes,no,OAW,0,150,5000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2,once a day milking
+2015,42,8,Aug,100,106,45735,10,High Speed,3,no,yes,no,yes,no,OAW,0,150,5000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2,once a day milking
+2015,42,9,Sep,99,106,51786,10,High Speed,3,no,yes,no,yes,no,OAW,0,150,5000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2,once a day milking
+2015,42,10,Oct,109,114,34056,10,High Speed,3,no,yes,no,yes,no,OAW,0,150,5000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2,once a day milking
+2015,42,11,nov,46,122,30498,10,High Speed,3,no,yes,no,yes,no,OAW,0,150,5000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2,once a day milking
+2015,42,12,Dec,46,122,24610,10,High Speed,3,no,yes,no,yes,no,OAW,0,150,5000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2,once a day milking
+2015,43,1,Jan,4,140,0,12,High Speed,3,no,yes,no,yes,no,OAD,0,150,15250,NaN,0,6,932,53,11793,7,11,11,no,no,no,no,1.5,n/a
+2015,43,2,Feb,136,182,22392,12,High Speed,3,no,yes,no,yes,no,OAD,0,150,15250,NaN,0,6,932,53,11793,7,11,11,no,no,no,no,1.5,n/a
+2015,43,3,Mar,185,197,103412,12,High Speed,3,no,yes,no,yes,no,OAD,0,150,15250,NaN,0,6,932,53,11793,7,11,11,no,no,no,no,1.5,n/a
+2015,43,4,Apr,194,196,148092,12,High Speed,3,no,yes,no,yes,no,OAD,0,150,15250,NaN,0,6,932,53,11793,7,11,11,no,no,no,no,1.5,n/a
+2015,43,5,May,196,196,130659,12,High Speed,3,no,yes,no,yes,no,OAD,0,150,15250,NaN,0,6,932,53,11793,7,11,11,no,no,no,no,1.5,n/a
+2015,43,6,Jun,196,196,151259,12,High Speed,3,no,yes,no,yes,no,OAD,0,150,15250,NaN,0,6,932,53,11793,7,11,11,no,no,no,no,1.5,n/a
+2015,43,7,Jul,196,196,106373,12,High Speed,3,no,yes,no,yes,no,OAD,0,150,15250,NaN,0,6,932,53,11793,7,11,11,no,no,no,no,1.5,n/a
+2015,43,8,Aug,196,196,94861,12,High Speed,3,no,yes,no,yes,no,OAD,0,150,15250,NaN,0,6,932,53,11793,7,11,11,no,no,no,no,1.5,n/a
+2015,43,9,Sep,196,196,102363,12,High Speed,3,no,yes,no,yes,no,OAD,0,150,15250,NaN,0,6,932,53,11793,7,11,11,no,no,no,no,1.5,n/a
+2015,43,10,Oct,196,196,75102,12,High Speed,3,no,yes,no,yes,no,OAD,0,150,15250,NaN,0,6,932,53,11793,7,11,11,no,no,no,no,1.5,n/a
+2015,43,11,nov,1,196,32796,12,High Speed,3,no,yes,no,yes,no,OAD,0,150,15250,NaN,0,6,932,53,11793,7,11,11,no,no,no,no,1.5,n/a
+2015,43,12,Dec,1,194,0,12,High Speed,3,no,yes,no,yes,no,OAD,0,150,15250,NaN,0,6,932,53,11793,7,11,11,no,no,no,no,1.5,n/a
+2015,44,1,Jan,94,99,13638,12,High Speed,3,no,yes,no,yes,no,E2ndD,0,80,8190,0,6,0,48,166,13421,2,11,NaN,no,no,no,n/a,2.5,once a day milking
+2015,44,2,Feb,99,104,31321,12,High Speed,3,no,yes,no,yes,no,E2ndD,0,80,8190,0,6,0,48,166,13421,2,11,NaN,no,no,no,n/a,2.5,once a day milking
+2015,44,3,Mar,102,102,46186,12,High Speed,3,no,yes,no,yes,no,E2ndD,0,80,8190,0,6,0,48,166,13421,2,11,NaN,no,no,no,n/a,2.5,once a day milking
+2015,44,4,Apr,96,96,67553,12,High Speed,3,no,yes,no,yes,no,E2ndD,0,80,8190,0,6,0,48,166,13421,2,11,NaN,no,no,no,n/a,2.5,once a day milking
+2015,44,5,May,92,96,60366,12,High Speed,3,no,yes,no,yes,no,E2ndD,0,80,8190,0,6,0,48,166,13421,2,11,NaN,no,no,no,n/a,2.5,once a day milking
+2015,44,6,Jun,95,95,72070,12,High Speed,3,no,yes,no,yes,no,E2ndD,0,80,8190,0,6,0,48,166,13421,2,11,NaN,no,no,no,n/a,2.5,once a day milking
+2015,44,7,Jul,94,94,50215,12,High Speed,3,no,yes,no,yes,no,E2ndD,0,80,8190,0,6,0,48,166,13421,2,11,NaN,no,no,no,n/a,2.5,once a day milking
+2015,44,8,Aug,94,94,41785,12,High Speed,3,no,yes,no,yes,no,E2ndD,0,80,8190,0,6,0,48,166,13421,2,11,NaN,no,no,no,n/a,2.5,once a day milking
+2015,44,9,Sep,93,93,46374,12,High Speed,3,no,yes,no,yes,no,E2ndD,0,80,8190,0,6,0,48,166,13421,2,11,NaN,no,no,no,n/a,2.5,once a day milking
+2015,44,10,Oct,93,93,26947,12,High Speed,3,no,yes,no,yes,no,E2ndD,0,80,8190,0,6,0,48,166,13421,2,11,NaN,no,no,no,n/a,2.5,once a day milking
+2015,44,11,nov,93,93,20688,12,High Speed,3,no,yes,no,yes,no,E2ndD,0,80,8190,0,6,0,48,166,13421,2,11,NaN,no,no,no,n/a,2.5,once a day milking
+2015,44,12,Dec,90,90,16560,12,High Speed,3,no,yes,no,yes,no,E2ndD,0,80,8190,0,6,0,48,166,13421,2,11,NaN,no,no,no,n/a,2.5,once a day milking
+2015,45,1,Jan,27,94,2455,14,Diaphram,3,no,yes,no,yes,no,E2ndD,0,150,10896,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,1,once a day milking
+2015,45,2,Feb,61,100,19836,14,Diaphram,3,no,yes,no,yes,no,E2ndD,0,150,10896,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,1,once a day milking
+2015,45,3,Mar,86,93,34207,14,Diaphram,3,no,yes,no,yes,no,E2ndD,0,150,10896,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,1,once a day milking
+2015,45,4,Apr,91,92,64774,14,Diaphram,3,no,yes,no,yes,no,E2ndD,0,150,10896,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,1,once a day milking
+2015,45,5,May,91,92,79756,14,Diaphram,3,no,yes,no,yes,no,E2ndD,0,150,10896,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,1,once a day milking
+2015,45,6,Jun,91,92,71362,14,Diaphram,3,no,yes,no,yes,no,E2ndD,0,150,10896,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,1,once a day milking
+2015,45,7,Jul,91,92,58931,14,Diaphram,3,no,yes,no,yes,no,E2ndD,0,150,10896,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,1,once a day milking
+2015,45,8,Aug,91,91,51471,14,Diaphram,3,no,yes,no,yes,no,E2ndD,0,150,10896,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,1,once a day milking
+2015,45,9,Sep,90,90,44874,14,Diaphram,3,no,yes,no,yes,no,E2ndD,0,150,10896,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,1,once a day milking
+2015,45,10,Oct,90,90,34651,14,Diaphram,3,no,yes,no,yes,no,E2ndD,0,150,10896,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,1,once a day milking
+2015,45,11,nov,90,90,24059,14,Diaphram,3,no,yes,no,yes,no,E2ndD,0,150,10896,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,1,once a day milking
+2015,45,12,Dec,0,90,8011,14,Diaphram,3,no,yes,no,yes,no,E2ndD,0,150,10896,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,1,once a day milking
+2015,46,1,Jan,0,121,0,20,High Speed,8,no,no,yes,yes,no,OAD,0,396,8200,6,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,2,once a day milking
+2015,46,2,Feb,115,166,14385,20,High Speed,8,no,no,yes,yes,no,OAD,0,396,8200,6,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,2,once a day milking
+2015,46,3,Mar,150,163,88373,20,High Speed,8,no,no,yes,yes,no,OAD,0,396,8200,6,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,2,once a day milking
+2015,46,4,Apr,163,164,85229,20,High Speed,8,no,no,yes,yes,no,OAD,0,396,8200,6,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,2,once a day milking
+2015,46,5,May,161,161,136182,20,High Speed,8,no,no,yes,yes,no,OAD,0,396,8200,6,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,2,once a day milking
+2015,46,6,Jun,161,161,102808,20,High Speed,8,no,no,yes,yes,no,OAD,0,396,8200,6,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,2,once a day milking
+2015,46,7,Jul,161,161,98692,20,High Speed,8,no,no,yes,yes,no,OAD,0,396,8200,6,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,2,once a day milking
+2015,46,8,Aug,160,160,105051,20,High Speed,8,no,no,yes,yes,no,OAD,0,396,8200,6,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,2,once a day milking
+2015,46,9,Sep,160,160,78968,20,High Speed,8,no,no,yes,yes,no,OAD,0,396,8200,6,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,2,once a day milking
+2015,46,10,Oct,160,160,67074,20,High Speed,8,no,no,yes,yes,no,OAD,0,396,8200,6,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,2,once a day milking
+2015,46,11,nov,88,136,52777,20,High Speed,8,no,no,yes,yes,no,OAD,0,396,8200,6,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,2,once a day milking
+2015,46,12,Dec,0,136,7176,20,High Speed,8,no,no,yes,yes,no,OAD,0,396,8200,6,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,2,once a day milking
+2015,47,1,Jan,1,69,0,12,Double Diaphram,3,no,yes,no,yes,no,E2ndD,0,100,11000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2015,47,2,Feb,59,89,7670,12,Double Diaphram,3,no,yes,no,yes,no,E2ndD,0,100,11000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2015,47,3,Mar,91,94,29971,12,Double Diaphram,3,no,yes,no,yes,no,E2ndD,0,100,11000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2015,47,4,Apr,95,95,58518,12,Double Diaphram,3,no,yes,no,yes,no,E2ndD,0,100,11000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2015,47,5,May,95,95,77653,12,Double Diaphram,3,no,yes,no,yes,no,E2ndD,0,100,11000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2015,47,6,Jun,94,94,58216,12,Double Diaphram,3,no,yes,no,yes,no,E2ndD,0,100,11000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2015,47,7,Jul,94,94,55233,12,Double Diaphram,3,no,yes,no,yes,no,E2ndD,0,100,11000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2015,47,8,Aug,94,94,62470,12,Double Diaphram,3,no,yes,no,yes,no,E2ndD,0,100,11000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2015,47,9,Sep,89,89,46977,12,Double Diaphram,3,no,yes,no,yes,no,E2ndD,0,100,11000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2015,47,10,Oct,87,88,40000,12,Double Diaphram,3,no,yes,no,yes,no,E2ndD,0,100,11000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2015,47,11,nov,56,83,35500,12,Double Diaphram,3,no,yes,no,yes,no,E2ndD,0,100,11000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2015,47,12,Dec,4,83,1781,12,Double Diaphram,3,no,yes,no,yes,no,E2ndD,0,100,11000,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2015,48,1,Jan,0,82,0,14,Diaphram,3,no,yes,no,no,yes,E2ndD,0,198,8000,3,0,0,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2015,48,2,Feb,73,103,6838,14,Diaphram,3,no,yes,no,no,yes,E2ndD,0,198,8000,3,0,0,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2015,48,3,Mar,94,103,30435,14,Diaphram,3,no,yes,no,no,yes,E2ndD,0,198,8000,3,0,0,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2015,48,4,Apr,100,101,57828,14,Diaphram,3,no,yes,no,no,yes,E2ndD,0,198,8000,3,0,0,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2015,48,5,May,99,99,86510,14,Diaphram,3,no,yes,no,no,yes,E2ndD,0,198,8000,3,0,0,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2015,48,6,Jun,99,99,59343,14,Diaphram,3,no,yes,no,no,yes,E2ndD,0,198,8000,3,0,0,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2015,48,7,Jul,98,98,61542,14,Diaphram,3,no,yes,no,no,yes,E2ndD,0,198,8000,3,0,0,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2015,48,8,Aug,97,97,59466,14,Diaphram,3,no,yes,no,no,yes,E2ndD,0,198,8000,3,0,0,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2015,48,9,Sep,97,97,49870,14,Diaphram,3,no,yes,no,no,yes,E2ndD,0,198,8000,3,0,0,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2015,48,10,Oct,94,94,36031,14,Diaphram,3,no,yes,no,no,yes,E2ndD,0,198,8000,3,0,0,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2015,48,11,nov,65,91,43296,14,Diaphram,3,no,yes,no,no,yes,E2ndD,0,198,8000,3,0,0,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2015,48,12,Dec,0,91,15897,14,Diaphram,3,no,yes,no,no,yes,E2ndD,0,198,8000,3,0,0,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2015,49,1,Jan,13,115,0,16,High Speed,6,no,yes,no,yes,no,E2ndD,0,150,11330,NaN,0,6,48,166,13421,2,11,NaN,no,no,no,n/a,1,twice a day milking
+2015,49,2,Feb,50,115,17457,16,High Speed,6,no,yes,no,yes,no,E2ndD,0,150,11330,NaN,0,6,48,166,13421,2,11,NaN,no,no,no,n/a,1,twice a day milking
+2015,49,3,Mar,73,111,50935,16,High Speed,6,no,yes,no,yes,no,E2ndD,0,150,11330,NaN,0,6,48,166,13421,2,11,NaN,no,no,no,n/a,1,twice a day milking
+2015,49,4,Apr,114,126,79037,16,High Speed,6,no,yes,no,yes,no,E2ndD,0,150,11330,NaN,0,6,48,166,13421,2,11,NaN,no,no,no,n/a,1,twice a day milking
+2015,49,5,May,121,122,94695,16,High Speed,6,no,yes,no,yes,no,E2ndD,0,150,11330,NaN,0,6,48,166,13421,2,11,NaN,no,no,no,n/a,1,twice a day milking
+2015,49,6,Jun,121,121,83738,16,High Speed,6,no,yes,no,yes,no,E2ndD,0,150,11330,NaN,0,6,48,166,13421,2,11,NaN,no,no,no,n/a,1,twice a day milking
+2015,49,7,Jul,121,121,71340,16,High Speed,6,no,yes,no,yes,no,E2ndD,0,150,11330,NaN,0,6,48,166,13421,2,11,NaN,no,no,no,n/a,1,twice a day milking
+2015,49,8,Aug,121,121,68617,16,High Speed,6,no,yes,no,yes,no,E2ndD,0,150,11330,NaN,0,6,48,166,13421,2,11,NaN,no,no,no,n/a,1,twice a day milking
+2015,49,9,Sep,119,121,62291,16,High Speed,6,no,yes,no,yes,no,E2ndD,0,150,11330,NaN,0,6,48,166,13421,2,11,NaN,no,no,no,n/a,1,twice a day milking
+2015,49,10,Oct,100,101,56646,16,High Speed,6,no,yes,no,yes,no,E2ndD,0,150,11330,NaN,0,6,48,166,13421,2,11,NaN,no,no,no,n/a,1,twice a day milking
+2015,49,11,nov,65,101,26198,16,High Speed,6,no,yes,no,yes,no,E2ndD,0,150,11330,NaN,0,6,48,166,13421,2,11,NaN,no,no,no,n/a,1,twice a day milking
+2015,49,12,Dec,0,101,6837,16,High Speed,6,no,yes,no,yes,no,E2ndD,0,150,11330,NaN,0,6,48,166,13421,2,11,NaN,no,no,no,n/a,1,twice a day milking
+2015,50,1,Jan,6,75,0,14,Single Speed,4,no,yes,no,yes,no,OAM,0,150,8000,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2,once a day milking
+2015,50,2,Feb,63,85,12344,14,Single Speed,4,no,yes,no,yes,no,OAM,0,150,8000,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2,once a day milking
+2015,50,3,Mar,84,88,48298,14,Single Speed,4,no,yes,no,yes,no,OAM,0,150,8000,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2,once a day milking
+2015,50,4,Apr,86,86,67127,14,Single Speed,4,no,yes,no,yes,no,OAM,0,150,8000,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2,once a day milking
+2015,50,5,May,70,70,54003,14,Single Speed,4,no,yes,no,yes,no,OAM,0,150,8000,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2,once a day milking
+2015,50,6,Jun,67,67,48028,14,Single Speed,4,no,yes,no,yes,no,OAM,0,150,8000,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2,once a day milking
+2015,50,7,Jul,67,67,46443,14,Single Speed,4,no,yes,no,yes,no,OAM,0,150,8000,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2,once a day milking
+2015,50,8,Aug,67,67,38615,14,Single Speed,4,no,yes,no,yes,no,OAM,0,150,8000,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2,once a day milking
+2015,50,9,Sep,49,49,27339,14,Single Speed,4,no,yes,no,yes,no,OAM,0,150,8000,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2,once a day milking
+2015,50,10,Oct,46,46,20994,14,Single Speed,4,no,yes,no,yes,no,OAM,0,150,8000,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2,once a day milking
+2015,50,11,nov,27,46,12250,14,Single Speed,4,no,yes,no,yes,no,OAM,0,150,8000,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2,once a day milking
+2015,50,12,Dec,0,46,1020,14,Single Speed,4,no,yes,no,yes,no,OAM,0,150,8000,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2,once a day milking
+2015,51,1,Jan,5,144,0,20,VSD,6,no,yes,no,yes,no,E2ndD,0,300,18000,NaN,0,6,664,17,12999,1,9,17,yes,yes,yes,yes,1.5,once a day milking
+2015,51,2,Feb,121,174,14312,20,VSD,6,no,yes,no,yes,no,E2ndD,0,300,18000,NaN,0,6,664,17,12999,1,9,17,yes,yes,yes,yes,1.5,once a day milking
+2015,51,3,Mar,157,181,74120,20,VSD,6,no,yes,no,yes,no,E2ndD,0,300,18000,NaN,0,6,664,17,12999,1,9,17,yes,yes,yes,yes,1.5,once a day milking
+2015,51,4,Apr,173,184,122262,20,VSD,6,no,yes,no,yes,no,E2ndD,0,300,18000,NaN,0,6,664,17,12999,1,9,17,yes,yes,yes,yes,1.5,once a day milking
+2015,51,5,May,177,179,119309,20,VSD,6,no,yes,no,yes,no,E2ndD,0,300,18000,NaN,0,6,664,17,12999,1,9,17,yes,yes,yes,yes,1.5,once a day milking
+2015,51,6,Jun,174,179,114198,20,VSD,6,no,yes,no,yes,no,E2ndD,0,300,18000,NaN,0,6,664,17,12999,1,9,17,yes,yes,yes,yes,1.5,once a day milking
+2015,51,7,Jul,172,175,123492,20,VSD,6,no,yes,no,yes,no,E2ndD,0,300,18000,NaN,0,6,664,17,12999,1,9,17,yes,yes,yes,yes,1.5,once a day milking
+2015,51,8,Aug,167,175,98453,20,VSD,6,no,yes,no,yes,no,E2ndD,0,300,18000,NaN,0,6,664,17,12999,1,9,17,yes,yes,yes,yes,1.5,once a day milking
+2015,51,9,Sep,167,175,91653,20,VSD,6,no,yes,no,yes,no,E2ndD,0,300,18000,NaN,0,6,664,17,12999,1,9,17,yes,yes,yes,yes,1.5,once a day milking
+2015,51,10,Oct,163,167,79256,20,VSD,6,no,yes,no,yes,no,E2ndD,0,300,18000,NaN,0,6,664,17,12999,1,9,17,yes,yes,yes,yes,1.5,once a day milking
+2015,51,11,nov,101,156,54896,20,VSD,6,no,yes,no,yes,no,E2ndD,0,300,18000,NaN,0,6,664,17,12999,1,9,17,yes,yes,yes,yes,1.5,once a day milking
+2015,51,12,Dec,0,156,9794,20,VSD,6,no,yes,no,yes,no,E2ndD,0,300,18000,NaN,0,6,664,17,12999,1,9,17,yes,yes,yes,yes,1.5,once a day milking
+2015,52,1,Jan,41,84,8809,6,Diaphram,2.1,no,yes,no,no,no,E2ndD,0,150,9700,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2.5,twice a day milking
+2015,52,2,Feb,63,90,19090,6,Diaphram,2.1,no,yes,no,no,no,E2ndD,0,150,9700,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2.5,twice a day milking
+2015,52,3,Mar,70,91,27421,6,Diaphram,2.1,no,yes,no,no,no,E2ndD,0,150,9700,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2.5,twice a day milking
+2015,52,4,Apr,75,90,55089,6,Diaphram,2.1,no,yes,no,no,no,E2ndD,0,150,9700,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2.5,twice a day milking
+2015,52,5,May,80,89,59922,6,Diaphram,2.1,no,yes,no,no,no,E2ndD,0,150,9700,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2.5,twice a day milking
+2015,52,6,Jun,80,88,53608,6,Diaphram,2.1,no,yes,no,no,no,E2ndD,0,150,9700,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2.5,twice a day milking
+2015,52,7,Jul,83,89,49086,6,Diaphram,2.1,no,yes,no,no,no,E2ndD,0,150,9700,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2.5,twice a day milking
+2015,52,8,Aug,84,89,50228,6,Diaphram,2.1,no,yes,no,no,no,E2ndD,0,150,9700,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2.5,twice a day milking
+2015,52,9,Sep,86,89,51295,6,Diaphram,2.1,no,yes,no,no,no,E2ndD,0,150,9700,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2.5,twice a day milking
+2015,52,10,Oct,94,98,40155,6,Diaphram,2.1,no,yes,no,no,no,E2ndD,0,150,9700,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2.5,twice a day milking
+2015,52,11,nov,59,96,27740,6,Diaphram,2.1,no,yes,no,no,no,E2ndD,0,150,9700,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2.5,twice a day milking
+2015,52,12,Dec,44,95,18759,6,Diaphram,2.1,no,yes,no,no,no,E2ndD,0,150,9700,2.4,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2.5,twice a day milking
+2015,53,1,Jan,11,57,0,8,Diaphram,2.2,no,yes,no,yes,no,E2ndD,0,150,5630,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,1,twice a day milking
+2015,53,2,Feb,31,63,8913,8,Diaphram,2.2,no,yes,no,yes,no,E2ndD,0,150,5630,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,1,twice a day milking
+2015,53,3,Mar,32,38,16808,8,Diaphram,2.2,no,yes,no,yes,no,E2ndD,0,150,5630,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,1,twice a day milking
+2015,53,4,Apr,30,33,16753,8,Diaphram,2.2,no,yes,no,yes,no,E2ndD,0,150,5630,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,1,twice a day milking
+2015,53,5,May,28,29,20501,8,Diaphram,2.2,no,yes,no,yes,no,E2ndD,0,150,5630,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,1,twice a day milking
+2015,53,6,Jun,28,29,18104,8,Diaphram,2.2,no,yes,no,yes,no,E2ndD,0,150,5630,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,1,twice a day milking
+2015,53,7,Jul,29,29,17689,8,Diaphram,2.2,no,yes,no,yes,no,E2ndD,0,150,5630,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,1,twice a day milking
+2015,53,8,Aug,29,29,17400,8,Diaphram,2.2,no,yes,no,yes,no,E2ndD,0,150,5630,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,1,twice a day milking
+2015,53,9,Sep,29,29,14959,8,Diaphram,2.2,no,yes,no,yes,no,E2ndD,0,150,5630,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,1,twice a day milking
+2015,53,10,Oct,29,29,13740,8,Diaphram,2.2,no,yes,no,yes,no,E2ndD,0,150,5630,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,1,twice a day milking
+2015,53,11,nov,0,28,6418,8,Diaphram,2.2,no,yes,no,yes,no,E2ndD,0,150,5630,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,1,twice a day milking
+2015,53,12,Dec,0,28,0,8,Diaphram,2.2,no,yes,no,yes,no,E2ndD,0,150,5630,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,1,twice a day milking
+2015,54,1,Jan,3,76,0,10,High Speed,2.6,no,yes,no,yes,no,E2ndD,0,150,8800,2.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2,twice a day milking
+2015,54,2,Feb,43,89,7469,10,High Speed,2.6,no,yes,no,yes,no,E2ndD,0,150,8800,2.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2,twice a day milking
+2015,54,3,Mar,71,90,22282,10,High Speed,2.6,no,yes,no,yes,no,E2ndD,0,150,8800,2.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2,twice a day milking
+2015,54,4,Apr,83,91,49675,10,High Speed,2.6,no,yes,no,yes,no,E2ndD,0,150,8800,2.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2,twice a day milking
+2015,54,5,May,91,92,62098,10,High Speed,2.6,no,yes,no,yes,no,E2ndD,0,150,8800,2.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2,twice a day milking
+2015,54,6,Jun,91,92,58926,10,High Speed,2.6,no,yes,no,yes,no,E2ndD,0,150,8800,2.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2,twice a day milking
+2015,54,7,Jul,90,91,56211,10,High Speed,2.6,no,yes,no,yes,no,E2ndD,0,150,8800,2.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2,twice a day milking
+2015,54,8,Aug,90,91,51182,10,High Speed,2.6,no,yes,no,yes,no,E2ndD,0,150,8800,2.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2,twice a day milking
+2015,54,9,Sep,89,89,49495,10,High Speed,2.6,no,yes,no,yes,no,E2ndD,0,150,8800,2.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2,twice a day milking
+2015,54,10,Oct,89,89,43434,10,High Speed,2.6,no,yes,no,yes,no,E2ndD,0,150,8800,2.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2,twice a day milking
+2015,54,11,nov,60,89,26826,10,High Speed,2.6,no,yes,no,yes,no,E2ndD,0,150,8800,2.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2,twice a day milking
+2015,54,12,Dec,22,89,11300,10,High Speed,2.6,no,yes,no,yes,no,E2ndD,0,150,8800,2.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2,twice a day milking
+2015,55,1,Jan,0,61,0,8,Diaphram,2.6,no,yes,no,no,no,OAW,0,NaN,6400,NaN,0,6,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2015,55,2,Feb,53,77,12924,8,Diaphram,2.6,no,yes,no,no,no,OAW,0,NaN,6400,NaN,0,6,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2015,55,3,Mar,71,78,49659,8,Diaphram,2.6,no,yes,no,no,no,OAW,0,NaN,6400,NaN,0,6,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2015,55,4,Apr,77,79,61892,8,Diaphram,2.6,no,yes,no,no,no,OAW,0,NaN,6400,NaN,0,6,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2015,55,5,May,80,81,70419,8,Diaphram,2.6,no,yes,no,no,no,OAW,0,NaN,6400,NaN,0,6,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2015,55,6,Jun,80,81,63097,8,Diaphram,2.6,no,yes,no,no,no,OAW,0,NaN,6400,NaN,0,6,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2015,55,7,Jul,80,81,51009,8,Diaphram,2.6,no,yes,no,no,no,OAW,0,NaN,6400,NaN,0,6,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2015,55,8,Aug,81,81,45032,8,Diaphram,2.6,no,yes,no,no,no,OAW,0,NaN,6400,NaN,0,6,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2015,55,9,Sep,80,80,46239,8,Diaphram,2.6,no,yes,no,no,no,OAW,0,NaN,6400,NaN,0,6,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2015,55,10,Oct,70,71,35569,8,Diaphram,2.6,no,yes,no,no,no,OAW,0,NaN,6400,NaN,0,6,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2015,55,11,nov,0,65,20762,8,Diaphram,2.6,no,yes,no,no,no,OAW,0,NaN,6400,NaN,0,6,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2015,55,12,Dec,0,65,0,8,Diaphram,2.6,no,yes,no,no,no,OAW,0,NaN,6400,NaN,0,6,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2015,56,1,Jan,7,181,0,22,High Speed,7.4,no,yes,no,yes,no,OAD,0,400,12485,4.9,0,0,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2015,56,2,Feb,139,227,16622,22,High Speed,7.4,no,yes,no,yes,no,OAD,0,400,12485,4.9,0,0,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2015,56,3,Mar,206,256,107816,22,High Speed,7.4,no,yes,no,yes,no,OAD,0,400,12485,4.9,0,0,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2015,56,4,Apr,211,216,148319,22,High Speed,7.4,no,yes,no,yes,no,OAD,0,400,12485,4.9,0,0,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2015,56,5,May,211,216,147359,22,High Speed,7.4,no,yes,no,yes,no,OAD,0,400,12485,4.9,0,0,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2015,56,6,Jun,211,215,137462,22,High Speed,7.4,no,yes,no,yes,no,OAD,0,400,12485,4.9,0,0,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2015,56,7,Jul,211,215,132492,22,High Speed,7.4,no,yes,no,yes,no,OAD,0,400,12485,4.9,0,0,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2015,56,8,Aug,211,215,116224,22,High Speed,7.4,no,yes,no,yes,no,OAD,0,400,12485,4.9,0,0,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2015,56,9,Sep,206,215,100740,22,High Speed,7.4,no,yes,no,yes,no,OAD,0,400,12485,4.9,0,0,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2015,56,10,Oct,203,214,90118,22,High Speed,7.4,no,yes,no,yes,no,OAD,0,400,12485,4.9,0,0,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2015,56,11,nov,161,214,52091,22,High Speed,7.4,no,yes,no,yes,no,OAD,0,400,12485,4.9,0,0,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2015,56,12,Dec,0,214,12197,22,High Speed,7.4,no,yes,no,yes,no,OAD,0,400,12485,4.9,0,0,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2015,57,1,Jan,15,103,1098,12,Diaphram,3.7,no,yes,no,yes,no,OAW,0,150,9000,2.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,1,once a day milking
+2015,57,2,Feb,90,125,27889,12,Diaphram,3.7,no,yes,no,yes,no,OAW,0,150,9000,2.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,1,once a day milking
+2015,57,3,Mar,116,129,55221,12,Diaphram,3.7,no,yes,no,yes,no,OAW,0,150,9000,2.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,1,once a day milking
+2015,57,4,Apr,130,131,114635,12,Diaphram,3.7,no,yes,no,yes,no,OAW,0,150,9000,2.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,1,once a day milking
+2015,57,5,May,127,130,114881,12,Diaphram,3.7,no,yes,no,yes,no,OAW,0,150,9000,2.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,1,once a day milking
+2015,57,6,Jun,127,130,100124,12,Diaphram,3.7,no,yes,no,yes,no,OAW,0,150,9000,2.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,1,once a day milking
+2015,57,7,Jul,127,130,85690,12,Diaphram,3.7,no,yes,no,yes,no,OAW,0,150,9000,2.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,1,once a day milking
+2015,57,8,Aug,127,130,88329,12,Diaphram,3.7,no,yes,no,yes,no,OAW,0,150,9000,2.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,1,once a day milking
+2015,57,9,Sep,127,130,71365,12,Diaphram,3.7,no,yes,no,yes,no,OAW,0,150,9000,2.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,1,once a day milking
+2015,57,10,Oct,123,126,62123,12,Diaphram,3.7,no,yes,no,yes,no,OAW,0,150,9000,2.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,1,once a day milking
+2015,57,11,nov,39,116,34085,12,Diaphram,3.7,no,yes,no,yes,no,OAW,0,150,9000,2.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,1,once a day milking
+2015,57,12,Dec,4,117,4872,12,Diaphram,3.7,no,yes,no,yes,no,OAW,0,150,9000,2.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,1,once a day milking
+2015,58,1,Jan,9,96,0,14,High Speed,3,no,yes,no,yes,no,OAD,0,300,7600,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2,twice a day milking
+2015,58,2,Feb,88,117,19074,14,High Speed,3,no,yes,no,yes,no,OAD,0,300,7600,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2,twice a day milking
+2015,58,3,Mar,97,116,50999,14,High Speed,3,no,yes,no,yes,no,OAD,0,300,7600,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2,twice a day milking
+2015,58,4,Apr,97,106,73765,14,High Speed,3,no,yes,no,yes,no,OAD,0,300,7600,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2,twice a day milking
+2015,58,5,May,97,97,61934,14,High Speed,3,no,yes,no,yes,no,OAD,0,300,7600,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2,twice a day milking
+2015,58,6,Jun,97,97,73151,14,High Speed,3,no,yes,no,yes,no,OAD,0,300,7600,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2,twice a day milking
+2015,58,7,Jul,97,97,50515,14,High Speed,3,no,yes,no,yes,no,OAD,0,300,7600,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2,twice a day milking
+2015,58,8,Aug,97,97,51960,14,High Speed,3,no,yes,no,yes,no,OAD,0,300,7600,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2,twice a day milking
+2015,58,9,Sep,97,97,53205,14,High Speed,3,no,yes,no,yes,no,OAD,0,300,7600,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2,twice a day milking
+2015,58,10,Oct,97,97,42555,14,High Speed,3,no,yes,no,yes,no,OAD,0,300,7600,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2,twice a day milking
+2015,58,11,nov,74,96,28663,14,High Speed,3,no,yes,no,yes,no,OAD,0,300,7600,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2,twice a day milking
+2015,58,12,Dec,0,96,11005,14,High Speed,3,no,yes,no,yes,no,OAD,0,300,7600,3,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2,twice a day milking
+2020,59,1,Jan,0,180,0,20,High Speed,7.5,yes,yes,no,yes,no,OAD,0,400,15000,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1.5,once a day milking
+2020,59,2,Feb,86,227,39994,20,High Speed,7.5,yes,yes,no,yes,no,OAD,0,400,15000,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1.5,once a day milking
+2020,59,3,Mar,186,210,147076,20,High Speed,7.5,yes,yes,no,yes,no,OAD,0,400,15000,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1.5,once a day milking
+2020,59,4,Apr,208,211,153246,20,High Speed,7.5,yes,yes,no,yes,no,OAD,0,400,15000,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1.5,once a day milking
+2020,59,5,May,211,208,144102,20,High Speed,7.5,yes,yes,no,yes,no,OAD,0,400,15000,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1.5,once a day milking
+2020,59,6,Jun,208,205,187484,20,High Speed,7.5,yes,yes,no,yes,no,OAD,0,400,15000,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1.5,once a day milking
+2020,59,7,Jul,205,205,137849,20,High Speed,7.5,yes,yes,no,yes,no,OAD,0,400,15000,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1.5,once a day milking
+2020,59,8,Aug,205,207,121587,20,High Speed,7.5,yes,yes,no,yes,no,OAD,0,400,15000,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1.5,once a day milking
+2020,59,9,Sep,204,205,134482,20,High Speed,7.5,yes,yes,no,yes,no,OAD,0,400,15000,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1.5,once a day milking
+2020,59,10,Oct,204,204,96471,20,High Speed,7.5,yes,yes,no,yes,no,OAD,0,400,15000,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1.5,once a day milking
+2020,59,11,nov,194,204,66317,20,High Speed,7.5,yes,yes,no,yes,no,OAD,0,400,15000,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1.5,once a day milking
+2020,59,12,Dec,148,196,32398,20,High Speed,7.5,yes,yes,no,yes,no,OAD,0,400,15000,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1.5,once a day milking
+2020,60,1,Jan,279,291,0,30,VSD,11,yes,yes,no,yes,no,OAW,0,800,32000,9,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2.5,once a day milking
+2020,60,2,Feb,245,352,27215,30,VSD,11,yes,yes,no,yes,no,OAW,0,800,32000,9,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2.5,once a day milking
+2020,60,3,Mar,327,353,204780,30,VSD,11,yes,yes,no,yes,no,OAW,0,800,32000,9,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2.5,once a day milking
+2020,60,4,Apr,346,353,235015,30,VSD,11,yes,yes,no,yes,no,OAW,0,800,32000,9,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2.5,once a day milking
+2020,60,5,May,353,353,234787,30,VSD,11,yes,yes,no,yes,no,OAW,0,800,32000,9,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2.5,once a day milking
+2020,60,6,Jun,352,351,279186,30,VSD,11,yes,yes,no,yes,no,OAW,0,800,32000,9,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2.5,once a day milking
+2020,60,7,Jul,349,348,201998,30,VSD,11,yes,yes,no,yes,no,OAW,0,800,32000,9,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2.5,once a day milking
+2020,60,8,Aug,348,343,181695,30,VSD,11,yes,yes,no,yes,no,OAW,0,800,32000,9,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2.5,once a day milking
+2020,60,9,Sep,348,348,208226,30,VSD,11,yes,yes,no,yes,no,OAW,0,800,32000,9,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2.5,once a day milking
+2020,60,10,Oct,348,348,140829,30,VSD,11,yes,yes,no,yes,no,OAW,0,800,32000,9,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2.5,once a day milking
+2020,60,11,nov,348,348,105515,30,VSD,11,yes,yes,no,yes,no,OAW,0,800,32000,9,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2.5,once a day milking
+2020,60,12,Dec,348,348,29491,30,VSD,11,yes,yes,no,yes,no,OAW,0,800,32000,9,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2.5,once a day milking
+2020,61,1,Jan,3,128,425,20,High Speed,10,yes,yes,no,yes,no,OAD,0,400,10900,4.8,0,0,932,53,11793,7,11,11,no,no,no,no,1,n/a
+2020,61,2,Feb,83,150,42652,20,High Speed,10,yes,yes,no,yes,no,OAD,0,400,10900,4.8,0,0,932,53,11793,7,11,11,no,no,no,no,1,n/a
+2020,61,3,Mar,129,152,106506,20,High Speed,10,yes,yes,no,yes,no,OAD,0,400,10900,4.8,0,0,932,53,11793,7,11,11,no,no,no,no,1,n/a
+2020,61,4,Apr,143,145,103420,20,High Speed,10,yes,yes,no,yes,no,OAD,0,400,10900,4.8,0,0,932,53,11793,7,11,11,no,no,no,no,1,n/a
+2020,61,5,May,144,145,104837,20,High Speed,10,yes,yes,no,yes,no,OAD,0,400,10900,4.8,0,0,932,53,11793,7,11,11,no,no,no,no,1,n/a
+2020,61,6,Jun,145,145,118137,20,High Speed,10,yes,yes,no,yes,no,OAD,0,400,10900,4.8,0,0,932,53,11793,7,11,11,no,no,no,no,1,n/a
+2020,61,7,Jul,145,145,85369,20,High Speed,10,yes,yes,no,yes,no,OAD,0,400,10900,4.8,0,0,932,53,11793,7,11,11,no,no,no,no,1,n/a
+2020,61,8,Aug,145,145,77962,20,High Speed,10,yes,yes,no,yes,no,OAD,0,400,10900,4.8,0,0,932,53,11793,7,11,11,no,no,no,no,1,n/a
+2020,61,9,Sep,144,144,85596,20,High Speed,10,yes,yes,no,yes,no,OAD,0,400,10900,4.8,0,0,932,53,11793,7,11,11,no,no,no,no,1,n/a
+2020,61,10,Oct,142,140,61654,20,High Speed,10,yes,yes,no,yes,no,OAD,0,400,10900,4.8,0,0,932,53,11793,7,11,11,no,no,no,no,1,n/a
+2020,61,11,nov,124,140,43390,20,High Speed,10,yes,yes,no,yes,no,OAD,0,400,10900,4.8,0,0,932,53,11793,7,11,11,no,no,no,no,1,n/a
+2020,61,12,Dec,28,130,11140,20,High Speed,10,yes,yes,no,yes,no,OAD,0,400,10900,4.8,0,0,932,53,11793,7,11,11,no,no,no,no,1,n/a
+2020,62,1,Jan,15,149,3068,16,High Speed,8,no,yes,no,yes,no,OAD,0,500,10900,6,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2,once a day milking
+2020,62,2,Feb,76,166,44842,16,High Speed,8,no,yes,no,yes,no,OAD,0,500,10900,6,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2,once a day milking
+2020,62,3,Mar,124,164,108712,16,High Speed,8,no,yes,no,yes,no,OAD,0,500,10900,6,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2,once a day milking
+2020,62,4,Apr,148,168,109489,16,High Speed,8,no,yes,no,yes,no,OAD,0,500,10900,6,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2,once a day milking
+2020,62,5,May,156,151,116637,16,High Speed,8,no,yes,no,yes,no,OAD,0,500,10900,6,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2,once a day milking
+2020,62,6,Jun,150,150,13725,16,High Speed,8,no,yes,no,yes,no,OAD,0,500,10900,6,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2,once a day milking
+2020,62,7,Jul,148,148,97464,16,High Speed,8,no,yes,no,yes,no,OAD,0,500,10900,6,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2,once a day milking
+2020,62,8,Aug,148,148,86277,16,High Speed,8,no,yes,no,yes,no,OAD,0,500,10900,6,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2,once a day milking
+2020,62,9,Sep,148,148,98071,16,High Speed,8,no,yes,no,yes,no,OAD,0,500,10900,6,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2,once a day milking
+2020,62,10,Oct,147,146,62531,16,High Speed,8,no,yes,no,yes,no,OAD,0,500,10900,6,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2,once a day milking
+2020,62,11,nov,145,145,33814,16,High Speed,8,no,yes,no,yes,no,OAD,0,500,10900,6,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2,once a day milking
+2020,62,12,Dec,141,145,2385,16,High Speed,8,no,yes,no,yes,no,OAD,0,500,10900,6,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2,once a day milking
+2020,63,1,Jan,0,55,0,6,High Speed,1.5,no,yes,no,yes,no,OAW,0,300,4000,2.6,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,1.5,once a day milking
+2020,63,2,Feb,18,69,12192,6,High Speed,1.5,no,yes,no,yes,no,OAW,0,300,4000,2.6,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,1.5,once a day milking
+2020,63,3,Mar,55,70,42725,6,High Speed,1.5,no,yes,no,yes,no,OAW,0,300,4000,2.6,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,1.5,once a day milking
+2020,63,4,Apr,69,71,58248,6,High Speed,1.5,no,yes,no,yes,no,OAW,0,300,4000,2.6,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,1.5,once a day milking
+2020,63,5,May,70,70,58937,6,High Speed,1.5,no,yes,no,yes,no,OAW,0,300,4000,2.6,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,1.5,once a day milking
+2020,63,6,Jun,70,70,53094,6,High Speed,1.5,no,yes,no,yes,no,OAW,0,300,4000,2.6,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,1.5,once a day milking
+2020,63,7,Jul,70,70,48022,6,High Speed,1.5,no,yes,no,yes,no,OAW,0,300,4000,2.6,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,1.5,once a day milking
+2020,63,8,Aug,70,70,41910,6,High Speed,1.5,no,yes,no,yes,no,OAW,0,300,4000,2.6,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,1.5,once a day milking
+2020,63,9,Sep,70,70,37145,6,High Speed,1.5,no,yes,no,yes,no,OAW,0,300,4000,2.6,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,1.5,once a day milking
+2020,63,10,Oct,69,68,32850,6,High Speed,1.5,no,yes,no,yes,no,OAW,0,300,4000,2.6,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,1.5,once a day milking
+2020,63,11,nov,62,65,23189,6,High Speed,1.5,no,yes,no,yes,no,OAW,0,300,4000,2.6,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,1.5,once a day milking
+2020,63,12,Dec,41,56,7414,6,High Speed,1.5,no,yes,no,yes,no,OAW,0,300,4000,2.6,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,1.5,once a day milking
+2020,64,1,Jan,0,93,0,20,High Speed,7.5,yes,yes,no,yes,no,OAD,0,400,6500,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,2.5,once a day milking
+2020,64,2,Feb,40,107,20787,20,High Speed,7.5,yes,yes,no,yes,no,OAD,0,400,6500,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,2.5,once a day milking
+2020,64,3,Mar,93,110,68213,20,High Speed,7.5,yes,yes,no,yes,no,OAD,0,400,6500,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,2.5,once a day milking
+2020,64,4,Apr,109,109,91885,20,High Speed,7.5,yes,yes,no,yes,no,OAD,0,400,6500,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,2.5,once a day milking
+2020,64,5,May,109,109,95106,20,High Speed,7.5,yes,yes,no,yes,no,OAD,0,400,6500,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,2.5,once a day milking
+2020,64,6,Jun,109,109,88439,20,High Speed,7.5,yes,yes,no,yes,no,OAD,0,400,6500,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,2.5,once a day milking
+2020,64,7,Jul,109,109,78995,20,High Speed,7.5,yes,yes,no,yes,no,OAD,0,400,6500,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,2.5,once a day milking
+2020,64,8,Aug,109,108,72152,20,High Speed,7.5,yes,yes,no,yes,no,OAD,0,400,6500,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,2.5,once a day milking
+2020,64,9,Sep,108,108,62750,20,High Speed,7.5,yes,yes,no,yes,no,OAD,0,400,6500,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,2.5,once a day milking
+2020,64,10,Oct,106,105,54003,20,High Speed,7.5,yes,yes,no,yes,no,OAD,0,400,6500,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,2.5,once a day milking
+2020,64,11,nov,102,105,42238,20,High Speed,7.5,yes,yes,no,yes,no,OAD,0,400,6500,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,2.5,once a day milking
+2020,64,12,Dec,59,105,25681,20,High Speed,7.5,yes,yes,no,yes,no,OAD,0,400,6500,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,2.5,once a day milking
+2020,65,1,Jan,305,357,108769,26,VSD,7.6,yes,yes,no,yes,no,E2ndD,0,1500,30100,5.7,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1,once a day milking
+2020,65,2,Feb,307,347,104162,26,VSD,7.6,yes,yes,no,yes,no,E2ndD,0,1500,30100,5.7,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1,once a day milking
+2020,65,3,Mar,307,355,153297,26,VSD,7.6,yes,yes,no,yes,no,E2ndD,0,1500,30100,5.7,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1,once a day milking
+2020,65,4,Apr,340,367,177078,26,VSD,7.6,yes,yes,no,yes,no,E2ndD,0,1500,30100,5.7,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1,once a day milking
+2020,65,5,May,353,367,219025,26,VSD,7.6,yes,yes,no,yes,no,E2ndD,0,1500,30100,5.7,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1,once a day milking
+2020,65,6,Jun,344,349,250579,26,VSD,7.6,yes,yes,no,yes,no,E2ndD,0,1500,30100,5.7,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1,once a day milking
+2020,65,7,Jul,341,348,169864,26,VSD,7.6,yes,yes,no,yes,no,E2ndD,0,1500,30100,5.7,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1,once a day milking
+2020,65,8,Aug,341,348,131153,26,VSD,7.6,yes,yes,no,yes,no,E2ndD,0,1500,30100,5.7,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1,once a day milking
+2020,65,9,Sep,327,348,123328,26,VSD,7.6,yes,yes,no,yes,no,E2ndD,0,1500,30100,5.7,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1,once a day milking
+2020,65,10,Oct,326,350,95120,26,VSD,7.6,yes,yes,no,yes,no,E2ndD,0,1500,30100,5.7,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1,once a day milking
+2020,65,11,nov,330,351,103895,26,VSD,7.6,yes,yes,no,yes,no,E2ndD,0,1500,30100,5.7,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1,once a day milking
+2020,65,12,Dec,322,325,135574,26,VSD,7.6,yes,yes,no,yes,no,E2ndD,0,1500,30100,5.7,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1,once a day milking
+2020,66,1,Jan,69,219,32474,12,High Speed,6,no,yes,no,yes,no,OAD,0,300,19000,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,2,twice a day milking
+2020,66,2,Feb,105,242,56797,12,High Speed,6,no,yes,no,yes,no,OAD,0,300,19000,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,2,twice a day milking
+2020,66,3,Mar,189,246,144324,12,High Speed,6,no,yes,no,yes,no,OAD,0,300,19000,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,2,twice a day milking
+2020,66,4,Apr,221,246,176740,12,High Speed,6,no,yes,no,yes,no,OAD,0,300,19000,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,2,twice a day milking
+2020,66,5,May,237,247,194043,12,High Speed,6,no,yes,no,yes,no,OAD,0,300,19000,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,2,twice a day milking
+2020,66,6,Jun,238,246,168305,12,High Speed,6,no,yes,no,yes,no,OAD,0,300,19000,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,2,twice a day milking
+2020,66,7,Jul,234,245,152602,12,High Speed,6,no,yes,no,yes,no,OAD,0,300,19000,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,2,twice a day milking
+2020,66,8,Aug,224,243,140493,12,High Speed,6,no,yes,no,yes,no,OAD,0,300,19000,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,2,twice a day milking
+2020,66,9,Sep,219,228,124297,12,High Speed,6,no,yes,no,yes,no,OAD,0,300,19000,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,2,twice a day milking
+2020,66,10,Oct,220,228,115006,12,High Speed,6,no,yes,no,yes,no,OAD,0,300,19000,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,2,twice a day milking
+2020,66,11,nov,212,228,97908,12,High Speed,6,no,yes,no,yes,no,OAD,0,300,19000,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,2,twice a day milking
+2020,66,12,Dec,129,224,61241,12,High Speed,6,no,yes,no,yes,no,OAD,0,300,19000,2.4,0,0,932,53,11793,7,11,11,no,no,no,no,2,twice a day milking
+2020,67,1,Jan,6,128,906,16,High Speed,3,no,yes,no,yes,no,OAD,0,NaN,8100,0,6,0,48,166,13421,2,11,NaN,no,no,no,n/a,1.5,twice a day milking
+2020,67,2,Feb,78,130,48385,16,High Speed,3,no,yes,no,yes,no,OAD,0,NaN,8100,0,6,0,48,166,13421,2,11,NaN,no,no,no,n/a,1.5,twice a day milking
+2020,67,3,Mar,114,133,93277,16,High Speed,3,no,yes,no,yes,no,OAD,0,NaN,8100,0,6,0,48,166,13421,2,11,NaN,no,no,no,n/a,1.5,twice a day milking
+2020,67,4,Apr,131,133,114183,16,High Speed,3,no,yes,no,yes,no,OAD,0,NaN,8100,0,6,0,48,166,13421,2,11,NaN,no,no,no,n/a,1.5,twice a day milking
+2020,67,5,May,133,133,114807,16,High Speed,3,no,yes,no,yes,no,OAD,0,NaN,8100,0,6,0,48,166,13421,2,11,NaN,no,no,no,n/a,1.5,twice a day milking
+2020,67,6,Jun,132,131,101433,16,High Speed,3,no,yes,no,yes,no,OAD,0,NaN,8100,0,6,0,48,166,13421,2,11,NaN,no,no,no,n/a,1.5,twice a day milking
+2020,67,7,Jul,131,131,89916,16,High Speed,3,no,yes,no,yes,no,OAD,0,NaN,8100,0,6,0,48,166,13421,2,11,NaN,no,no,no,n/a,1.5,twice a day milking
+2020,67,8,Aug,130,130,87777,16,High Speed,3,no,yes,no,yes,no,OAD,0,NaN,8100,0,6,0,48,166,13421,2,11,NaN,no,no,no,n/a,1.5,twice a day milking
+2020,67,9,Sep,130,130,72060,16,High Speed,3,no,yes,no,yes,no,OAD,0,NaN,8100,0,6,0,48,166,13421,2,11,NaN,no,no,no,n/a,1.5,twice a day milking
+2020,67,10,Oct,127,128,63628,16,High Speed,3,no,yes,no,yes,no,OAD,0,NaN,8100,0,6,0,48,166,13421,2,11,NaN,no,no,no,n/a,1.5,twice a day milking
+2020,67,11,nov,85,126,35153,16,High Speed,3,no,yes,no,yes,no,OAD,0,NaN,8100,0,6,0,48,166,13421,2,11,NaN,no,no,no,n/a,1.5,twice a day milking
+2020,67,12,Dec,8,120,3074,16,High Speed,3,no,yes,no,yes,no,OAD,0,NaN,8100,0,6,0,48,166,13421,2,11,NaN,no,no,no,n/a,1.5,twice a day milking
+2020,68,1,Jan,15,179,1992,20,High Speed,6,no,yes,no,yes,no,OAD,0,NaN,8800,0,6,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2.5,once a day milking
+2020,68,2,Feb,87,210,42104,20,High Speed,6,no,yes,no,yes,no,OAD,0,NaN,8800,0,6,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2.5,once a day milking
+2020,68,3,Mar,177,218,157531,20,High Speed,6,no,yes,no,yes,no,OAD,0,NaN,8800,0,6,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2.5,once a day milking
+2020,68,4,Apr,207,214,155324,20,High Speed,6,no,yes,no,yes,no,OAD,0,NaN,8800,0,6,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2.5,once a day milking
+2020,68,5,May,214,214,151723,20,High Speed,6,no,yes,no,yes,no,OAD,0,NaN,8800,0,6,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2.5,once a day milking
+2020,68,6,Jun,210,210,169059,20,High Speed,6,no,yes,no,yes,no,OAD,0,NaN,8800,0,6,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2.5,once a day milking
+2020,68,7,Jul,209,209,120365,20,High Speed,6,no,yes,no,yes,no,OAD,0,NaN,8800,0,6,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2.5,once a day milking
+2020,68,8,Aug,207,209,105159,20,High Speed,6,no,yes,no,yes,no,OAD,0,NaN,8800,0,6,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2.5,once a day milking
+2020,68,9,Sep,206,209,119721,20,High Speed,6,no,yes,no,yes,no,OAD,0,NaN,8800,0,6,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2.5,once a day milking
+2020,68,10,Oct,206,209,89363,20,High Speed,6,no,yes,no,yes,no,OAD,0,NaN,8800,0,6,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2.5,once a day milking
+2020,68,11,nov,175,207,69943,20,High Speed,6,no,yes,no,yes,no,OAD,0,NaN,8800,0,6,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2.5,once a day milking
+2020,68,12,Dec,60,207,25238,20,High Speed,6,no,yes,no,yes,no,OAD,0,NaN,8800,0,6,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2.5,once a day milking
+2020,69,1,Jan,0,116,0,12,High Speed,3,no,yes,no,no,no,E2ndD,0,210,16000,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1,once a day milking
+2020,69,2,Feb,55,142,26691,12,High Speed,3,no,yes,no,no,no,E2ndD,0,210,16000,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1,once a day milking
+2020,69,3,Mar,127,145,116322,12,High Speed,3,no,yes,no,no,no,E2ndD,0,210,16000,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1,once a day milking
+2020,69,4,Apr,144,144,116374,12,High Speed,3,no,yes,no,no,no,E2ndD,0,210,16000,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1,once a day milking
+2020,69,5,May,144,144,114187,12,High Speed,3,no,yes,no,no,no,E2ndD,0,210,16000,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1,once a day milking
+2020,69,6,Jun,144,144,127563,12,High Speed,3,no,yes,no,no,no,E2ndD,0,210,16000,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1,once a day milking
+2020,69,7,Jul,144,144,96519,12,High Speed,3,no,yes,no,no,no,E2ndD,0,210,16000,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1,once a day milking
+2020,69,8,Aug,144,144,84043,12,High Speed,3,no,yes,no,no,no,E2ndD,0,210,16000,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1,once a day milking
+2020,69,9,Sep,144,144,88234,12,High Speed,3,no,yes,no,no,no,E2ndD,0,210,16000,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1,once a day milking
+2020,69,10,Oct,142,140,66470,12,High Speed,3,no,yes,no,no,no,E2ndD,0,210,16000,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1,once a day milking
+2020,69,11,nov,101,140,37459,12,High Speed,3,no,yes,no,no,no,E2ndD,0,210,16000,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1,once a day milking
+2020,69,12,Dec,18,126,7852,12,High Speed,3,no,yes,no,no,no,E2ndD,0,210,16000,3,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,1,once a day milking
+2020,70,1,Jan,0,88,0,14,Diaphram,6,no,yes,no,yes,no,OAD,0,300,6000,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2,twice a day milking
+2020,70,2,Feb,49,108,26900,14,Diaphram,6,no,yes,no,yes,no,OAD,0,300,6000,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2,twice a day milking
+2020,70,3,Mar,93,106,75804,14,Diaphram,6,no,yes,no,yes,no,OAD,0,300,6000,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2,twice a day milking
+2020,70,4,Apr,103,105,84538,14,Diaphram,6,no,yes,no,yes,no,OAD,0,300,6000,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2,twice a day milking
+2020,70,5,May,105,104,80526,14,Diaphram,6,no,yes,no,yes,no,OAD,0,300,6000,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2,twice a day milking
+2020,70,6,Jun,104,104,73838,14,Diaphram,6,no,yes,no,yes,no,OAD,0,300,6000,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2,twice a day milking
+2020,70,7,Jul,104,105,67814,14,Diaphram,6,no,yes,no,yes,no,OAD,0,300,6000,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2,twice a day milking
+2020,70,8,Aug,104,104,57073,14,Diaphram,6,no,yes,no,yes,no,OAD,0,300,6000,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2,twice a day milking
+2020,70,9,Sep,102,101,49249,14,Diaphram,6,no,yes,no,yes,no,OAD,0,300,6000,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2,twice a day milking
+2020,70,10,Oct,99,99,46252,14,Diaphram,6,no,yes,no,yes,no,OAD,0,300,6000,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2,twice a day milking
+2020,70,11,nov,76,99,27156,14,Diaphram,6,no,yes,no,yes,no,OAD,0,300,6000,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2,twice a day milking
+2020,70,12,Dec,4,98,2205,14,Diaphram,6,no,yes,no,yes,no,OAD,0,300,6000,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2,twice a day milking
+2020,71,1,Jan,47,144,18114,20,VSD,8,yes,yes,no,yes,no,E2ndD,0,400,11000,5.4,0,0,932,53,11793,7,11,11,no,no,no,no,1.5,twice a day milking
+2020,71,2,Feb,104,147,48661,20,VSD,8,yes,yes,no,yes,no,E2ndD,0,400,11000,5.4,0,0,932,53,11793,7,11,11,no,no,no,no,1.5,twice a day milking
+2020,71,3,Mar,138,144,105541,20,VSD,8,yes,yes,no,yes,no,E2ndD,0,400,11000,5.4,0,0,932,53,11793,7,11,11,no,no,no,no,1.5,twice a day milking
+2020,71,4,Apr,140,141,97151,20,VSD,8,yes,yes,no,yes,no,E2ndD,0,400,11000,5.4,0,0,932,53,11793,7,11,11,no,no,no,no,1.5,twice a day milking
+2020,71,5,May,135,134,97784,20,VSD,8,yes,yes,no,yes,no,E2ndD,0,400,11000,5.4,0,0,932,53,11793,7,11,11,no,no,no,no,1.5,twice a day milking
+2020,71,6,Jun,134,134,114174,20,VSD,8,yes,yes,no,yes,no,E2ndD,0,400,11000,5.4,0,0,932,53,11793,7,11,11,no,no,no,no,1.5,twice a day milking
+2020,71,7,Jul,132,131,78950,20,VSD,8,yes,yes,no,yes,no,E2ndD,0,400,11000,5.4,0,0,932,53,11793,7,11,11,no,no,no,no,1.5,twice a day milking
+2020,71,8,Aug,131,131,74048,20,VSD,8,yes,yes,no,yes,no,E2ndD,0,400,11000,5.4,0,0,932,53,11793,7,11,11,no,no,no,no,1.5,twice a day milking
+2020,71,9,Sep,130,127,80184,20,VSD,8,yes,yes,no,yes,no,E2ndD,0,400,11000,5.4,0,0,932,53,11793,7,11,11,no,no,no,no,1.5,twice a day milking
+2020,71,10,Oct,122,127,51086,20,VSD,8,yes,yes,no,yes,no,E2ndD,0,400,11000,5.4,0,0,932,53,11793,7,11,11,no,no,no,no,1.5,twice a day milking
+2020,71,11,nov,93,127,26536,20,VSD,8,yes,yes,no,yes,no,E2ndD,0,400,11000,5.4,0,0,932,53,11793,7,11,11,no,no,no,no,1.5,twice a day milking
+2020,71,12,Dec,46,125,18630,20,VSD,8,yes,yes,no,yes,no,E2ndD,0,400,11000,5.4,0,0,932,53,11793,7,11,11,no,no,no,no,1.5,twice a day milking
+2020,72,1,Jan,1,313,0,36,VSD,15,yes,yes,no,yes,no,OAD,0,1500,22000,6,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2.5,twice a day milking
+2020,72,2,Feb,170,323,76632,36,VSD,15,yes,yes,no,yes,no,OAD,0,1500,22000,6,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2.5,twice a day milking
+2020,72,3,Mar,289,327,193204,36,VSD,15,yes,yes,no,yes,no,OAD,0,1500,22000,6,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2.5,twice a day milking
+2020,72,4,Apr,322,322,247532,36,VSD,15,yes,yes,no,yes,no,OAD,0,1500,22000,6,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2.5,twice a day milking
+2020,72,5,May,322,320,263091,36,VSD,15,yes,yes,no,yes,no,OAD,0,1500,22000,6,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2.5,twice a day milking
+2020,72,6,Jun,320,320,227154,36,VSD,15,yes,yes,no,yes,no,OAD,0,1500,22000,6,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2.5,twice a day milking
+2020,72,7,Jul,319,319,203905,36,VSD,15,yes,yes,no,yes,no,OAD,0,1500,22000,6,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2.5,twice a day milking
+2020,72,8,Aug,319,319,191309,36,VSD,15,yes,yes,no,yes,no,OAD,0,1500,22000,6,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2.5,twice a day milking
+2020,72,9,Sep,317,316,162610,36,VSD,15,yes,yes,no,yes,no,OAD,0,1500,22000,6,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2.5,twice a day milking
+2020,72,10,Oct,316,315,153587,36,VSD,15,yes,yes,no,yes,no,OAD,0,1500,22000,6,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2.5,twice a day milking
+2020,72,11,nov,307,304,103265,36,VSD,15,yes,yes,no,yes,no,OAD,0,1500,22000,6,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2.5,twice a day milking
+2020,72,12,Dec,304,304,36939,36,VSD,15,yes,yes,no,yes,no,OAD,0,1500,22000,6,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2.5,twice a day milking
+2020,73,1,Jan,1,101,0,20,High Speed,7.5,yes,yes,no,yes,no,OAD,0,800,6000,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1,once a day milking
+2020,73,2,Feb,45,116,20299,20,High Speed,7.5,yes,yes,no,yes,no,OAD,0,800,6000,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1,once a day milking
+2020,73,3,Mar,94,115,75975,20,High Speed,7.5,yes,yes,no,yes,no,OAD,0,800,6000,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1,once a day milking
+2020,73,4,Apr,112,115,93220,20,High Speed,7.5,yes,yes,no,yes,no,OAD,0,800,6000,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1,once a day milking
+2020,73,5,May,115,115,94310,20,High Speed,7.5,yes,yes,no,yes,no,OAD,0,800,6000,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1,once a day milking
+2020,73,6,Jun,113,113,85444,20,High Speed,7.5,yes,yes,no,yes,no,OAD,0,800,6000,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1,once a day milking
+2020,73,7,Jul,111,110,80027,20,High Speed,7.5,yes,yes,no,yes,no,OAD,0,800,6000,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1,once a day milking
+2020,73,8,Aug,109,109,61924,20,High Speed,7.5,yes,yes,no,yes,no,OAD,0,800,6000,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1,once a day milking
+2020,73,9,Sep,107,106,60623,20,High Speed,7.5,yes,yes,no,yes,no,OAD,0,800,6000,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1,once a day milking
+2020,73,10,Oct,106,106,60101,20,High Speed,7.5,yes,yes,no,yes,no,OAD,0,800,6000,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1,once a day milking
+2020,73,11,nov,98,93,42442,20,High Speed,7.5,yes,yes,no,yes,no,OAD,0,800,6000,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1,once a day milking
+2020,73,12,Dec,6,91,4183,20,High Speed,7.5,yes,yes,no,yes,no,OAD,0,800,6000,3,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1,once a day milking
+2020,74,1,Jan,3,134,983,16,High Speed,5.2,no,yes,no,yes,no,E2ndD,0,NaN,9100,0,6,0,932,53,11793,7,11,11,no,no,no,no,2,twice a day milking
+2020,74,2,Feb,63,142,39167,16,High Speed,5.2,no,yes,no,yes,no,E2ndD,0,NaN,9100,0,6,0,932,53,11793,7,11,11,no,no,no,no,2,twice a day milking
+2020,74,3,Mar,121,143,110033,16,High Speed,5.2,no,yes,no,yes,no,E2ndD,0,NaN,9100,0,6,0,932,53,11793,7,11,11,no,no,no,no,2,twice a day milking
+2020,74,4,Apr,142,143,112719,16,High Speed,5.2,no,yes,no,yes,no,E2ndD,0,NaN,9100,0,6,0,932,53,11793,7,11,11,no,no,no,no,2,twice a day milking
+2020,74,5,May,143,143,108261,16,High Speed,5.2,no,yes,no,yes,no,E2ndD,0,NaN,9100,0,6,0,932,53,11793,7,11,11,no,no,no,no,2,twice a day milking
+2020,74,6,Jun,143,143,123427,16,High Speed,5.2,no,yes,no,yes,no,E2ndD,0,NaN,9100,0,6,0,932,53,11793,7,11,11,no,no,no,no,2,twice a day milking
+2020,74,7,Jul,143,143,84172,16,High Speed,5.2,no,yes,no,yes,no,E2ndD,0,NaN,9100,0,6,0,932,53,11793,7,11,11,no,no,no,no,2,twice a day milking
+2020,74,8,Aug,143,143,75281,16,High Speed,5.2,no,yes,no,yes,no,E2ndD,0,NaN,9100,0,6,0,932,53,11793,7,11,11,no,no,no,no,2,twice a day milking
+2020,74,9,Sep,143,143,77621,16,High Speed,5.2,no,yes,no,yes,no,E2ndD,0,NaN,9100,0,6,0,932,53,11793,7,11,11,no,no,no,no,2,twice a day milking
+2020,74,10,Oct,142,143,56734,16,High Speed,5.2,no,yes,no,yes,no,E2ndD,0,NaN,9100,0,6,0,932,53,11793,7,11,11,no,no,no,no,2,twice a day milking
+2020,74,11,nov,119,143,47639,16,High Speed,5.2,no,yes,no,yes,no,E2ndD,0,NaN,9100,0,6,0,932,53,11793,7,11,11,no,no,no,no,2,twice a day milking
+2020,74,12,Dec,44,142,20643,16,High Speed,5.2,no,yes,no,yes,no,E2ndD,0,NaN,9100,0,6,0,932,53,11793,7,11,11,no,no,no,no,2,twice a day milking
+2020,75,1,Jan,117,258,63192,24,VSD,7.5,yes,no,yes,yes,no,OAD,0,600,13100,11.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,1.5,once a day milking
+2020,75,2,Feb,154,268,90834,24,VSD,7.5,yes,no,yes,yes,no,OAD,0,600,13100,11.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,1.5,once a day milking
+2020,75,3,Mar,219,253,173259,24,VSD,7.5,yes,no,yes,yes,no,OAD,0,600,13100,11.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,1.5,once a day milking
+2020,75,4,Apr,234,239,168630,24,VSD,7.5,yes,no,yes,yes,no,OAD,0,600,13100,11.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,1.5,once a day milking
+2020,75,5,May,232,237,164433,24,VSD,7.5,yes,no,yes,yes,no,OAD,0,600,13100,11.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,1.5,once a day milking
+2020,75,6,Jun,225,222,192308,24,VSD,7.5,yes,no,yes,yes,no,OAD,0,600,13100,11.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,1.5,once a day milking
+2020,75,7,Jul,222,222,124951,24,VSD,7.5,yes,no,yes,yes,no,OAD,0,600,13100,11.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,1.5,once a day milking
+2020,75,8,Aug,210,221,107552,24,VSD,7.5,yes,no,yes,yes,no,OAD,0,600,13100,11.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,1.5,once a day milking
+2020,75,9,Sep,187,221,111656,24,VSD,7.5,yes,no,yes,yes,no,OAD,0,600,13100,11.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,1.5,once a day milking
+2020,75,10,Oct,193,230,83366,24,VSD,7.5,yes,no,yes,yes,no,OAD,0,600,13100,11.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,1.5,once a day milking
+2020,75,11,nov,218,231,92281,24,VSD,7.5,yes,no,yes,yes,no,OAD,0,600,13100,11.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,1.5,once a day milking
+2020,75,12,Dec,159,220,83929,24,VSD,7.5,yes,no,yes,yes,no,OAD,0,600,13100,11.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,1.5,once a day milking
+2020,76,1,Jan,1,216,0,44,VSD,15,yes,yes,no,yes,no,OAD,0,1000,22001,0,6,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2.5,twice a day milking
+2020,76,2,Feb,41,269,13981,44,VSD,15,yes,yes,no,yes,no,OAD,0,1000,22001,0,6,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2.5,twice a day milking
+2020,76,3,Mar,213,275,170912,44,VSD,15,yes,yes,no,yes,no,OAD,0,1000,22001,0,6,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2.5,twice a day milking
+2020,76,4,Apr,264,281,189688,44,VSD,15,yes,yes,no,yes,no,OAD,0,1000,22001,0,6,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2.5,twice a day milking
+2020,76,5,May,279,280,197309,44,VSD,15,yes,yes,no,yes,no,OAD,0,1000,22001,0,6,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2.5,twice a day milking
+2020,76,6,Jun,274,275,234531,44,VSD,15,yes,yes,no,yes,no,OAD,0,1000,22001,0,6,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2.5,twice a day milking
+2020,76,7,Jul,274,275,174327,44,VSD,15,yes,yes,no,yes,no,OAD,0,1000,22001,0,6,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2.5,twice a day milking
+2020,76,8,Aug,269,265,159571,44,VSD,15,yes,yes,no,yes,no,OAD,0,1000,22001,0,6,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2.5,twice a day milking
+2020,76,9,Sep,263,263,169294,44,VSD,15,yes,yes,no,yes,no,OAD,0,1000,22001,0,6,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2.5,twice a day milking
+2020,76,10,Oct,260,262,134351,44,VSD,15,yes,yes,no,yes,no,OAD,0,1000,22001,0,6,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2.5,twice a day milking
+2020,76,11,nov,256,262,99185,44,VSD,15,yes,yes,no,yes,no,OAD,0,1000,22001,0,6,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2.5,twice a day milking
+2020,76,12,Dec,135,259,71583,44,VSD,15,yes,yes,no,yes,no,OAD,0,1000,22001,0,6,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,2.5,twice a day milking
+2020,77,1,Jan,1,281,0,50,VSD,16.5,yes,yes,no,yes,no,OAD,0,900,22000,0,6,0,664,17,12999,1,9,17,yes,yes,yes,yes,1,once a day milking
+2020,77,2,Feb,108,324,55272,50,VSD,16.5,yes,yes,no,yes,no,OAD,0,900,22000,0,6,0,664,17,12999,1,9,17,yes,yes,yes,yes,1,once a day milking
+2020,77,3,Mar,281,332,175703,50,VSD,16.5,yes,yes,no,yes,no,OAD,0,900,22000,0,6,0,664,17,12999,1,9,17,yes,yes,yes,yes,1,once a day milking
+2020,77,4,Apr,320,331,249838,50,VSD,16.5,yes,yes,no,yes,no,OAD,0,900,22000,0,6,0,664,17,12999,1,9,17,yes,yes,yes,yes,1,once a day milking
+2020,77,5,May,329,329,254099,50,VSD,16.5,yes,yes,no,yes,no,OAD,0,900,22000,0,6,0,664,17,12999,1,9,17,yes,yes,yes,yes,1,once a day milking
+2020,77,6,Jun,329,329,233116,50,VSD,16.5,yes,yes,no,yes,no,OAD,0,900,22000,0,6,0,664,17,12999,1,9,17,yes,yes,yes,yes,1,once a day milking
+2020,77,7,Jul,329,329,218007,50,VSD,16.5,yes,yes,no,yes,no,OAD,0,900,22000,0,6,0,664,17,12999,1,9,17,yes,yes,yes,yes,1,once a day milking
+2020,77,8,Aug,326,328,186325,50,VSD,16.5,yes,yes,no,yes,no,OAD,0,900,22000,0,6,0,664,17,12999,1,9,17,yes,yes,yes,yes,1,once a day milking
+2020,77,9,Sep,326,326,173443,50,VSD,16.5,yes,yes,no,yes,no,OAD,0,900,22000,0,6,0,664,17,12999,1,9,17,yes,yes,yes,yes,1,once a day milking
+2020,77,10,Oct,319,306,149454,50,VSD,16.5,yes,yes,no,yes,no,OAD,0,900,22000,0,6,0,664,17,12999,1,9,17,yes,yes,yes,yes,1,once a day milking
+2020,77,11,nov,239,306,62091,50,VSD,16.5,yes,yes,no,yes,no,OAD,0,900,22000,0,6,0,664,17,12999,1,9,17,yes,yes,yes,yes,1,once a day milking
+2020,77,12,Dec,75,306,19599,50,VSD,16.5,yes,yes,no,yes,no,OAD,0,900,22000,0,6,0,664,17,12999,1,9,17,yes,yes,yes,yes,1,once a day milking
+2020,78,1,Jan,14,484,1659,50,VSD,15,yes,yes,no,yes,no,OAD,0,600,17600,9,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2,once a day milking
+2020,78,2,Feb,230,516,103835,50,VSD,15,yes,yes,no,yes,no,OAD,0,600,17600,9,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2,once a day milking
+2020,78,3,Mar,433,514,252145,50,VSD,15,yes,yes,no,yes,no,OAD,0,600,17600,9,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2,once a day milking
+2020,78,4,Apr,499,491,348393,50,VSD,15,yes,yes,no,yes,no,OAD,0,600,17600,9,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2,once a day milking
+2020,78,5,May,484,482,343360,50,VSD,15,yes,yes,no,yes,no,OAD,0,600,17600,9,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2,once a day milking
+2020,78,6,Jun,481,480,312588,50,VSD,15,yes,yes,no,yes,no,OAD,0,600,17600,9,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2,once a day milking
+2020,78,7,Jul,480,480,288824,50,VSD,15,yes,yes,no,yes,no,OAD,0,600,17600,9,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2,once a day milking
+2020,78,8,Aug,478,470,252869,50,VSD,15,yes,yes,no,yes,no,OAD,0,600,17600,9,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2,once a day milking
+2020,78,9,Sep,469,468,217578,50,VSD,15,yes,yes,no,yes,no,OAD,0,600,17600,9,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2,once a day milking
+2020,78,10,Oct,458,409,199628,50,VSD,15,yes,yes,no,yes,no,OAD,0,600,17600,9,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2,once a day milking
+2020,78,11,nov,355,409,113895,50,VSD,15,yes,yes,no,yes,no,OAD,0,600,17600,9,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2,once a day milking
+2020,78,12,Dec,106,394,36956,50,VSD,15,yes,yes,no,yes,no,OAD,0,600,17600,9,0,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,2,once a day milking
+2020,79,1,Jan,3,581,0,64,VSD,15,yes,yes,no,yes,no,OAD,0,1300,26000,0,6,0,932,53,11793,7,11,11,no,no,no,no,1.5,n/a
+2020,79,2,Feb,239,681,87994,64,VSD,15,yes,yes,no,yes,no,OAD,0,1300,26000,0,6,0,932,53,11793,7,11,11,no,no,no,no,1.5,n/a
+2020,79,3,Mar,527,650,321119,64,VSD,15,yes,yes,no,yes,no,OAD,0,1300,26000,0,6,0,932,53,11793,7,11,11,no,no,no,no,1.5,n/a
+2020,79,4,Apr,621,629,417349,64,VSD,15,yes,yes,no,yes,no,OAD,0,1300,26000,0,6,0,932,53,11793,7,11,11,no,no,no,no,1.5,n/a
+2020,79,5,May,627,625,442282,64,VSD,15,yes,yes,no,yes,no,OAD,0,1300,26000,0,6,0,932,53,11793,7,11,11,no,no,no,no,1.5,n/a
+2020,79,6,Jun,624,629,379157,64,VSD,15,yes,yes,no,yes,no,OAD,0,1300,26000,0,6,0,932,53,11793,7,11,11,no,no,no,no,1.5,n/a
+2020,79,7,Jul,616,628,342759,64,VSD,15,yes,yes,no,yes,no,OAD,0,1300,26000,0,6,0,932,53,11793,7,11,11,no,no,no,no,1.5,n/a
+2020,79,8,Aug,611,619,315876,64,VSD,15,yes,yes,no,yes,no,OAD,0,1300,26000,0,6,0,932,53,11793,7,11,11,no,no,no,no,1.5,n/a
+2020,79,9,Sep,600,557,262967,64,VSD,15,yes,yes,no,yes,no,OAD,0,1300,26000,0,6,0,932,53,11793,7,11,11,no,no,no,no,1.5,n/a
+2020,79,10,Oct,576,557,218189,64,VSD,15,yes,yes,no,yes,no,OAD,0,1300,26000,0,6,0,932,53,11793,7,11,11,no,no,no,no,1.5,n/a
+2020,79,11,nov,575,576,179584,64,VSD,15,yes,yes,no,yes,no,OAD,0,1300,26000,0,6,0,932,53,11793,7,11,11,no,no,no,no,1.5,n/a
+2020,79,12,Dec,539,553,76931,64,VSD,15,yes,yes,no,yes,no,OAD,0,1300,26000,0,6,0,932,53,11793,7,11,11,no,no,no,no,1.5,n/a
+2020,80,1,Jan,14,411,0,44,VSD,15,yes,yes,no,yes,no,OAD,0,1200,32695,5.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2.5,once a day milking
+2020,80,2,Feb,112,477,47939,44,VSD,15,yes,yes,no,yes,no,OAD,0,1200,32695,5.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2.5,once a day milking
+2020,80,3,Mar,377,492,185327,44,VSD,15,yes,yes,no,yes,no,OAD,0,1200,32695,5.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2.5,once a day milking
+2020,80,4,Apr,455,489,291906,44,VSD,15,yes,yes,no,yes,no,OAD,0,1200,32695,5.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2.5,once a day milking
+2020,80,5,May,465,479,398275,44,VSD,15,yes,yes,no,yes,no,OAD,0,1200,32695,5.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2.5,once a day milking
+2020,80,6,Jun,457,460,280760,44,VSD,15,yes,yes,no,yes,no,OAD,0,1200,32695,5.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2.5,once a day milking
+2020,80,7,Jul,451,453,241621,44,VSD,15,yes,yes,no,yes,no,OAD,0,1200,32695,5.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2.5,once a day milking
+2020,80,8,Aug,451,452,280847,44,VSD,15,yes,yes,no,yes,no,OAD,0,1200,32695,5.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2.5,once a day milking
+2020,80,9,Sep,449,451,217016,44,VSD,15,yes,yes,no,yes,no,OAD,0,1200,32695,5.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2.5,once a day milking
+2020,80,10,Oct,415,422,174546,44,VSD,15,yes,yes,no,yes,no,OAD,0,1200,32695,5.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2.5,once a day milking
+2020,80,11,nov,363,420,136845,44,VSD,15,yes,yes,no,yes,no,OAD,0,1200,32695,5.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2.5,once a day milking
+2020,80,12,Dec,26,388,9062,44,VSD,15,yes,yes,no,yes,no,OAD,0,1200,32695,5.4,0,0,48,166,13421,2,11,NaN,no,no,no,n/a,2.5,once a day milking
+2020,81,1,Jan,5,365,0,44,VSD,15,yes,no,yes,yes,no,OAD,0,700,16000,11.4,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,1,once a day milking
+2020,81,2,Feb,182,441,54584,44,VSD,15,yes,no,yes,yes,no,OAD,0,700,16000,11.4,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,1,once a day milking
+2020,81,3,Mar,373,462,244183,44,VSD,15,yes,no,yes,yes,no,OAD,0,700,16000,11.4,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,1,once a day milking
+2020,81,4,Apr,447,454,315134,44,VSD,15,yes,no,yes,yes,no,OAD,0,700,16000,11.4,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,1,once a day milking
+2020,81,5,May,447,449,306186,44,VSD,15,yes,no,yes,yes,no,OAD,0,700,16000,11.4,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,1,once a day milking
+2020,81,6,Jun,443,445,280619,44,VSD,15,yes,no,yes,yes,no,OAD,0,700,16000,11.4,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,1,once a day milking
+2020,81,7,Jul,444,445,260360,44,VSD,15,yes,no,yes,yes,no,OAD,0,700,16000,11.4,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,1,once a day milking
+2020,81,8,Aug,444,445,212338,44,VSD,15,yes,no,yes,yes,no,OAD,0,700,16000,11.4,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,1,once a day milking
+2020,81,9,Sep,442,429,188112,44,VSD,15,yes,no,yes,yes,no,OAD,0,700,16000,11.4,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,1,once a day milking
+2020,81,10,Oct,425,423,173397,44,VSD,15,yes,no,yes,yes,no,OAD,0,700,16000,11.4,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,1,once a day milking
+2020,81,11,nov,412,398,118415,44,VSD,15,yes,no,yes,yes,no,OAD,0,700,16000,11.4,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,1,once a day milking
+2020,81,12,Dec,51,394,34722,44,VSD,15,yes,no,yes,yes,no,OAD,0,700,16000,11.4,0,0,NaN,58,NaN,3,5,12,yes,yes,yes,yes,1,once a day milking
+2020,82,1,Jan,2,279,585,50,VSD,15,yes,no,yes,yes,no,OAD,0,1200,25000,6,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,2,once a day milking
+2020,82,2,Feb,118,345,69335,50,VSD,15,yes,no,yes,yes,no,OAD,0,1200,25000,6,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,2,once a day milking
+2020,82,3,Mar,255,353,187826,50,VSD,15,yes,no,yes,yes,no,OAD,0,1200,25000,6,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,2,once a day milking
+2020,82,4,Apr,309,352,229819,50,VSD,15,yes,no,yes,yes,no,OAD,0,1200,25000,6,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,2,once a day milking
+2020,82,5,May,320,340,222784,50,VSD,15,yes,no,yes,yes,no,OAD,0,1200,25000,6,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,2,once a day milking
+2020,82,6,Jun,320,323,208086,50,VSD,15,yes,no,yes,yes,no,OAD,0,1200,25000,6,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,2,once a day milking
+2020,82,7,Jul,318,319,193425,50,VSD,15,yes,no,yes,yes,no,OAD,0,1200,25000,6,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,2,once a day milking
+2020,82,8,Aug,311,312,166076,50,VSD,15,yes,no,yes,yes,no,OAD,0,1200,25000,6,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,2,once a day milking
+2020,82,9,Sep,308,308,157819,50,VSD,15,yes,no,yes,yes,no,OAD,0,1200,25000,6,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,2,once a day milking
+2020,82,10,Oct,301,307,146153,50,VSD,15,yes,no,yes,yes,no,OAD,0,1200,25000,6,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,2,once a day milking
+2020,82,11,nov,213,307,68269,50,VSD,15,yes,no,yes,yes,no,OAD,0,1200,25000,6,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,2,once a day milking
+2020,82,12,Dec,58,398,26315,50,VSD,15,yes,no,yes,yes,no,OAD,0,1200,25000,6,0,0,664,17,12999,1,9,17,yes,yes,yes,yes,2,once a day milking
+2020,83,1,Jan,82,344,20369,60,VSD,14,yes,yes,no,yes,no,OAD,0,1300,32000,0,6,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2020,83,2,Feb,45,387,13368,60,VSD,14,yes,yes,no,yes,no,OAD,0,1300,32000,0,6,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2020,83,3,Mar,265,412,150917,60,VSD,14,yes,yes,no,yes,no,OAD,0,1300,32000,0,6,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2020,83,4,Apr,378,425,259948,60,VSD,14,yes,yes,no,yes,no,OAD,0,1300,32000,0,6,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2020,83,5,May,412,417,314835,60,VSD,14,yes,yes,no,yes,no,OAD,0,1300,32000,0,6,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2020,83,6,Jun,412,411,282302,60,VSD,14,yes,yes,no,yes,no,OAD,0,1300,32000,0,6,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2020,83,7,Jul,411,406,237401,60,VSD,14,yes,yes,no,yes,no,OAD,0,1300,32000,0,6,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2020,83,8,Aug,406,406,209766,60,VSD,14,yes,yes,no,yes,no,OAD,0,1300,32000,0,6,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2020,83,9,Sep,406,406,177925,60,VSD,14,yes,yes,no,yes,no,OAD,0,1300,32000,0,6,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2020,83,10,Oct,405,404,150305,60,VSD,14,yes,yes,no,yes,no,OAD,0,1300,32000,0,6,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2020,83,11,nov,403,401,129437,60,VSD,14,yes,yes,no,yes,no,OAD,0,1300,32000,0,6,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2020,83,12,Dec,380,352,119093,60,VSD,14,yes,yes,no,yes,no,OAD,0,1300,32000,0,6,0,1000,200,NaN,0,11,NaN,yes,yes,yes,yes,1.5,once a day milking
+2020,84,1,Jan,247,249,0,50,VSD,15,yes,yes,no,yes,no,OAD,0,500,22000,3,6,0,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2020,84,2,Feb,204,317,36543,50,VSD,15,yes,yes,no,yes,no,OAD,0,500,22000,3,6,0,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2020,84,3,Mar,295,326,154128,50,VSD,15,yes,yes,no,yes,no,OAD,0,500,22000,3,6,0,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2020,84,4,Apr,321,321,209882,50,VSD,15,yes,yes,no,yes,no,OAD,0,500,22000,3,6,0,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2020,84,5,May,320,318,206124,50,VSD,15,yes,yes,no,yes,no,OAD,0,500,22000,3,6,0,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2020,84,6,Jun,317,316,188976,50,VSD,15,yes,yes,no,yes,no,OAD,0,500,22000,3,6,0,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2020,84,7,Jul,315,311,183074,50,VSD,15,yes,yes,no,yes,no,OAD,0,500,22000,3,6,0,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2020,84,8,Aug,309,309,215887,50,VSD,15,yes,yes,no,yes,no,OAD,0,500,22000,3,6,0,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2020,84,9,Sep,303,297,150957,50,VSD,15,yes,yes,no,yes,no,OAD,0,500,22000,3,6,0,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2020,84,10,Oct,297,295,138816,50,VSD,15,yes,yes,no,yes,no,OAD,0,500,22000,3,6,0,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2020,84,11,nov,241,295,71039,50,VSD,15,yes,yes,no,yes,no,OAD,0,500,22000,3,6,0,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
+2020,84,12,Dec,118,275,19582,50,VSD,15,yes,yes,no,yes,no,OAD,0,500,22000,3,6,0,932,53,11793,7,11,11,no,no,no,no,2.5,twice a day milking
