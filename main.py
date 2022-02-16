@@ -1,5 +1,5 @@
 from fbs_runtime.application_context.PyQt5 import ApplicationContext
-from PyQt5.QtWidgets import QFileDialog, QPushButton, QHBoxLayout, QRadioButton, QGridLayout, \
+from PyQt5.QtWidgets import QMessageBox, QFileDialog, QPushButton, QHBoxLayout, QRadioButton, QGridLayout, \
     QLabel, QGroupBox, QCheckBox, QDialogButtonBox, QTabWidget, QVBoxLayout, QButtonGroup, QTextEdit, QDialog, QWidget, QApplication
 from qtrangeslider import QLabeledRangeSlider
 from PyQt5.QtGui import QStandardItem, QIcon, QPixmap
@@ -393,7 +393,6 @@ class mainwindow(QDialog):
         self.importedfile = importedfile
         self.on_filterButtonLoad_clicked()
         self.window().spinner.stop()
-        # self.spinner.stop()
 
     @QtCore.pyqtSlot()
     def export_clicked(self):
@@ -690,63 +689,122 @@ class mainwindow(QDialog):
 
     @QtCore.pyqtSlot()
     def on_filterButtonLoad_clicked(self):
-        current_tv = self.tvdatabase # annual
-        current_charts = self.importedfile # monthly
 
-        #farm size
-        minsize = self.slider1.value()[0]
-        maxsize = self.slider1.value()[1]
-        # minsize = 5
-        # maxsize = 500
 
-        #VSD
-        if self.VSD_yes.isChecked():
-            current_tv = current_tv.loc[(current_tv['VSD'] == "yes")]
-        elif self.VSD_no.isChecked():
-            current_tv = current_tv.loc[(current_tv['VSD'] == "no")]
+        if hasattr(self, "tvdatabase"):
 
-        # #PHE
-        if self.PHE_yes.isChecked():
-            current_tv = current_tv.loc[(current_tv['coolingsystem_platecooler'] == "yes")]
-        elif self.PHE_no.isChecked():
-            current_tv = current_tv.loc[(current_tv['coolingsystem_platecooler'] == "no")]
+            current_tv = self.tvdatabase # annual
+            current_charts = self.importedfile # monthly
 
-        # #Cooling System
-        if self.cs_DX.isChecked():
-            current_tv = current_tv.loc[(current_tv['coolingsystem_directexpansion'] == "yes")]
-        elif self.cs_IB.isChecked():
-            current_tv = current_tv.loc[(current_tv['coolingsystem_icebank'] == "yes")]
+            #farm size
+            minsize = self.slider1.value()[0]
+            maxsize = self.slider1.value()[1]
 
-        # DER
-        der_logical = [self.der_a.isChecked(), self.der_b.isChecked(), self.der_c.isChecked(), self.der_d.isChecked(), self.der_e.isChecked()]
-        DER_selected = np.array(["A", "B", "C", "D", "E"])[np.array(der_logical)]
-        current_tv = current_tv[(current_tv['DER'].isin(DER_selected))]
+            #VSD
+            if self.VSD_yes.isChecked():
+                current_tv = current_tv.loc[(current_tv['VSD'] == "yes")]
+            elif self.VSD_no.isChecked():
+                current_tv = current_tv.loc[(current_tv['VSD'] == "no")]
 
-        #filter treeview database based on slider chart values
-        current_tv = current_tv.loc[(current_tv['herd_size'] >= minsize) & (current_tv['herd_size'] <= maxsize)]
-        current_charts = current_charts.loc[current_charts['farm_id'].isin(current_tv["farm_id"])]
+            # #PHE
+            if self.PHE_yes.isChecked():
+                current_tv = current_tv.loc[(current_tv['coolingsystem_platecooler'] == "yes")]
+            elif self.PHE_no.isChecked():
+                current_tv = current_tv.loc[(current_tv['coolingsystem_platecooler'] == "no")]
 
-        # difference from mean of subset
-        current_tv["wh_lm"] = round(current_tv["wh_lm"], 2)
-        current_tv["subset_diff_%"] = round((current_tv["wh_lm"] - statistics.mean(current_tv["wh_lm"])) / statistics.mean(current_tv["wh_lm"]) * 100, 2)
+            # #Cooling System
+            if self.cs_DX.isChecked():
+                current_tv = current_tv.loc[(current_tv['coolingsystem_directexpansion'] == "yes")]
+            elif self.cs_IB.isChecked():
+                current_tv = current_tv.loc[(current_tv['coolingsystem_icebank'] == "yes")]
 
-        if current_tv is None:
-            return
+            # DER
+            der_logical = [self.der_a.isChecked(), self.der_b.isChecked(), self.der_c.isChecked(), self.der_d.isChecked(), self.der_e.isChecked()]
+            DER_selected = np.array(["A", "B", "C", "D", "E"])[np.array(der_logical)]
+            current_tv = current_tv[(current_tv['DER'].isin(DER_selected))]
 
-        if current_charts is None:
-            return
+            #filter treeview database based on slider chart values
+            current_tv = current_tv.loc[(current_tv['herd_size'] >= minsize) & (current_tv['herd_size'] <= maxsize)]
+            current_charts = current_charts.loc[current_charts['farm_id'].isin(current_tv["farm_id"])]
 
-        self.firstTab.MRChart(current_tv)
-        self.firstTab.BLChart(current_charts)
-        self.firstTab.energychart(current_charts, current_tv)
-        # current_tv_removed = current_tv.drop(["TotalKWh", "wh_lm", "global_diff_%", "subset_diff_%"], axis=1)
-        self.model = PandasModel(current_tv)
-        self.tableView.setModel(self.model)
-        self.filtereddatabase_ann = current_tv
-        self.filtereddatabase_mth = current_charts
+            if len(current_tv) == 0:
+                msg = QMessageBox()
+                msg.setWindowTitle("Filter Data")
+                msg.setText("No farms available with current parameters.")
+                msg.setStandardButtons(QMessageBox.Ok)
+                x = msg.exec_()
 
-        self.mdl = self.firstTab.kpi_table(self.filtereddatabase_ann)
-        self.firstTab.tableViewkpi.setModel(self.mdl)
+                # Change filtering buttons to original (as per tvdatabase)
+                self.slider1.setValue((self.cursel_minsize, self.cursel_maxsize))
+                self.__dict__[f"VSD_{self.cursel_vsd}"].setChecked(True)
+                self.__dict__[f"PHE_{self.cursel_phe}"].setChecked(True)
+                self.__dict__[f"cs_{self.cursel_cs}"].setChecked(True)
+                self.der_a.setChecked(self.der[0])
+                self.der_b.setChecked(self.der[1])
+                self.der_c.setChecked(self.der[2])
+                self.der_d.setChecked(self.der[3])
+                self.der_e.setChecked(self.der[4])
+                return
+
+            if current_charts is None:
+                return
+
+            # difference from mean of subset
+            current_tv["wh_lm"] = round(current_tv["wh_lm"], 2)
+            current_tv["subset_diff_%"] = round((current_tv["wh_lm"] - statistics.mean(current_tv["wh_lm"])) / statistics.mean(current_tv["wh_lm"]) * 100, 2)
+
+
+            self.firstTab.MRChart(current_tv)
+            self.firstTab.BLChart(current_charts)
+            self.firstTab.energychart(current_charts, current_tv)
+            current_tv_removed = current_tv.drop(["TotalKWh", "wh_lm", "global_diff_%", "subset_diff_%", "pv_kwh"], axis=1)
+            self.model = PandasModel(current_tv_removed)
+            self.tableView.setModel(self.model)
+            self.filtereddatabase_ann = current_tv
+            self.filtereddatabase_mth = current_charts
+
+            self.mdl = self.firstTab.kpi_table(self.filtereddatabase_ann)
+            self.firstTab.tableViewkpi.setModel(self.mdl)
+
+            # cookies (to return back to if no data available)
+            self.cursel_minsize = self.slider1.value()[0]
+            self.cursel_maxsize = self.slider1.value()[1]
+
+            # VSD
+            if self.VSD_yes.isChecked():
+                self.cursel_vsd = "yes"
+            elif self.VSD_no.isChecked():
+                self.cursel_vsd = "no"
+            elif self.VSD_all.isChecked():
+                self.cursel_vsd = "all"
+
+            # #PHE
+            if self.PHE_yes.isChecked():
+                self.cursel_phe = "yes"
+            elif self.PHE_no.isChecked():
+                self.cursel_phe = "no"
+            elif self.PHE_all.isChecked():
+                self.cursel_phe = "all"
+
+            # #Cooling System
+            if self.cs_DX.isChecked():
+                self.cursel_cs = "DX"
+            elif self.cs_IB.isChecked():
+                self.cursel_cs = "IB"
+            elif self.cs_all.isChecked():
+                self.cursel_cs = "all"
+
+            # DER
+            self.der = [self.der_a.isChecked(), self.der_b.isChecked(), self.der_c.isChecked(),
+                           self.der_d.isChecked(), self.der_e.isChecked()]
+
+
+        else:
+            msg = QMessageBox()
+            msg.setWindowTitle("Import Data")
+            msg.setText("Please import data before filtering.")
+            msg.setStandardButtons(QMessageBox.Ok)
+            x = msg.exec_()
 
 class FirstTab(QWidget):
     def __init__(self, tabwidget):
