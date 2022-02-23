@@ -398,18 +398,26 @@ class mainwindow(QDialog):
     def export_clicked(self):
         # export treeview file as csv
 
+        if hasattr(self, "tvdatabase"):
 
-        fileforexport = self.filtereddatabase_ann
+            fileforexport = self.filtereddatabase_ann
 
 
-        if fileforexport is None:
-            return
+            if fileforexport is None:
+                return
 
-        option = QFileDialog.Options()
-        fname, _ = QFileDialog.getSaveFileName(self, 'Save file',
-                                            CURRENT_DIR, "CSV files (*.csv)", options=option)
-        if fname:
-            fileforexport.to_csv(fname, index=False)
+            option = QFileDialog.Options()
+            fname, _ = QFileDialog.getSaveFileName(self, 'Save file',
+                                                CURRENT_DIR, "CSV files (*.csv)", options=option)
+            if fname:
+                fileforexport.to_csv(fname, index=False)
+
+        else:
+            msg = QMessageBox()
+            msg.setWindowTitle("Export Data")
+            msg.setText("Please import data.")
+            msg.setStandardButtons(QMessageBox.Ok)
+            x = msg.exec_()
 
     def processimportedfile(self, data):
         # fname = "C:/NAIDEADATA2.csv"
