@@ -1,8 +1,8 @@
 from fbs_runtime.application_context.PyQt5 import ApplicationContext
-from PyQt5.QtWidgets import QMessageBox, QFileDialog, QPushButton, QHBoxLayout, QRadioButton, QGridLayout, \
+from PyQt5.QtWidgets import QLineEdit, QMessageBox, QFileDialog, QPushButton, QHBoxLayout, QRadioButton, QGridLayout, \
     QLabel, QGroupBox, QCheckBox, QDialogButtonBox, QTabWidget, QVBoxLayout, QButtonGroup, QTextEdit, QDialog, QWidget, QApplication
 from qtrangeslider import QLabeledRangeSlider
-from PyQt5.QtGui import QStandardItem, QIcon, QPixmap
+from PyQt5.QtGui import QStandardItem, QIcon, QPixmap, QIntValidator
 from PyQt5 import QtWebEngineWidgets, QtCore, QtGui, QtWidgets
 from pyqtspinner.spinner import WaitingSpinner
 from PyQt5.QtCore import *
@@ -71,12 +71,18 @@ class mainwindow(QDialog):
         HeaderBox = QGroupBox("Import/Export Data")
 
         inputfilebtn = QPushButton("Import")
-        inputfilebtn.resize(150, 50)
-        inputfilebtn.clicked.connect(self.start_spinner)
+        # inputfilebtn.resize(150, 50)
+        # inputfilebtn.clicked.connect(self.start_spinner)
         inputfilebtn.clicked.connect(self.on_pushButtonLoad_clicked)
 
+        inptbox = QLineEdit(self)
+        inptbox.setStyleSheet("border: 0px solid red;")
+        onlyInt = QIntValidator()
+        inptbox.setValidator(onlyInt)
+        boxlabel = QLabel("gCO\u2082/kWh")
+
         exportfilebtn = QPushButton("Export")
-        exportfilebtn.setGeometry(200, 150, 100, 40)
+        # exportfilebtn.setGeometry(200, 150, 100, 40)
         exportfilebtn.clicked.connect(self.export_clicked)
         #import box layout
 
@@ -89,9 +95,15 @@ class mainwindow(QDialog):
         importrow2layout.addWidget(exportfilebtn)
         importrow2layout.addStretch()
 
+        importrow3layout = QHBoxLayout()
+        importrow3layout.addWidget(inptbox)
+        importrow3layout.addWidget(boxlabel)
+        importrow3layout.addStretch()
+
         HeaderLayout = QGridLayout()
         HeaderLayout.addLayout(importrow1layout, 0, 1)
         HeaderLayout.addLayout(importrow2layout, 1, 1)
+        HeaderLayout.addLayout(importrow3layout, 2, 1)
         HeaderBox.setLayout(HeaderLayout)
         HeaderBox.setFlat(True)
 
@@ -1046,7 +1058,7 @@ class FirstTab(QWidget):
             derdata = derdata.sort_values(by=['DER'], ascending=True)
             fig = go.Pie(labels=derdata["DER"], hovertemplate = "%{label}: <br>No. Farms: %{value} <extra></extra>", sort=False)
         elif self.radioButton7.isChecked():
-            summed = round(kwhdata.sum(axis=0)*0.324)
+            summed = round(kwhdata.sum(axis=0)*0.296)
             fig = go.Pie(labels=["Milk Cooling", "Milk Harvesting", "Water Heating", "Other Use"], values=summed.values,  hovertemplate = "%{label}: <br>Sum: %{value} kg CO\u2082 <extra></extra>", sort=False)
 
         layout = go.Layout(autosize=True, legend=dict(orientation="h",xanchor='center', x=0.5))
