@@ -75,10 +75,14 @@ class mainwindow(QDialog):
         # inputfilebtn.clicked.connect(self.start_spinner)
         inputfilebtn.clicked.connect(self.on_pushButtonLoad_clicked)
 
-        inptbox = QLineEdit(self)
-        inptbox.setStyleSheet("border: 0px solid red;")
+        self.inptbox = QLineEdit(self)
+        self.inptbox.setStyleSheet("border: 0px solid red;")
         onlyInt = QIntValidator()
-        inptbox.setValidator(onlyInt)
+        self.inptbox.setValidator(onlyInt)
+        if not hasattr(self, "carbon"):
+            self.inptbox.setText(str(296))
+
+
         boxlabel = QLabel("gCO\u2082/kWh")
 
         exportfilebtn = QPushButton("Export")
@@ -96,7 +100,7 @@ class mainwindow(QDialog):
         importrow2layout.addStretch()
 
         importrow3layout = QHBoxLayout()
-        importrow3layout.addWidget(inptbox)
+        importrow3layout.addWidget(self.inptbox)
         importrow3layout.addWidget(boxlabel)
         importrow3layout.addStretch()
 
@@ -710,7 +714,6 @@ class mainwindow(QDialog):
     @QtCore.pyqtSlot()
     def on_filterButtonLoad_clicked(self):
 
-
         if hasattr(self, "tvdatabase"):
 
             current_tv = self.tvdatabase # annual
@@ -919,7 +922,7 @@ class FirstTab(QWidget):
             self.modelkpi.setItem(0, 4, QStandardItem(str("")))
 
         try:
-            val = sum(data["TotalKWh"])*.324
+            val = sum(data["TotalKWh"])*float(self.tabwidget.inptbox.text())/1000
             if val == 0:
                 self.modelkpi.setItem(0, 5, QStandardItem(str("")))
             else:
@@ -952,7 +955,6 @@ class FirstTab(QWidget):
         self.modelkpi.setHeaderData(3, Qt.Horizontal, "kWh /Farm /Cow")
         self.modelkpi.setHeaderData(4, Qt.Horizontal, "Average DER")
         self.modelkpi.setHeaderData(5, Qt.Horizontal, "kg CO\u2082")
-        # 'kh CO{}'.format(get_sub('2'))
 
         # Align text in tableview
         for item in range(0, 6):
@@ -1058,7 +1060,7 @@ class FirstTab(QWidget):
             derdata = derdata.sort_values(by=['DER'], ascending=True)
             fig = go.Pie(labels=derdata["DER"], hovertemplate = "%{label}: <br>No. Farms: %{value} <extra></extra>", sort=False)
         elif self.radioButton7.isChecked():
-            summed = round(kwhdata.sum(axis=0)*0.296)
+            summed = round(kwhdata.sum(axis=0)*float(self.tabwidget.inptbox.text())/1000) #0.296
             fig = go.Pie(labels=["Milk Cooling", "Milk Harvesting", "Water Heating", "Other Use"], values=summed.values,  hovertemplate = "%{label}: <br>Sum: %{value} kg CO\u2082 <extra></extra>", sort=False)
 
         layout = go.Layout(autosize=True, legend=dict(orientation="h",xanchor='center', x=0.5))
