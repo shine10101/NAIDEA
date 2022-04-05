@@ -1,8 +1,8 @@
 from fbs_runtime.application_context.PyQt5 import ApplicationContext
-from PyQt5.QtWidgets import QMessageBox, QFileDialog, QPushButton, QHBoxLayout, QRadioButton, QGridLayout, \
+from PyQt5.QtWidgets import QLineEdit, QMessageBox, QFileDialog, QPushButton, QHBoxLayout, QRadioButton, QGridLayout, \
     QLabel, QGroupBox, QCheckBox, QDialogButtonBox, QTabWidget, QVBoxLayout, QButtonGroup, QTextEdit, QDialog, QWidget, QApplication
 from qtrangeslider import QLabeledRangeSlider
-from PyQt5.QtGui import QStandardItem, QIcon, QPixmap
+from PyQt5.QtGui import QStandardItem, QIcon, QPixmap, QIntValidator
 from PyQt5 import QtWebEngineWidgets, QtCore, QtGui, QtWidgets
 from pyqtspinner.spinner import WaitingSpinner
 from PyQt5.QtCore import *
@@ -71,12 +71,22 @@ class mainwindow(QDialog):
         HeaderBox = QGroupBox("Import/Export Data")
 
         inputfilebtn = QPushButton("Import")
-        inputfilebtn.resize(150, 50)
-        inputfilebtn.clicked.connect(self.start_spinner)
+        # inputfilebtn.resize(150, 50)
+        # inputfilebtn.clicked.connect(self.start_spinner)
         inputfilebtn.clicked.connect(self.on_pushButtonLoad_clicked)
 
+        self.inptbox = QLineEdit(self)
+        self.inptbox.setStyleSheet("border: 0px solid red;")
+        onlyInt = QIntValidator()
+        self.inptbox.setValidator(onlyInt)
+        if not hasattr(self, "carbon"):
+            self.inptbox.setText(str(296))
+
+
+        boxlabel = QLabel("gCO\u2082/kWh")
+
         exportfilebtn = QPushButton("Export")
-        exportfilebtn.setGeometry(200, 150, 100, 40)
+        # exportfilebtn.setGeometry(200, 150, 100, 40)
         exportfilebtn.clicked.connect(self.export_clicked)
         #import box layout
 
@@ -89,9 +99,15 @@ class mainwindow(QDialog):
         importrow2layout.addWidget(exportfilebtn)
         importrow2layout.addStretch()
 
+        importrow3layout = QHBoxLayout()
+        importrow3layout.addWidget(self.inptbox)
+        importrow3layout.addWidget(boxlabel)
+        importrow3layout.addStretch()
+
         HeaderLayout = QGridLayout()
         HeaderLayout.addLayout(importrow1layout, 0, 1)
         HeaderLayout.addLayout(importrow2layout, 1, 1)
+        HeaderLayout.addLayout(importrow3layout, 2, 1)
         HeaderBox.setLayout(HeaderLayout)
         HeaderBox.setFlat(True)
 
@@ -398,18 +414,26 @@ class mainwindow(QDialog):
     def export_clicked(self):
         # export treeview file as csv
 
+        if hasattr(self, "tvdatabase"):
 
-        fileforexport = self.filtereddatabase_ann
+            fileforexport = self.filtereddatabase_ann
 
 
-        if fileforexport is None:
-            return
+            if fileforexport is None:
+                return
 
-        option = QFileDialog.Options()
-        fname, _ = QFileDialog.getSaveFileName(self, 'Save file',
-                                            CURRENT_DIR, "CSV files (*.csv)", options=option)
-        if fname:
-            fileforexport.to_csv(fname, index=False)
+            option = QFileDialog.Options()
+            fname, _ = QFileDialog.getSaveFileName(self, 'Save file',
+                                                CURRENT_DIR, "CSV files (*.csv)", options=option)
+            if fname:
+                fileforexport.to_csv(fname, index=False)
+
+        else:
+            msg = QMessageBox()
+            msg.setWindowTitle("Export Data")
+            msg.setText("Please import data.")
+            msg.setStandardButtons(QMessageBox.Ok)
+            x = msg.exec_()
 
     def processimportedfile(self, data):
         # fname = "C:/NAIDEADATA2.csv"
@@ -690,7 +714,6 @@ class mainwindow(QDialog):
     @QtCore.pyqtSlot()
     def on_filterButtonLoad_clicked(self):
 
-
         if hasattr(self, "tvdatabase"):
 
             current_tv = self.tvdatabase # annual
@@ -899,7 +922,7 @@ class FirstTab(QWidget):
             self.modelkpi.setItem(0, 4, QStandardItem(str("")))
 
         try:
-            val = sum(data["TotalKWh"])*.324
+            val = sum(data["TotalKWh"])*float(self.tabwidget.inptbox.text())/1000
             if val == 0:
                 self.modelkpi.setItem(0, 5, QStandardItem(str("")))
             else:
@@ -932,7 +955,6 @@ class FirstTab(QWidget):
         self.modelkpi.setHeaderData(3, Qt.Horizontal, "kWh /Farm /Cow")
         self.modelkpi.setHeaderData(4, Qt.Horizontal, "Average DER")
         self.modelkpi.setHeaderData(5, Qt.Horizontal, "kg CO\u2082")
-        # 'kh CO{}'.format(get_sub('2'))
 
         # Align text in tableview
         for item in range(0, 6):
@@ -1038,7 +1060,7 @@ class FirstTab(QWidget):
             derdata = derdata.sort_values(by=['DER'], ascending=True)
             fig = go.Pie(labels=derdata["DER"], hovertemplate = "%{label}: <br>No. Farms: %{value} <extra></extra>", sort=False)
         elif self.radioButton7.isChecked():
-            summed = round(kwhdata.sum(axis=0)*0.324)
+            summed = round(kwhdata.sum(axis=0)*float(self.tabwidget.inptbox.text())/1000) #0.296
             fig = go.Pie(labels=["Milk Cooling", "Milk Harvesting", "Water Heating", "Other Use"], values=summed.values,  hovertemplate = "%{label}: <br>Sum: %{value} kg CO\u2082 <extra></extra>", sort=False)
 
         layout = go.Layout(autosize=True, legend=dict(orientation="h",xanchor='center', x=0.5))
