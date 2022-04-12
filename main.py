@@ -287,6 +287,17 @@ class mainwindow(QDialog):
 
         # database for treeview
         df1 = pd.read_csv(fname[0])
+        # Manual filtering
+        df1 = df1.drop_duplicates(subset=['farm_id', 'month_str'], keep='first', inplace=False)
+        df1 = df1[df1["milking_frequency"].str.contains("Robotic milking frequency") == False]
+        df1 = df1.reset_index()
+        # Mechanism to replace missing values (non-mean, interpolation)
+        # xy_test = nan values
+        # xy_train = non nan values of y var and all other variables. Classification algorithm??
+
+
+        #
+
         total_db, cooling_db, vacuum_db, heating_db, combined_db = self.processimportedfile(df1)
         # Load csv files
         # wandb_total = pd.read_csv('wandbtotalkwh.csv')
@@ -392,6 +403,7 @@ class mainwindow(QDialog):
         self.model = PandasModel(df2)
         self.tableView.setModel(self.model)
 
+
         if fname:
             return df1, df2
 
@@ -441,7 +453,6 @@ class mainwindow(QDialog):
         # data = pd.read_csv(fname)
         # Custom processing of zero values
         # Replace WH vol, units, vac power with mean of populaiton
-        data.drop_duplicates(subset=['farm_id', 'month_str'], keep='first')
         data['vacuumpump_power_kw'] = data['vacuumpump_power_kw'].replace(0, data['vacuumpump_power_kw'].mean())
         data['num_parlour_units'] = data['num_parlour_units'].replace(0, data['num_parlour_units'].mean())
         data['hotwatertank_capacity_litres'] = data['hotwatertank_capacity_litres'].replace(0, data['hotwatertank_capacity_litres'].mean())
@@ -450,7 +461,7 @@ class mainwindow(QDialog):
         # replace herd and lact cow numbers with mean for that month
         x = data.groupby(data.month).herd_size.mean()
         xx = data.groupby(data.month).milking_cows.mean()
-        for item in range(len(data['herd_size'])):
+        for item in range(len(data)):
             if data['herd_size'][item] == 0:
                 m = data['month'][item]
                 data['herd_size'][item] = round(x[m],0)
