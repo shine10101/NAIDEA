@@ -77,13 +77,14 @@ class mainwindow(QDialog):
 
         self.inptbox = QLineEdit(self)
         self.inptbox.setStyleSheet("border: 0px solid red;")
+        self.inptbox.setAlignment(Qt.AlignCenter)
         onlyInt = QIntValidator()
         self.inptbox.setValidator(onlyInt)
         if not hasattr(self, "carbon"):
             self.inptbox.setText(str(296))
 
 
-        boxlabel = QLabel("gCO\u2082/kWh")
+        boxlabel = QLabel("gCO\u2082 / kWh")
 
         exportfilebtn = QPushButton("Export")
         # exportfilebtn.setGeometry(200, 150, 100, 40)
@@ -350,14 +351,14 @@ class mainwindow(QDialog):
         retech.values[retech > 0] = 1
         retech['retech'] = retech['re_thermal_m3'].astype(str) + '_' + retech['re_solarpv_kw'].astype(str)\
                            + '_' + retech['re_wind_kw'].astype(str)
-        retech['retech'].values[retech['retech'] == '1_0_0'] = 'Solar Thermal'
-        retech['retech'].values[retech['retech'] == '1_1_0'] = 'Solar Thermal, PV'
-        retech['retech'].values[retech['retech'] == '1_1_1'] = 'Thermal, PV, Wind'
-        retech['retech'].values[retech['retech'] == '0_1_1'] = 'PV, Wind'
-        retech['retech'].values[retech['retech'] == '0_1_0'] = 'Solar PV'
-        retech['retech'].values[retech['retech'] == '0_0_1'] = 'Wind'
-        retech['retech'].values[retech['retech'] == '1_0_1'] = 'Solar Thermal, Wind'
-        retech['retech'].values[retech['retech'] == '0_0_0'] = 'None'
+        retech['retech'].values[retech['retech'] == '1.0_0.0_0.0'] = 'Solar Thermal'
+        retech['retech'].values[retech['retech'] == '1.0_1.0_0.0'] = 'Solar Thermal, PV'
+        retech['retech'].values[retech['retech'] == '1.0_1.0_1.0'] = 'Thermal, PV, Wind'
+        retech['retech'].values[retech['retech'] == '0_1.0.0_1.0'] = 'PV, Wind'
+        retech['retech'].values[retech['retech'] == '0.0_1.0_0.0'] = 'Solar PV'
+        retech['retech'].values[retech['retech'] == '0.0_0.0_1.0'] = 'Wind'
+        retech['retech'].values[retech['retech'] == '1_0.0.0_1.0'] = 'Solar Thermal, Wind'
+        retech['retech'].values[retech['retech'] == '0.0_0.0_0.0'] = 'None'
 
         #merge
         df4['retech'] = retech['retech']
@@ -436,8 +437,30 @@ class mainwindow(QDialog):
             x = msg.exec_()
 
     def processimportedfile(self, data):
-        # fname = "C:/NAIDEADATA2.csv"
-        # df1 = pd.read_csv(fname)
+        # fname = "C:/NAIDEA SAMPLE DATA_BordBia.csv"
+        # data = pd.read_csv(fname)
+        # Custom processing of zero values
+        # Replace WH vol, units, vac power with mean of populaiton
+        data.drop_duplicates(subset=['farm_id', 'month_str'], keep='first')
+        data['vacuumpump_power_kw'] = data['vacuumpump_power_kw'].replace(0, data['vacuumpump_power_kw'].mean())
+        data['num_parlour_units'] = data['num_parlour_units'].replace(0, data['num_parlour_units'].mean())
+        data['hotwatertank_capacity_litres'] = data['hotwatertank_capacity_litres'].replace(0, data['hotwatertank_capacity_litres'].mean())
+        data['waterheating_power_elec_kw'] = data['waterheating_power_elec_kw'].replace(0, data['waterheating_power_elec_kw'].mean())
+        data['bulktank_capacity_litres'] = data['bulktank_capacity_litres'].replace(0, data['bulktank_capacity_litres'].mean())
+        # replace herd and lact cow numbers with mean for that month
+        x = data.groupby(data.month).herd_size.mean()
+        xx = data.groupby(data.month).milking_cows.mean()
+        for item in range(len(data['herd_size'])):
+            if data['herd_size'][item] == 0:
+                m = data['month'][item]
+                data['herd_size'][item] = round(x[m],0)
+                data['milking_cows'][item] = round(xx[m], 0)
+
+        data['re_solarpv_kw'] = data['re_solarpv_kw'].fillna(0)
+        data['re_wind_kw'] = data['re_wind_kw'].fillna(0)
+        data['re_thermal_m3'] = data['re_thermal_m3'].fillna(0)
+
+
         data_mdl = data[["farm_id", "month", "milk_yield_litres", "herd_size", "milking_cows",
                      "re_thermal_m3", "num_parlour_units", "milking_frequency", "hotwash_freq",
                      "milkpump_type", "vacuumpump_power_kw", "VSD", "bulktank_capacity_litres",
@@ -457,13 +480,13 @@ class mainwindow(QDialog):
         milkpump = pd.get_dummies(data_mdl['milkpump_type'])+1
         # milkpump.columns = milkpump.columns.str.lower()
         PHE = pd.get_dummies(data_mdl['coolingsystem_platecooler'])+1 #yes ==2
-        PHE = PHE.rename(columns={"yes": "GWPHE"})
+        PHE = PHE.rename(columns={"yes": "GWPHE", "Yes": "GWPHE"})
         DXIB = pd.get_dummies(data_mdl['coolingsystem_directexpansion']) + 1  # DX=1
-        DXIB = DXIB.rename(columns={"no": "IBDX"})
+        DXIB = DXIB.rename(columns={"no": "IBDX", "No": "IBDX"})
         ICWPHE = pd.get_dummies(data_mdl['coolingsystem_waterchillingunit']) + 1  # yes ==2
-        ICWPHE = ICWPHE.rename(columns={"yes": "ICWPHE"})
+        ICWPHE = ICWPHE.rename(columns={"yes": "ICWPHE", "Yes": "ICWPHE"})
         VSD = pd.get_dummies(data_mdl['VSD']) + 1  # yes ==2
-        VSD = VSD.rename(columns={"yes": "Parlour_VacuumPump1_VariableSpeedY_N"})
+        VSD = VSD.rename(columns={"yes": "Parlour_VacuumPump1_VariableSpeedY_N", "Yes": "Parlour_VacuumPump1_VariableSpeedY_N"})
         data_mdl = data_mdl.drop(columns=["VSD"])
         # WH Fuel source
         WH = data_mdl[["TotalWaterHeaterPower", "waterheating_power_gas_kw", "waterheating_power_oil_kw"]]
@@ -484,16 +507,19 @@ class mainwindow(QDialog):
         Milking = pd.DataFrame(Milking, columns = ["Milking"])
         Milking['Milking'].values[data_mdl['MilkYield'] == 0] = 2
 
-        # Form datasets for TCVH
+        if 'OAM' not in hzhw:
+            hzhw['OAM'] = np.ones(len(hzhw))
+
+            # Form datasets for TCVH
         df = pd.concat([data_mdl, hzhw[['OAD', "OAM", "OAW", "E2ndD"]],
-                        milkpump[['Diaphram','High Speed','Double Diaphram','Single Speed', 'VSD']],
+                        milkpump[['Diaphragm','High Speed','Double Diaphragm','Single Speed', 'Variable Speed Pump']],
                         PHE['GWPHE'], DXIB['IBDX'], ICWPHE['ICWPHE'], VSD['Parlour_VacuumPump1_VariableSpeedY_N'],
                         ElectricAndOil["ElectricAndOil"], Electric["Electric"], Dwelling["Dwelling"], Milking["Milking"]], axis=1)
         df.columns = df.columns.str.lower()
         df.columns = df.columns.str.replace(' ', '')
 
         # Create datasets for each DV, with required vars in correct order.
-        total_vars = ['farm_id', 'month', 'dairycows_milking', 'dairycows_total', 'milkyield','ibdx', 'gwphe', 'icwphe', 'totalbulktankvolume', 'parlour_vacuumpump1_variablespeedy_n', 'oad', 'oam', 'oaw', 'parlour_solarthermaly_n', 'totalwaterheatervolume','totalwaterheaterpower', 'electricandoil', 'diaphram', 'doublediaphram','highspeed','vsd','dwelling','milking']
+        total_vars = ['farm_id', 'month', 'dairycows_milking', 'dairycows_total', 'milkyield','ibdx', 'gwphe', 'icwphe', 'totalbulktankvolume', 'parlour_vacuumpump1_variablespeedy_n', 'oad', 'oam', 'oaw', 'parlour_solarthermaly_n', 'totalwaterheatervolume','totalwaterheaterpower', 'electricandoil', 'diaphragm', 'doublediaphragm','highspeed','variablespeedpump','dwelling','milking']
         # total_vars = ['farm_id', 'month', 'dairycows_milking', 'dairycows_total', 'milkyield',	'NoOfParlourUnits',	'TotalBulkTankVolume', 'TotalVacuumPower',	'OAD', 'TotalWaterHeaterVolume',	'TotalWaterHeaterPower',	'HighSpeed', 'dwelling', 'milking']
         total_vars = [each.lower() for each in total_vars]
         total_db = df[total_vars]
@@ -860,7 +886,7 @@ class FirstTab(QWidget):
         label = QTextEdit()
         label.setFrameStyle(0)
         label.setReadOnly(True)
-        label.textCursor().insertHtml("The National Artificial Intelligent Dairy Energy Application (NAIDEA) was developed and is maintained by researchers in the MeSSO research group at the Munster Technological University (messo.mtu.ie). NAIDEA is not for use by commercial bodies. Contact messo@mtu.ie for further information.")
+        label.textCursor().insertHtml("The National Artificial Intelligent Dairy Energy Application (NAIDEA) was developed and is maintained by researchers in the MeSSO research group at the Munster Technological University (messo.cit.ie). NAIDEA is not for use by commercial bodies. Contact messo@mtu.ie for further information.")
 
         ExLayout = QVBoxLayout()
         ExLayout.addWidget(label)
@@ -1107,8 +1133,9 @@ class FirstTab(QWidget):
             hovertext = "%{x}: <br>%{y} kWh <extra></extra>"
             fig = go.Figure(data=[go.Bar(name='Milk Cooling', x=smonth, y=round(kwhdata["CoolingKWh"], 1)),
                                   go.Bar(name='Milk Harvesting', x=smonth, y=round(kwhdata["VacuumKWh"], 1)),
-                                  go.Bar(name='Water Heating', x=smonth, y=round(kwhdata["WaterHeatKWh"], 1)),
-                                  go.Bar(name='Other Use', x=smonth, y=round(kwhdata["OtherKWh"], 1))])
+                                  go.Bar(name='Water Heating', x=smonth, y=round(kwhdata["WaterHeatKWh"], 1))])
+                # ,
+                #                   go.Bar(name='Other Use', x=smonth, y=round(kwhdata["OtherKWh"], 1))])
             fig.update_layout(legend=dict(orientation="h", xanchor='center', x=0.5))
 
         elif self.radioButton9.isChecked(): # total / litre milk
@@ -1123,8 +1150,9 @@ class FirstTab(QWidget):
             hovertext = "%{label}: <br>%{value} Wh/Litre <extra></extra>"
             fig = go.Figure(data=[go.Bar(name='Milk Cooling', x=smonth, y=round(kwhdata["CoolingKWh"], 1)),
                                   go.Bar(name='Milk Harvesting', x=smonth, y=round(kwhdata["VacuumKWh"], 1)),
-                                  go.Bar(name='Water Heating', x=smonth, y=round(kwhdata["WaterHeatKWh"], 1)),
-                                  go.Bar(name='Other Use', x=smonth, y=round(kwhdata["OtherKWh"], 1))])
+                                  go.Bar(name='Water Heating', x=smonth, y=round(kwhdata["WaterHeatKWh"], 1))])
+            # ,
+            #                       go.Bar(name='Other Use', x=smonth, y=round(kwhdata["OtherKWh"], 1))])
 
         elif self.radioButton10.isChecked(): # total / cow
             kwhdata_percow = importedfile[["CoolingKWh", "VacuumKWh", "WaterHeatKWh", "OtherKWh"]].div(importedfile.herd_size, axis=0)
@@ -1134,8 +1162,9 @@ class FirstTab(QWidget):
             hovertext = "%{label}: <br>%{value} kWh/Cow <extra></extra>"
             fig = go.Figure(data=[go.Bar(name='Milk Cooling', x=smonth, y=round(kwhdata["CoolingKWh"], 1)),
                                   go.Bar(name='Milk Harvesting', x=smonth, y=round(kwhdata["VacuumKWh"], 1)),
-                                  go.Bar(name='Water Heating', x=smonth, y=round(kwhdata["WaterHeatKWh"], 1)),
-                                  go.Bar(name='Other Use', x=smonth, y=round(kwhdata["OtherKWh"], 1))])
+                                  go.Bar(name='Water Heating', x=smonth, y=round(kwhdata["WaterHeatKWh"], 1))])
+            # ,
+            #                       go.Bar(name='Other Use', x=smonth, y=round(kwhdata["OtherKWh"], 1))])
 
 
         fig.update_traces(hovertemplate=hovertext)
