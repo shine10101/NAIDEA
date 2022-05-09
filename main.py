@@ -348,7 +348,7 @@ class mainwindow(QDialog):
         df1['VacuumKWh'] = df1['CombinedKWh']*(sum(df1['VacuumKWh'])/sum(CVW))
         df1['WaterHeatKWh'] = df1['CombinedKWh']*(sum(df1['WaterHeatKWh'])/sum(CVW))
         df1["OtherKWh"] = df1["TotalKWh"] - df1["CombinedKWh"] #- df1["CoolingKWh"] - df1["VacuumKWh"]
-        df2 = df1[["farm_id", "milk_yield_litres", "TotalKWh"]].groupby("farm_id", as_index=False).sum().round()
+        df2 = df1[["farm_id", "milk_yield_litres", "TotalKWh"]].groupby("farm_id", as_index=False).sum().round()#, "CoolingKWh", "VacuumKWh", "WaterHeatKWh", "OtherKWh"
         # merge datasets
         df3_size = df1[["farm_id", "herd_size", "milking_cows"]].groupby("farm_id").mean().round()
         df2 = pd.merge(left=df3_size, right=df2, left_on='farm_id', right_on='farm_id')
@@ -398,6 +398,29 @@ class mainwindow(QDialog):
         # print(df2.columns)
         first_column = df2.pop('DER')
         df2.insert(1, 'DER', first_column)
+
+
+        # Recommendations: low_energy_lighting, coolingsystem_platecooler, VSD, retech
+        red = []
+        for row in range(0,len(data)):
+            temp = []
+            if data['low_energy_lighting'][row] == "No":
+                txt = "Install energy efficient lighting ; "
+                temp.append(txt)
+            if data['coolingsystem_platecooler'][row] == "no":
+                txt = "Install milk pre-cooling system ; "
+                temp.append(txt)
+            if data['VSD'][row] == "no":
+                txt = "Install variable speed drive ; "
+                temp.append(txt)
+            # if df2['retech'][row] == "None":
+            #     txt = "Install renewable energy system."
+            #     temp.append(txt)
+
+            red.append(temp)
+
+        second_column = pd.DataFrame(red, columns = ['Recommendations'])
+        df2.insert(2, 'Recommendations', second_column)
 
         self.tvdatabase = df2 # annual database
         self.model = PandasModel(df2)
@@ -449,8 +472,6 @@ class mainwindow(QDialog):
             x = msg.exec_()
 
     def processimportedfile(self, data):
-        # import pandas as pd
-        # import numpy as np
         # fname = "C:/NAIDEA SAMPLE DATA_BordBia.csv"
         # data = pd.read_csv(fname)
         # Custom processing of zero values
@@ -475,6 +496,7 @@ class mainwindow(QDialog):
         data['re_solarpv_kw'] = data['re_solarpv_kw'].fillna(0)
         data['re_wind_kw'] = data['re_wind_kw'].fillna(0)
         data['re_thermal_m3'] = data['re_thermal_m3'].fillna(0)
+
 
         # Replace missing values according to farm size
         data['farm_id'] = pd.Categorical(data.farm_id)
@@ -539,6 +561,7 @@ class mainwindow(QDialog):
                      "waterheating_power_elec_kw", "waterheating_power_gas_kw", "waterheating_power_oil_kw",
                      "hotwatertank_capacity_litres","coolingsystem_directexpansion", "coolingsystem_platecooler",
                      "coolingsystem_icebank", "coolingsystem_waterchillingunit"]]
+        # data_mdl = data_mdl.dropna() #delete later
         data_mdl['re_thermal_m3'].values[data_mdl['re_thermal_m3'] > 0] = 2
         data_mdl['re_thermal_m3'].values[data_mdl['re_thermal_m3'] == 0] = 1
         data_mdl = data_mdl.rename(columns={"month": "Month", "milk_yield_litres": "MilkYield", "herd_size": "DairyCows_Total",
@@ -582,7 +605,23 @@ class mainwindow(QDialog):
         if 'OAM' not in hzhw:
             hzhw['OAM'] = np.ones(len(hzhw))
 
-            # Form datasets for TCVH
+        # if 'diaphragm', 'doublediaphragm','highspeed','variablespeedpump' is not in milkpump then add column of ones
+        if 'Diaphragm' not in milkpump:
+            milkpump['Diaphragm'] = np.ones(len(milkpump))
+
+        if 'Double Diaphragm' not in milkpump:
+            milkpump['Double Diaphragm'] = np.ones(len(milkpump))
+
+        if 'High Speed' not in milkpump:
+            milkpump['High Speed'] = np.ones(len(milkpump))
+
+        if 'Single Speed' not in milkpump:
+            milkpump['Single Speed'] = np.ones(len(milkpump))
+
+        if 'Variable Speed Pump' not in milkpump:
+            milkpump['Variable Speed Pump'] = np.ones(len(milkpump))
+
+        # Create datasets for TCVH
         df = pd.concat([data_mdl, hzhw[['OAD', "OAM", "OAW", "E2ndD"]],
                         milkpump[['Diaphragm','High Speed','Double Diaphragm','Single Speed', 'Variable Speed Pump']],
                         PHE['GWPHE'], DXIB['IBDX'], ICWPHE['ICWPHE'], VSD['Parlour_VacuumPump1_VariableSpeedY_N'],
@@ -980,7 +1019,7 @@ class FirstTab(QWidget):
             self.modelkpi.setItem(0, 0, QStandardItem(str("")))
 
         try:
-            val = sum(data["TotalKWh"])
+            val = np.mean(data["TotalKWh"])
             if val == 0:
                 self.modelkpi.setItem(0, 1, QStandardItem(str("")))
             else:
@@ -988,22 +1027,22 @@ class FirstTab(QWidget):
         except:
             self.modelkpi.setItem(0, 1, QStandardItem(str("")))
 
-        try:
-            val = sum(data["TotalKWh"]) / sum(data["milk_yield_litres"]) * 1000
-            self.modelkpi.setItem(0, 2, QStandardItem(str(round(val, 1))))
-        except:
-            self.modelkpi.setItem(0, 2, QStandardItem(str("")))
+        # try:
+        #     val = sum(data["TotalKWh"]) / sum(data["milk_yield_litres"]) * 1000
+        #     self.modelkpi.setItem(0, 2, QStandardItem(str(round(val, 1))))
+        # except:
+        #     self.modelkpi.setItem(0, 2, QStandardItem(str("")))
 
         try:
             val = data["TotalKWh"] / data["herd_size"]
             val = val.mean()
             if val == 0:
-                self.modelkpi.setItem(0, 3, QStandardItem(str("")))
+                self.modelkpi.setItem(0, 2, QStandardItem(str("")))
             else:
-                self.modelkpi.setItem(0, 3, QStandardItem(str(f'{round(val):,}')))
+                self.modelkpi.setItem(0, 2, QStandardItem(str(f'{round(val):,}')))
 
         except:
-            self.modelkpi.setItem(0, 3, QStandardItem(str("")))
+            self.modelkpi.setItem(0, 2, QStandardItem(str("")))
 
         try:
             val = sum(data["TotalKWh"]) / sum(data["milk_yield_litres"]) * 1000
@@ -1015,18 +1054,18 @@ class FirstTab(QWidget):
             DER = DER.replace(str(3), 'C')
             DER = DER.replace(str(4), 'D')
             DER = DER.replace(str(5), 'E')
-            self.modelkpi.setItem(0, 4, QStandardItem(DER))
+            self.modelkpi.setItem(0, 3, QStandardItem(DER))
         except:
-            self.modelkpi.setItem(0, 4, QStandardItem(str("")))
+            self.modelkpi.setItem(0, 3, QStandardItem(str("")))
 
         try:
-            val = sum(data["TotalKWh"])*float(self.tabwidget.inptbox.text())/1000
+            val = np.mean(data["TotalKWh"])*float(self.tabwidget.inptbox.text())/1000
             if val == 0:
-                self.modelkpi.setItem(0, 5, QStandardItem(str("")))
+                self.modelkpi.setItem(0, 4, QStandardItem(str("")))
             else:
-                self.modelkpi.setItem(0, 5, QStandardItem(str(f'{round(val):,}')))
+                self.modelkpi.setItem(0, 4, QStandardItem(str(f'{round(val):,}')))
         except:
-            self.modelkpi.setItem(0, 5, QStandardItem(str("")))
+            self.modelkpi.setItem(0, 4, QStandardItem(str("")))
 
         return self.modelkpi
 
@@ -1038,7 +1077,7 @@ class FirstTab(QWidget):
 
         self.modelkpi = QtGui.QStandardItemModel(self)
         self.modelkpi.setRowCount(1)
-        self.modelkpi.setColumnCount(6)
+        self.modelkpi.setColumnCount(5)
         self.tableViewkpi = QtWidgets.QTableView(self)
         self.tableViewkpi.setFixedHeight(62) # height of available space
         self.tableViewkpi.setShowGrid(False) # removes horizontal lines
@@ -1049,10 +1088,10 @@ class FirstTab(QWidget):
         self.tableViewkpi.verticalHeader().hide()
         self.modelkpi.setHeaderData(0, Qt.Horizontal, "No. of Farms")
         self.modelkpi.setHeaderData(1, Qt.Horizontal, "kWh")
-        self.modelkpi.setHeaderData(2, Qt.Horizontal, "Wh / Lm")
-        self.modelkpi.setHeaderData(3, Qt.Horizontal, "kWh /Farm /Cow")
-        self.modelkpi.setHeaderData(4, Qt.Horizontal, "Average DER")
-        self.modelkpi.setHeaderData(5, Qt.Horizontal, "kg CO\u2082")
+        # self.modelkpi.setHeaderData(2, Qt.Horizontal, "Wh/Lm")
+        self.modelkpi.setHeaderData(2, Qt.Horizontal, "kWh/Cow")
+        self.modelkpi.setHeaderData(3, Qt.Horizontal, "Average DER")
+        self.modelkpi.setHeaderData(4, Qt.Horizontal, "kg CO\u2082")
 
         # Align text in tableview
         for item in range(0, 6):
@@ -1200,7 +1239,7 @@ class FirstTab(QWidget):
 
         if self.radioButton8.isChecked():# total
             kwhdata = importedfile[["month", "CoolingKWh", "VacuumKWh", "WaterHeatKWh", "OtherKWh"]].groupby("month",
-                                                                                                             as_index=False).sum()
+                                                                                                             as_index=False).mean()
             y_axislabel = "Electricity Use\n(kWh)"
             hovertext = "%{x}: <br>%{y} kWh <extra></extra>"
             fig = go.Figure(data=[go.Bar(name='Milk Cooling', x=smonth, y=round(kwhdata["CoolingKWh"], 1)),
@@ -1211,7 +1250,7 @@ class FirstTab(QWidget):
             fig.update_layout(legend=dict(orientation="h", xanchor='center', x=0.5))
 
         elif self.radioButton9.isChecked(): # total / litre milk
-            kwhdata_perlitre = importedfile[["month", "milk_yield_litres", "CoolingKWh", "VacuumKWh", "WaterHeatKWh", "OtherKWh"]].groupby("month", as_index = False).sum()
+            kwhdata_perlitre = importedfile[["month", "milk_yield_litres", "CoolingKWh", "VacuumKWh", "WaterHeatKWh", "OtherKWh"]].groupby("month", as_index = False).mean()
             month_vector = kwhdata_perlitre["month"]
             kwhdata_perlitre = kwhdata_perlitre[["CoolingKWh", "VacuumKWh", "WaterHeatKWh", "OtherKWh"]].div(
                 kwhdata_perlitre.milk_yield_litres, axis=0)
@@ -1261,7 +1300,7 @@ class FirstTab(QWidget):
         self.radioButton9.toggled.connect(lambda: self.BLChart(self.tabwidget.filtereddatabase_mth))
         right.addWidget(self.radioButton9)
 
-        self.radioButton10 = QRadioButton("Electricity Use / Farm / Cow")
+        self.radioButton10 = QRadioButton("Electricity Use / Cow")
         self.radioButton10.toggled.connect(lambda: self.BLChart(self.tabwidget.filtereddatabase_mth))
         right.addWidget(self.radioButton10)
 
