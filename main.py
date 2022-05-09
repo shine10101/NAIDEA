@@ -449,15 +449,70 @@ class mainwindow(QDialog):
             x = msg.exec_()
 
     def processimportedfile(self, data):
+        # import pandas as pd
+        # import numpy as np
         # fname = "C:/NAIDEA SAMPLE DATA_BordBia.csv"
         # data = pd.read_csv(fname)
         # Custom processing of zero values
-        # Replace WH vol, units, vac power with mean of populaiton
-        data['vacuumpump_power_kw'] = data['vacuumpump_power_kw'].replace(0, data['vacuumpump_power_kw'].mean())
-        data['num_parlour_units'] = data['num_parlour_units'].replace(0, data['num_parlour_units'].mean())
-        data['hotwatertank_capacity_litres'] = data['hotwatertank_capacity_litres'].replace(0, data['hotwatertank_capacity_litres'].mean())
-        data['waterheating_power_elec_kw'] = data['waterheating_power_elec_kw'].replace(0, data['waterheating_power_elec_kw'].mean())
-        data['bulktank_capacity_litres'] = data['bulktank_capacity_litres'].replace(0, data['bulktank_capacity_litres'].mean())
+        # Infer missing  WH vol, units, vac power
+        data['vacuumpump_power_kw'] = data['vacuumpump_power_kw'].replace(0, np.nan)
+        data['num_parlour_units'] = data['num_parlour_units'].replace(0, np.nan)
+        data['hotwatertank_capacity_litres'] = data['hotwatertank_capacity_litres'].replace(0, np.nan)
+        data['waterheating_power_elec_kw'] = data['waterheating_power_elec_kw'].replace(0, np.nan)
+        data['bulktank_capacity_litres'] = data['bulktank_capacity_litres'].replace(0, np.nan)
+
+        #replace values greater than X (assume erroneous)
+        data['vacuumpump_power_kw'][data['vacuumpump_power_kw'] >= 1000] = data['vacuumpump_power_kw'] / 1000
+        data['waterheating_power_elec_kw'][data['waterheating_power_elec_kw'] >= 1000] =  data['waterheating_power_elec_kw'] / 1000
+        data['bulktank_capacity_litres'][data['bulktank_capacity_litres'] >= 50000] = data['bulktank_capacity_litres'] / 10
+
+        data['vacuumpump_power_kw'][data['vacuumpump_power_kw'] >= 100] = data['vacuumpump_power_kw'] / 100
+        data['waterheating_power_elec_kw'][data['waterheating_power_elec_kw'] >= 100] =  data['waterheating_power_elec_kw'] / 100
+
+        data['vacuumpump_power_kw'][data['vacuumpump_power_kw'] >= 20] = data['vacuumpump_power_kw'] / 10
+        data['waterheating_power_elec_kw'][data['waterheating_power_elec_kw'] >= 20] =  data['waterheating_power_elec_kw'] / 10
+
+        data['re_solarpv_kw'] = data['re_solarpv_kw'].fillna(0)
+        data['re_wind_kw'] = data['re_wind_kw'].fillna(0)
+        data['re_thermal_m3'] = data['re_thermal_m3'].fillna(0)
+
+        # Replace missing values according to farm size
+        data['farm_id'] = pd.Categorical(data.farm_id)
+        farmdata = data[["farm_id", "herd_size"]].groupby("farm_id").mean()
+        b = np.linspace(0,500, 11)
+        BIN = pd.DataFrame(np.digitize(farmdata, b), columns=['bins'])
+        BIN = BIN.set_index(farmdata.index)
+        show = pd.concat([farmdata, pd.DataFrame(BIN, columns=['bins'])], axis=1)
+
+        fd = data.drop_duplicates("farm_id")
+        fd = fd.set_index('farm_id')
+        fd['month'].update(show['bins'])
+        fd = fd.rename(columns={'month': 'bins'})
+
+        fd = fd[['bins','num_parlour_units', 'vacuumpump_power_kw', 'waterheating_power_elec_kw', 'bulktank_capacity_litres', 'hotwatertank_capacity_litres']]
+        # mdls = pd.read_csv('missingdatamodels.csv')
+        # MDM = pd.to_pickle(mdls, 'missingdatamodels.pkl')
+        MDM = pd.read_pickle('missingdatamodels.pkl')
+
+        fd2 = fd
+        # infer missing datapoints in fd
+        for column in fd.columns:
+            for row in range(0,len(fd)):
+                if pd.isna(fd[column].iloc[row]):
+                    fd2[column].iloc[row] = (fd.bins.iloc[row]*MDM[column].iloc[1]) + MDM[column].iloc[0]
+
+        #Round infered data
+        fd2["vacuumpump_power_kw"] = round(fd2["vacuumpump_power_kw"], 1)
+        fd2["waterheating_power_elec_kw"] = round(fd2["waterheating_power_elec_kw"], 1)
+        fd2["num_parlour_units"] = round(fd2["num_parlour_units"], 0)
+
+        #replace in data
+        for column in fd2.columns[1:]:
+            for row in range(0,len(fd2)):
+                farmid = fd2.index[row]
+                col = column
+                data[col][data['farm_id'] == farmid] = fd2[col].iloc[row]
+
         # replace herd and lact cow numbers with mean for that month
         x = data.groupby(data.month).herd_size.mean()
         xx = data.groupby(data.month).milking_cows.mean()
@@ -467,9 +522,15 @@ class mainwindow(QDialog):
                 data['herd_size'][item] = round(x[m],0)
                 data['milking_cows'][item] = round(xx[m], 0)
 
-        data['re_solarpv_kw'] = data['re_solarpv_kw'].fillna(0)
-        data['re_wind_kw'] = data['re_wind_kw'].fillna(0)
-        data['re_thermal_m3'] = data['re_thermal_m3'].fillna(0)
+        #change Yes to yes etc..
+        data['VSD'] = data['VSD'].replace("Yes", "yes")
+        data['coolingsystem_directexpansion'] = data['coolingsystem_directexpansion'].replace("Yes", "yes")
+        data['coolingsystem_icebank'] = data['coolingsystem_icebank'].replace("Yes", "yes")
+        data['coolingsystem_platecooler'] = data['coolingsystem_platecooler'].replace("Yes", "yes")
+        data['VSD'] = data['VSD'].replace("No", "no")
+        data['coolingsystem_directexpansion'] = data['coolingsystem_directexpansion'].replace("No", "no")
+        data['coolingsystem_icebank'] = data['coolingsystem_icebank'].replace("No", "no")
+        data['coolingsystem_platecooler'] = data['coolingsystem_platecooler'].replace("No", "no")
 
 
         data_mdl = data[["farm_id", "month", "milk_yield_litres", "herd_size", "milking_cows",
