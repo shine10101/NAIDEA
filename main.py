@@ -4,7 +4,6 @@ from PyQt5.QtWidgets import QLineEdit, QMessageBox, QFileDialog, QPushButton, QH
 from qtrangeslider import QLabeledRangeSlider
 from PyQt5.QtGui import QStandardItem, QIcon, QPixmap, QIntValidator
 from PyQt5 import QtWebEngineWidgets, QtCore, QtGui, QtWidgets
-from pyqtspinner.spinner import WaitingSpinner
 from PyQt5.QtCore import *
 import sys
 import pandas as pd
@@ -16,50 +15,41 @@ import os
 
 CURRENT_DIR = os.path.dirname(os.path.realpath(__file__))
 
-
-
-# pip install fbs PyQt5 pandas plotly numpy statistics
-
 class mainwindow(QDialog):
     def __init__(self, data):
         super(mainwindow, self).__init__()
         self.data = data
 
-
-        self.spinner = WaitingSpinner(self, roundness=100.0, opacity=15.0, fade=75.0, radius=50.0, lines=25,
-                                      line_length=25.0, line_width=5.0,speed=0.5, color=(0, 0, 0),
-                                      disableParentWhenSpinning=False, centerOnParent=True)
-
-
-        #create filter object
+        # create header sections
         FilterLayout = QHBoxLayout()
         FilterLayout.addWidget(self.createHeader1a(), 1)#import/export
         FilterLayout.addWidget(self.createHeader2a(), 4)# filters
-        # FilterLayout.addWidget(self.loading_screen, 1)# Loading
         FilterLayout.addWidget(self.Header3(), 4)  # images
+
+        # Macro-level statistics tab instance
         self.firstTab = FirstTab(self)
 
-        #The key to plotting Treeview information
-        #https://www.pythonguis.com/tutorials/qtableview-modelviews-numpy-pandas/
-
+        # KPI table
         self.model = QtGui.QStandardItemModel(self)
+
+        # Farm-level table
         self.tableView = QtWidgets.QTableView(self)
         self.tableView.horizontalHeader().setStretchLastSection(True)
         self.tableView.setEditTriggers(QtWidgets.QTableWidget.NoEditTriggers)
         self.tableView.setObjectName("tableView")
 
-        #create tab widget object
+        # Tab widget objects
         tabs = QTabWidget()
         tabs.addTab(self.firstTab, "Macro-Level")
         tabs.addTab(self.tableView, "Farm-Level")
         tabs.addTab(ThirdTab(), "Help")
 
+        # GUI buttons
         buttonbox = QDialogButtonBox(QDialogButtonBox.Close)
-
         buttonbox.accepted.connect(self.accept)
         buttonbox.rejected.connect(self.reject)
 
-
+        # GUI Layout
         vbox = QVBoxLayout()
         vbox.addLayout(FilterLayout, 1)
         vbox.addWidget(tabs, 6)
@@ -67,43 +57,47 @@ class mainwindow(QDialog):
 
         self.setLayout(vbox)
 
-    def createHeader1a(self): # function defining characteristics of each group/grid object
+    def createHeader1a(self): # Header Object: Import/Export | Filter | Collaboration
+
         HeaderBox = QGroupBox("Import/Export Data")
 
+        # Import/Export/CO2 section
         inputfilebtn = QPushButton("Import")
-        # inputfilebtn.resize(150, 50)
-        # inputfilebtn.clicked.connect(self.start_spinner)
-        inputfilebtn.clicked.connect(self.on_pushButtonLoad_clicked)
+        inputfilebtn.clicked.connect(self.on_pushButtonLoad_clicked) # Load data file when clicked
 
         self.inptbox = QLineEdit(self)
         self.inptbox.setStyleSheet("border: 0px solid red;")
+        self.inptbox.setAlignment(Qt.AlignCenter)
         onlyInt = QIntValidator()
         self.inptbox.setValidator(onlyInt)
+
+        # gCO2 / kWh input box/value
         if not hasattr(self, "carbon"):
             self.inptbox.setText(str(296))
 
+        boxlabel = QLabel("gCO\u2082 / kWh")
 
-        boxlabel = QLabel("gCO\u2082/kWh")
-
+        # Export button
         exportfilebtn = QPushButton("Export")
-        # exportfilebtn.setGeometry(200, 150, 100, 40)
         exportfilebtn.clicked.connect(self.export_clicked)
-        #import box layout
 
-        #importrow1
+        # Row 1
         importrow1layout = QHBoxLayout()
         importrow1layout.addWidget(inputfilebtn)
         importrow1layout.addStretch()
 
+        # Row 2
         importrow2layout = QHBoxLayout()
         importrow2layout.addWidget(exportfilebtn)
         importrow2layout.addStretch()
 
+        # Row 3
         importrow3layout = QHBoxLayout()
         importrow3layout.addWidget(self.inptbox)
         importrow3layout.addWidget(boxlabel)
         importrow3layout.addStretch()
 
+        # Import/ Export seciton layout
         HeaderLayout = QGridLayout()
         HeaderLayout.addLayout(importrow1layout, 0, 1)
         HeaderLayout.addLayout(importrow2layout, 1, 1)
@@ -113,13 +107,7 @@ class mainwindow(QDialog):
 
         return HeaderBox
 
-    @QtCore.pyqtSlot()
-    def start_spinner(self):
-        self.spinner.start()
-        self.spinner.raise_()
-        self.spinner.show()
-
-    def createHeader2a(self): # function defining characteristics of each group/grid object
+    def createHeader2a(self): # Header Object: Filter data section
 
         QSS = """
         QSlider {
@@ -149,13 +137,18 @@ class mainwindow(QDialog):
         }
         """
 
+        # Section Heading
         HeaderBox = QGroupBox("Filter Data")
+
+        # Filter section layout (left)
         leftlayout = QGridLayout()
 
+        # Define seperate group for each radio button (n = 3)
         self.radiogroup1 = QButtonGroup()
         self.radiogroup2 = QButtonGroup()
         self.radiogroup3 = QButtonGroup()
 
+        # Radio button 1
         label1 = QLabel(self)
         label1.setText("Variable Speed Drive:")
         label1.setAlignment(Qt.AlignTop)
@@ -171,7 +164,7 @@ class mainwindow(QDialog):
         leftlayout.addWidget(self.VSD_no, 0, 2)
         leftlayout.addWidget(self.VSD_all, 0, 3)
 
-
+        # Radio button 2
         label2 = QLabel(self)
         label2.setText("Plate Cooler:")
         label2.setAlignment(Qt.AlignTop)
@@ -187,6 +180,7 @@ class mainwindow(QDialog):
         leftlayout.addWidget(self.PHE_no, 1, 2)
         leftlayout.addWidget(self.PHE_all, 1, 3)
 
+        # Radio button 3
         label3 = QLabel(self)
         label3.setText("Cooling System:")
         label3.setAlignment(Qt.AlignTop)
@@ -203,12 +197,13 @@ class mainwindow(QDialog):
         leftlayout.addWidget(self.cs_all, 2, 3)
         leftlayout.setRowStretch(leftlayout.rowCount(), 1)
 
+        # Filter section layout (right)
         righttoplayout = QHBoxLayout()
         rightmiddlelayout = QHBoxLayout()
         rightbottomlayout = QHBoxLayout()
-        # range slider bars for farm size
+
+        # Range Slider Object for filtering herd size
         #https://pythonrepo.com/repo/tlambert03-QtRangeSlider-python-graphical-user-interface-applications
-        #https://doc.qt.io/qt-5/qslider.html
         label4 = QLabel(self)
         label4.setText("Farm Size\n(No. Cows):")
         label4.setAlignment(Qt.AlignLeft)
@@ -223,7 +218,7 @@ class mainwindow(QDialog):
         self.slider1.setStyleSheet(QSS)
         righttoplayout.addWidget(self.slider1)
 
-
+        # Filter a/c to calculater DER of each farm
         label5 = QLabel(self)
         label5.setAlignment(Qt.AlignLeft)
         label5.setText("Dairy Energy\nRating (DER):")
@@ -244,10 +239,12 @@ class mainwindow(QDialog):
         rightmiddlelayout.addWidget(self.der_d)
         rightmiddlelayout.addWidget(self.der_e)
 
+        # Filter button to initiate filtering of data
         self.filterbutton = QPushButton("Filter")
         self.filterbutton.clicked.connect(self.on_filterButtonLoad_clicked)
         rightmiddlelayout.addWidget(self.filterbutton)
 
+        # Filter section (right) layout
         rightlayout = QVBoxLayout()
         rightlayout.addLayout(righttoplayout)
         rightlayout.addStretch(1)
@@ -259,18 +256,17 @@ class mainwindow(QDialog):
         layout.addLayout(leftlayout)
         layout.addLayout(rightlayout)
         HeaderBox.setLayout(layout)
-        HeaderBox.setFlat(True)#
+        HeaderBox.setFlat(True)
 
         return HeaderBox
 
-    def Header3(self): # function defining characteristics of each group/grid object
+    def Header3(self): # Header section: collaboration logos
         HeaderBox = QGroupBox("A Collaboration of:")
 
         label_collab = QLabel()
         pixmap = QPixmap("collab2_trans.png")
         pixmap2 = pixmap.scaled(600, 600, Qt.KeepAspectRatio, Qt.SmoothTransformation)
         label_collab.setPixmap(pixmap2)
-
 
         grid = QHBoxLayout()
         grid.addWidget(label_collab)
@@ -279,35 +275,45 @@ class mainwindow(QDialog):
         HeaderBox.setFlat(True)
         return HeaderBox
 
-    def getfile(self):
+    def getfile(self): # Import dataset
+
+        # Open file dialog | .csv files only
         option = QFileDialog.Options()
         fname = QFileDialog.getOpenFileName(self, 'Open file',
                                                 CURRENT_DIR, "CSV files (*.csv)", options=option)
 
-        # database for treeview
+        # read file
         df1 = pd.read_csv(fname[0])
+
+        # Manual filtering
+        df1 = df1.drop_duplicates(subset=['farm_id', 'month_str'], keep='first', inplace=False) # drop rows with duplicate farm id and months
+        df1 = df1[df1["milking_frequency"].str.contains("Robotic milking frequency") == False] # drop farms with robotic milking
+        df1 = df1.reset_index()
+
+        # Create datasets specific to predicting each Dependent variable
         total_db, cooling_db, vacuum_db, heating_db, combined_db = self.processimportedfile(df1)
-        # Load csv files
+        # Load csv files (required for updating pfl files with ANN weights and biases)
         # wandb_total = pd.read_csv('wandbtotalkwh.csv')
         # wandb_cooling = pd.read_csv('wandbcoolingkwh.csv')
         # wandb_vacuum = pd.read_csv('wandbvacuumkwh.csv')
         # wandb_heating = pd.read_csv('wandbwaterheatkwh.csv')
         # wandb_combined = pd.read_csv('wandbcombinedkwh.csv')
-        # # Convert to pickle files
+        # Convert to pickle files
         # wandbtotal = pd.to_pickle(wandb_total, 'wandbtotalkwh.pkl')
         # wandb_cooling = pd.to_pickle(wandb_cooling, 'wandbcoolingkwh.pkl')
         # wandb_vacuum = pd.to_pickle(wandb_vacuum, 'wandbvacuumkwh.pkl')
         # wandb_heating = pd.to_pickle(wandb_heating, 'wandbwaterheatkwh.pkl')
         # wandb_combined = pd.to_pickle(wandb_combined, 'wandbcombinedkwh.pkl')
+
         # Read pickle files
         wandb_total = pd.read_pickle('wandbtotalkwh.pkl')
         wandb_cooling = pd.read_pickle('wandbcoolingkwh.pkl')
         wandb_vacuum = pd.read_pickle('wandbvacuumkwh.pkl')
         wandb_heating = pd.read_pickle('wandbwaterheatkwh.pkl')
         wandb_combined = pd.read_pickle('wandbcombinedkwh.pkl')
-        # iterrows
         t = time.time()
         total = total_db.iloc[:, 1:total_db.shape[1]]
+        # Predict monthly total, cooling, vacuum, heating and combined kWh consumption
         df1["TotalKWh"] = pd.DataFrame([self.predict_total(data=row, wandb=wandb_total) for idx, row in total.iterrows()], columns=['TotalKWh'])
         cooling = cooling_db.iloc[:, 1:cooling_db.shape[1]]
         df1["CoolingKWh"] = pd.DataFrame([self.predict_cooling(data=row, wandb=wandb_cooling) for idx, row in cooling.iterrows()], columns=['CoolingKWh'])
@@ -318,38 +324,48 @@ class mainwindow(QDialog):
         combined = combined_db.iloc[:, 1:combined_db.shape[1]]
         df1["CombinedKWh"] = pd.DataFrame([self.predict_combined(data=row, wandb=wandb_combined) for idx, row in combined.iterrows()], columns=['CombinedKWh'])
         print(time.time()-t)
-        # # List Comprehension (assess to speed up calculations)
-        # t = time.time()
-        # df1["TotalKWh"] = pd.DataFrame([self.predict_total(data=total_db.iloc[i, 1:total_db.shape[1]], wandb=wandb_total) for i in range(len(total_db))], columns=['TotalKWh'])
-        # df1["CoolingKWh"] = pd.DataFrame([self.predict_cooling(data=cooling_db.iloc[i, 1:cooling_db.shape[1]], wandb=wandb_cooling) for i in range(len(cooling_db))], columns=['CoolingKWh'])
-        # df1["VacuumKWh"] = pd.DataFrame([self.predict_vacuum(data=vacuum_db.iloc[i, 1:vacuum_db.shape[1]], wandb=wandb_vacuum) for i in range(len(vacuum_db))], columns=['VacuumKWh'])
-        # df1["WaterHeatKWh"] = pd.DataFrame([self.predict_heating(data=heating_db.iloc[i, 1:heating_db.shape[1]], wandb=wandb_heating) for i in range(len(heating_db))], columns=['WaterHeatKWh'])
-        # df1["CombinedKWh"] = pd.DataFrame([self.predict_combined(data=combined_db.iloc[i, 1:combined_db.shape[1]], wandb=wandb_combined) for i in range(len(combined_db))], columns=['CombinedKWh'])
-        # print(time.time() - t)
+
         # Manual processing
+        # Milk cooling and vacuum equals 0 when milk production = 0
         df1['CoolingKWh'].values[df1['milk_yield_litres'] == 0] = 0
         df1['VacuumKWh'].values[df1['milk_yield_litres'] == 0] = 0
+
+        # Water heating kWh equals 0 when gas/oil water heating used
         df1['WaterHeatKWh'].values[df1['waterheating_power_elec_kw'] == 0] = 0
+
         # Adjust cooling, vacuum and WH based on their % of combined prediction
         CVW = df1['CoolingKWh']+df1['VacuumKWh']+df1['WaterHeatKWh']
         df1['CoolingKWh'] = df1['CombinedKWh']*(sum(df1['CoolingKWh'])/sum(CVW))
         df1['VacuumKWh'] = df1['CombinedKWh']*(sum(df1['VacuumKWh'])/sum(CVW))
         df1['WaterHeatKWh'] = df1['CombinedKWh']*(sum(df1['WaterHeatKWh'])/sum(CVW))
-        df1["OtherKWh"] = df1["TotalKWh"] - df1["CombinedKWh"] #- df1["CoolingKWh"] - df1["VacuumKWh"]
-        df2 = df1[["farm_id", "milk_yield_litres", "TotalKWh"]].groupby("farm_id", as_index=False).sum().round()
-        # merge datasets
+        df1["OtherKWh"] = df1["TotalKWh"] - df1["CombinedKWh"]
+        df2 = df1[["farm_id", "milk_yield_litres", "TotalKWh"]].groupby("farm_id", as_index=False).sum().round()#, "CoolingKWh", "VacuumKWh", "WaterHeatKWh", "OtherKWh"
+
+        # merge datasets (1. mean herd size and milking cows | 2. sum milk yield and total kWh)
         df3_size = df1[["farm_id", "herd_size", "milking_cows"]].groupby("farm_id").mean().round()
         df2 = pd.merge(left=df3_size, right=df2, left_on='farm_id', right_on='farm_id')
+
+        # Extract features for each farm (i.e. drop duplicates)
         df4 = df1[["farm_id", "re_thermal_m3", "re_solarpv_kw", "re_wind_kw", "res_capacity_kw", "low_energy_lighting",
                        "night_rate_electricity", "heat_recovery", "green_electricity", "num_parlour_units", "milking_frequency",
                        "milking_duration_hours", "hotwash_freq", "milkpump_type", "vacuumpump_power_kw", "VSD", "bulktank_capacity_litres",
                        "waterheating_power_elec_kw", "waterheating_power_gas_kw", "waterheating_power_oil_kw", "hotwatertank_capacity_litres",
                        "coolingsystem_directexpansion", "coolingsystem_platecooler", "coolingsystem_icebank", "coolingsystem_waterchillingunit"]].drop_duplicates(subset='farm_id', keep="first")
+
         # Renewable Energy Technologies (binary for pie chart)
         retech = df4[["re_thermal_m3", "re_solarpv_kw", "re_wind_kw"]]
         retech.values[retech > 0] = 1
         retech['retech'] = retech['re_thermal_m3'].astype(str) + '_' + retech['re_solarpv_kw'].astype(str)\
                            + '_' + retech['re_wind_kw'].astype(str)
+        retech['retech'].values[retech['retech'] == '1.0_0.0_0.0'] = 'Solar Thermal'
+        retech['retech'].values[retech['retech'] == '1.0_1.0_0.0'] = 'Solar Thermal, PV'
+        retech['retech'].values[retech['retech'] == '1.0_1.0_1.0'] = 'Thermal, PV, Wind'
+        retech['retech'].values[retech['retech'] == '0_1.0.0_1.0'] = 'PV, Wind'
+        retech['retech'].values[retech['retech'] == '0.0_1.0_0.0'] = 'Solar PV'
+        retech['retech'].values[retech['retech'] == '0.0_0.0_1.0'] = 'Wind'
+        retech['retech'].values[retech['retech'] == '1_0.0.0_1.0'] = 'Solar Thermal, Wind'
+        retech['retech'].values[retech['retech'] == '0.0_0.0_0.0'] = 'None'
+
         retech['retech'].values[retech['retech'] == '1_0_0'] = 'Solar Thermal'
         retech['retech'].values[retech['retech'] == '1_1_0'] = 'Solar Thermal, PV'
         retech['retech'].values[retech['retech'] == '1_1_1'] = 'Thermal, PV, Wind'
@@ -359,23 +375,23 @@ class mainwindow(QDialog):
         retech['retech'].values[retech['retech'] == '1_0_1'] = 'Solar Thermal, Wind'
         retech['retech'].values[retech['retech'] == '0_0_0'] = 'None'
 
-        #merge
+        # merge (df2 and df4)
         df4['retech'] = retech['retech']
         df2 = pd.merge(left=df2, right=df4, left_on='farm_id', right_on='farm_id')
-        # rule of thumb solar pV calculation
+        # rule of thumb solar pV calculation, as per DEAP software
         df2['pv_kwh'] = round(0.8 * df2["re_solarpv_kw"] * 1074 * 1, 1)  # constant x kWp x kWh/m2 x overshdowing factor
         df2["TotalKWh"] = df2["TotalKWh"] - df2['pv_kwh']
-        # https://www.seai.ie/home-energy/building-energy-rating-ber/support-for-ber-assessors/domestic-ber-resources/
-        # https://www.rexelenergysolutions.ie/solar-electricity/part-l-using-solar-pv/
-        # rule of thumb wind kWh calculation (DEAP Appendix H)
-        # df2['therm_kwh'] = round(df2["re_thermal_m3"] * 1074 * 1 * ,1)  # Qs = S × Zpanel × Aap × η0 × UF × f(a1/η0) × f(Veff/Vd)
-        # https://www.seai.ie/home-energy/building-energy-rating-ber/support-for-ber-assessors/domestic-ber-resources/deap4-software/
+        # Ref: https://www.seai.ie/home-energy/building-energy-rating-ber/support-for-ber-assessors/domestic-ber-resources/
+        # Ref: https://www.rexelenergysolutions.ie/solar-electricity/part-l-using-solar-pv/
+
+        # Subtract PB kWh from total kWh
         df2["TotalKWh"] = round(df2["TotalKWh"] - df2['pv_kwh'],1)
         df2['TotalKWh'].values[df2['TotalKWh'] < 0] = 0
-        #process wh/lm & bins
+
+        # Process Wh/lm & categorise into bins
         df2["wh_lm"] = round(df2["TotalKWh"]/ df2["milk_yield_litres"] * 1000,2)
         df2["global_diff_%"] = round((df2["wh_lm"] - statistics.mean(df2["wh_lm"])) / statistics.mean(df2["wh_lm"]) * 100,2)
-        self.bins = [0, 23,	36,	49,	62,	1000]
+        self.bins = [0, 23,	36,	49,	62,	1000] # bins calculated using monitored dataset
         df2["DER"] = pd.DataFrame(np.digitize(df2["wh_lm"], self.bins), columns=["DER"])
         df2['DER'] = df2['DER'].astype(str)
         df2['DER'] = df2['DER'].replace(str(1), 'A')
@@ -383,21 +399,53 @@ class mainwindow(QDialog):
         df2['DER'] = df2['DER'].replace(str(3), 'C')
         df2['DER'] = df2['DER'].replace(str(4), 'D')
         df2['DER'] = df2['DER'].replace(str(5), 'E')
-        # print(df2.columns)
         first_column = df2.pop('DER')
         df2.insert(1, 'DER', first_column)
 
+        # Recommendations: low_energy_lighting, coolingsystem_platecooler, VSD, retech
+        # data = data.drop_duplicates(subset='farm_id', keep="first")
+        # data = data.reset_index()
+        df2['coolingsystem_platecooler'] = df2['coolingsystem_platecooler'].fillna('n/a')
+        df2['VSD'] = df2['VSD'].fillna('n/a')
+        df2['low_energy_lighting'] = df2['low_energy_lighting'].fillna('n/a')
+        red = []
+        for row in range(0,len(df2)):
+            if df2['low_energy_lighting'].iloc[row].lower() == "no":
+                txt1 = "Install energy efficient lighting ; "
+            else:
+                txt1 = ""
+
+            if df2['coolingsystem_platecooler'].iloc[row].lower() == "no":
+                txt2 = "Install milk pre-cooling system ; "
+            else:
+                txt2 = ""
+
+            if df2['VSD'].iloc[row].lower() == "no":
+                txt3 = "Install variable speed drive ; "
+            else:
+                txt3 = ""
+
+            if df2['retech'].iloc[row].lower() == "none":
+                txt4 = "Install renewable energy system"
+            else:
+                txt4 = ""
+
+            red.append(txt1+txt2+txt3+txt4)
+
+        second_column = pd.DataFrame(red, columns = ['Recommendations'])
+        df2.insert(2, 'Recommendations', second_column)
+
         self.tvdatabase = df2 # annual database
-        self.model = PandasModel(df2)
-        self.tableView.setModel(self.model)
+        self.model = PandasModel(df2) # KPI table
+        self.tableView.setModel(self.model) # farm-level table
+
 
         if fname:
             return df1, df2
 
     @QtCore.pyqtSlot()
-    def on_pushButtonLoad_clicked(self):
-        # self.parentWidget().window().spinner.start()
-        #https://github.com/fbjorn/QtWaitingSpinner/blob/master/README.md
+    def on_pushButtonLoad_clicked(self): # update charts when import button pressed
+
         importedfile, annfile = self.getfile()
 
         if importedfile is None:
@@ -407,12 +455,10 @@ class mainwindow(QDialog):
         self.firstTab.BLChart(importedfile)
         self.firstTab.energychart(importedfile, annfile)
         self.importedfile = importedfile
-        self.on_filterButtonLoad_clicked()
-        self.window().spinner.stop()
+        self.on_filterButtonLoad_clicked() # adjust data based on filter section parameters
 
     @QtCore.pyqtSlot()
-    def export_clicked(self):
-        # export treeview file as csv
+    def export_clicked(self): # export treeview file as .csv
 
         if hasattr(self, "tvdatabase"):
 
@@ -436,35 +482,124 @@ class mainwindow(QDialog):
             x = msg.exec_()
 
     def processimportedfile(self, data):
-        # fname = "C:/NAIDEADATA2.csv"
-        # df1 = pd.read_csv(fname)
+        # fname = "C:/NAIDEA SAMPLE DATA_BordBia.csv"
+        # data = pd.read_csv(fname)
+
+        # Replace 0 values with nan values
+        data['vacuumpump_power_kw'] = data['vacuumpump_power_kw'].replace(0, np.nan)
+        data['num_parlour_units'] = data['num_parlour_units'].replace(0, np.nan)
+        data['hotwatertank_capacity_litres'] = data['hotwatertank_capacity_litres'].replace(0, np.nan)
+        data['waterheating_power_elec_kw'] = data['waterheating_power_elec_kw'].replace(0, np.nan)
+        data['bulktank_capacity_litres'] = data['bulktank_capacity_litres'].replace(0, np.nan)
+
+        # Replace values greater than X (assume erroneous) -
+        data['vacuumpump_power_kw'][data['vacuumpump_power_kw'] >= 1000] = data['vacuumpump_power_kw'] / 1000
+        data['waterheating_power_elec_kw'][data['waterheating_power_elec_kw'] >= 1000] =  data['waterheating_power_elec_kw'] / 1000
+        data['bulktank_capacity_litres'][data['bulktank_capacity_litres'] >= 50000] = data['bulktank_capacity_litres'] / 10
+
+        data['vacuumpump_power_kw'][data['vacuumpump_power_kw'] >= 100] = data['vacuumpump_power_kw'] / 100
+        data['waterheating_power_elec_kw'][data['waterheating_power_elec_kw'] >= 100] =  data['waterheating_power_elec_kw'] / 100
+
+        data['vacuumpump_power_kw'][data['vacuumpump_power_kw'] >= 20] = data['vacuumpump_power_kw'] / 10
+        data['waterheating_power_elec_kw'][data['waterheating_power_elec_kw'] >= 20] =  data['waterheating_power_elec_kw'] / 10
+
+        # replace nan values with 0
+        data['re_solarpv_kw'] = data['re_solarpv_kw'].fillna(0)
+        data['re_wind_kw'] = data['re_wind_kw'].fillna(0)
+        data['re_thermal_m3'] = data['re_thermal_m3'].fillna(0)
+        data['coolingsystem_platecooler'] = data['coolingsystem_platecooler'].fillna('n/a')
+        data['VSD'] = data['VSD'].fillna('n/a')
+        data['low_energy_lighting'] = data['low_energy_lighting'].fillna('n/a')
+
+        # Replace missing values according to farm size using regression coefficients
+        data['farm_id'] = pd.Categorical(data.farm_id)
+        farmdata = data[["farm_id", "herd_size"]].groupby("farm_id").mean()
+        b = np.linspace(0,500, 11)
+        BIN = pd.DataFrame(np.digitize(farmdata, b), columns=['bins'])
+        BIN = BIN.set_index(farmdata.index)
+        show = pd.concat([farmdata, pd.DataFrame(BIN, columns=['bins'])], axis=1)
+
+        fd = data.drop_duplicates("farm_id")
+        fd = fd.set_index('farm_id')
+        fd['month'].update(show['bins'])
+        fd = fd.rename(columns={'month': 'bins'})
+
+        fd = fd[['bins','num_parlour_units', 'vacuumpump_power_kw', 'waterheating_power_elec_kw', 'bulktank_capacity_litres', 'hotwatertank_capacity_litres']]
+        # mdls = pd.read_csv('missingdatamodels.csv')
+        # MDM = pd.to_pickle(mdls, 'missingdatamodels.pkl')
+        MDM = pd.read_pickle('missingdatamodels.pkl') # missing data model coefficients
+
+        fd2 = fd
+        # infer missing datapoints in fd
+        for column in fd.columns:
+            for row in range(0,len(fd)):
+                if pd.isna(fd[column].iloc[row]):
+                    fd2[column].iloc[row] = (fd.bins.iloc[row]*MDM[column].iloc[1]) + MDM[column].iloc[0]
+
+        #Round infered data
+        fd2["vacuumpump_power_kw"] = round(fd2["vacuumpump_power_kw"], 1)
+        fd2["waterheating_power_elec_kw"] = round(fd2["waterheating_power_elec_kw"], 1)
+        fd2["num_parlour_units"] = round(fd2["num_parlour_units"], 0)
+
+        # replace in data
+        for column in fd2.columns[1:]:
+            for row in range(0,len(fd2)):
+                farmid = fd2.index[row]
+                col = column
+                data[col][data['farm_id'] == farmid] = fd2[col].iloc[row]
+
+        # replace herd and milking cow numbers with mean for that month
+        x = data.groupby(data.month).herd_size.mean()
+        xx = data.groupby(data.month).milking_cows.mean()
+        for item in range(len(data)):
+            if data['herd_size'][item] == 0:
+                m = data['month'][item]
+                data['herd_size'][item] = round(x[m],0)
+                data['milking_cows'][item] = round(xx[m], 0)
+
+        # Change Yes to yes etc..
+        data['VSD'] = data['VSD'].replace("Yes", "yes")
+        data['coolingsystem_directexpansion'] = data['coolingsystem_directexpansion'].replace("Yes", "yes")
+        data['coolingsystem_icebank'] = data['coolingsystem_icebank'].replace("Yes", "yes")
+        data['coolingsystem_platecooler'] = data['coolingsystem_platecooler'].replace("Yes", "yes")
+        data['VSD'] = data['VSD'].replace("No", "no")
+        data['coolingsystem_directexpansion'] = data['coolingsystem_directexpansion'].replace("No", "no")
+        data['coolingsystem_icebank'] = data['coolingsystem_icebank'].replace("No", "no")
+        data['coolingsystem_platecooler'] = data['coolingsystem_platecooler'].replace("No", "no")
+
         data_mdl = data[["farm_id", "month", "milk_yield_litres", "herd_size", "milking_cows",
                      "re_thermal_m3", "num_parlour_units", "milking_frequency", "hotwash_freq",
                      "milkpump_type", "vacuumpump_power_kw", "VSD", "bulktank_capacity_litres",
                      "waterheating_power_elec_kw", "waterheating_power_gas_kw", "waterheating_power_oil_kw",
                      "hotwatertank_capacity_litres","coolingsystem_directexpansion", "coolingsystem_platecooler",
                      "coolingsystem_icebank", "coolingsystem_waterchillingunit"]]
+
         data_mdl['re_thermal_m3'].values[data_mdl['re_thermal_m3'] > 0] = 2
         data_mdl['re_thermal_m3'].values[data_mdl['re_thermal_m3'] == 0] = 1
+
+        # Rename column headings
         data_mdl = data_mdl.rename(columns={"month": "Month", "milk_yield_litres": "MilkYield", "herd_size": "DairyCows_Total",
                                             "milking_cows": "DairyCows_Milking", "re_thermal_m3": "Parlour_SolarThermalY_N",
                                             "num_parlour_units": "NoOfParlourUnits", "waterheating_power_elec_kw": "TotalWaterHeaterPower",
                                             "hotwatertank_capacity_litres": "TotalWaterHeaterVolume", "bulktank_capacity_litres": "TotalBulkTankVolume",
                                             "vacuumpump_power_kw": "TotalVacuumPower"})
+
+        # Create dummy variables
         hzhw = pd.get_dummies(data_mdl['hotwash_freq'])+1
         hzhw = hzhw.rename(columns={"once a day": "OAD", "once a month": "OAM", "once a week": "OAW",
                                     "once every two days": "E2ndD"})
         milkpump = pd.get_dummies(data_mdl['milkpump_type'])+1
         # milkpump.columns = milkpump.columns.str.lower()
         PHE = pd.get_dummies(data_mdl['coolingsystem_platecooler'])+1 #yes ==2
-        PHE = PHE.rename(columns={"yes": "GWPHE"})
+        PHE = PHE.rename(columns={"yes": "GWPHE", "Yes": "GWPHE"})
         DXIB = pd.get_dummies(data_mdl['coolingsystem_directexpansion']) + 1  # DX=1
-        DXIB = DXIB.rename(columns={"no": "IBDX"})
+        DXIB = DXIB.rename(columns={"no": "IBDX", "No": "IBDX"})
         ICWPHE = pd.get_dummies(data_mdl['coolingsystem_waterchillingunit']) + 1  # yes ==2
-        ICWPHE = ICWPHE.rename(columns={"yes": "ICWPHE"})
+        ICWPHE = ICWPHE.rename(columns={"yes": "ICWPHE", "Yes": "ICWPHE"})
         VSD = pd.get_dummies(data_mdl['VSD']) + 1  # yes ==2
-        VSD = VSD.rename(columns={"yes": "Parlour_VacuumPump1_VariableSpeedY_N"})
+        VSD = VSD.rename(columns={"yes": "Parlour_VacuumPump1_VariableSpeedY_N", "Yes": "Parlour_VacuumPump1_VariableSpeedY_N"})
         data_mdl = data_mdl.drop(columns=["VSD"])
+
         # WH Fuel source
         WH = data_mdl[["TotalWaterHeaterPower", "waterheating_power_gas_kw", "waterheating_power_oil_kw"]]
         WH['TotalWaterHeaterPower'].values[WH['TotalWaterHeaterPower'] > 0] = 1
@@ -476,25 +611,45 @@ class mainwindow(QDialog):
         Electric = electric + 1
         Electric.values[electricplus == 2] = 1
         Electric = pd.DataFrame(Electric.values, columns = ["Electric"])
+
         # Dwelling
         Dwelling = np.ones((len(ElectricAndOil), 1), dtype=int)
         Dwelling = pd.DataFrame(Dwelling, columns = ["Dwelling"])
+
         # Milking
         Milking = np.ones((len(ElectricAndOil), 1), dtype=int)
         Milking = pd.DataFrame(Milking, columns = ["Milking"])
         Milking['Milking'].values[data_mdl['MilkYield'] == 0] = 2
 
-        # Form datasets for TCVH
+        if 'OAM' not in hzhw:
+            hzhw['OAM'] = np.ones(len(hzhw))
+
+        # if 'diaphragm', 'doublediaphragm','highspeed','variablespeedpump' is not in milkpump then add column of ones
+        if 'Diaphragm' not in milkpump:
+            milkpump['Diaphragm'] = np.ones(len(milkpump))
+
+        if 'Double Diaphragm' not in milkpump:
+            milkpump['Double Diaphragm'] = np.ones(len(milkpump))
+
+        if 'High Speed' not in milkpump:
+            milkpump['High Speed'] = np.ones(len(milkpump))
+
+        if 'Single Speed' not in milkpump:
+            milkpump['Single Speed'] = np.ones(len(milkpump))
+
+        if 'Variable Speed Pump' not in milkpump:
+            milkpump['Variable Speed Pump'] = np.ones(len(milkpump))
+
+        # Create datasets for total, cooling. vacuum water heating and combined
         df = pd.concat([data_mdl, hzhw[['OAD', "OAM", "OAW", "E2ndD"]],
-                        milkpump[['Diaphram','High Speed','Double Diaphram','Single Speed', 'VSD']],
+                        milkpump[['Diaphragm','High Speed','Double Diaphragm','Single Speed', 'Variable Speed Pump']],
                         PHE['GWPHE'], DXIB['IBDX'], ICWPHE['ICWPHE'], VSD['Parlour_VacuumPump1_VariableSpeedY_N'],
                         ElectricAndOil["ElectricAndOil"], Electric["Electric"], Dwelling["Dwelling"], Milking["Milking"]], axis=1)
         df.columns = df.columns.str.lower()
         df.columns = df.columns.str.replace(' ', '')
 
-        # Create datasets for each DV, with required vars in correct order.
-        total_vars = ['farm_id', 'month', 'dairycows_milking', 'dairycows_total', 'milkyield','ibdx', 'gwphe', 'icwphe', 'totalbulktankvolume', 'parlour_vacuumpump1_variablespeedy_n', 'oad', 'oam', 'oaw', 'parlour_solarthermaly_n', 'totalwaterheatervolume','totalwaterheaterpower', 'electricandoil', 'diaphram', 'doublediaphram','highspeed','vsd','dwelling','milking']
-        # total_vars = ['farm_id', 'month', 'dairycows_milking', 'dairycows_total', 'milkyield',	'NoOfParlourUnits',	'TotalBulkTankVolume', 'TotalVacuumPower',	'OAD', 'TotalWaterHeaterVolume',	'TotalWaterHeaterPower',	'HighSpeed', 'dwelling', 'milking']
+        # Create datasets for each dependent variable, with required vars in correct order.
+        total_vars = ['farm_id', 'month', 'dairycows_milking', 'dairycows_total', 'milkyield','ibdx', 'gwphe', 'icwphe', 'totalbulktankvolume', 'parlour_vacuumpump1_variablespeedy_n', 'oad', 'oam', 'oaw', 'parlour_solarthermaly_n', 'totalwaterheatervolume','totalwaterheaterpower', 'electricandoil', 'diaphragm', 'doublediaphragm','highspeed','variablespeedpump','dwelling','milking']
         total_vars = [each.lower() for each in total_vars]
         total_db = df[total_vars]
         total_db = total_db.fillna(total_db.mean().round())
@@ -521,34 +676,38 @@ class mainwindow(QDialog):
 
         return total_db, cooling_db, vacuum_db, heating_db, combined_db
 
-    def predict_total(self, data, wandb):
+    def predict_total(self, data, wandb): # predict total kWh consumption
         # data = total_db.iloc[0, 1:23]
         # wandb = pd.read_csv('wandbtotal.csv')
+
+        # transform data as per data used for model training
         data["dairycows_milking"] = np.sqrt(data["dairycows_milking"])
         data["dairycows_total"] = np.log(data["dairycows_total"])
         data["milkyield"] = np.sqrt(data["milkyield"])
         data["totalbulktankvolume"] = np.log(data["totalbulktankvolume"])
         data["totalwaterheatervolume"] = np.reciprocal(data["totalwaterheatervolume"])
         data["totalwaterheaterpower"] = np.sqrt(data["totalwaterheaterpower"])
+
+        # Normalize according to data used for model training
         minmax = wandb.iloc[wandb.shape[0]-2:wandb.shape[0], 1:wandb.shape[1]-3]
         data_std = pd.DataFrame(2 * np.subtract(data, minmax.iloc[0].values.tolist()) / np.subtract(minmax.iloc[1].values.tolist(), minmax.iloc[0].values.tolist()) -1)
         # wandbtotal = pd.to_pickle(wandb, 'wandbtotal.pkl')
         # wandbtotal = pd.read_pickle('wandbtotal.pkl')
 
-        # https://stackoverflow.com/questions/45830206/pyinstaller-created-exe-file-can-not-load-a-keras-nn-model
+        # Model weights and biases
         weights = wandb.iloc[0:wandb.shape[0]-2, 1:wandb.shape[1]-3]
         innerbias = wandb["Bias"][0:wandb.shape[0]-2]
         outerlayerbias = wandb["Outputlayerweights"][0:wandb.shape[0]-2]
         outerbias = wandb["Outputbias"][0]
         minkWh = wandb["Bias"].iloc[-2]
         maxkWh = wandb["Bias"].iloc[-1]
-        # print(maxkWh)
 
         # explode input data
         input_trans_minmax = pd.DataFrame(data_std)
         input_trans_minmax = input_trans_minmax.transpose()
         input_trans_minmax = input_trans_minmax.append([input_trans_minmax] * (weights.shape[0] - 1), ignore_index=True)
 
+        # Calculate predictions
         inputxweights = np.multiply(weights.to_numpy(), input_trans_minmax)
         hiddensum = inputxweights.sum(axis=1)
         transfcnplusbias = np.tanh(hiddensum + innerbias)
@@ -557,9 +716,10 @@ class mainwindow(QDialog):
         outerlayersumTF = np.tanh(outerlayersum + outerbias)
 
         predictionvalue = (((outerlayersumTF + 1) * (maxkWh - minkWh)) / 2) + minkWh
+
         return predictionvalue
 
-    def predict_cooling(self, data, wandb):
+    def predict_cooling(self, data, wandb): # predicting cooling kWh
         # data = cooling_db.iloc[0, 1:9]
         # wandb = pd.read_csv('wandbcooling.csv')
         data["dairycows_total"] = np.log(data["dairycows_total"])
@@ -571,14 +731,12 @@ class mainwindow(QDialog):
         # wandbtotal = pd.to_pickle(wandb, 'wandbtotal.pkl')
         # wandbtotal = pd.read_pickle('wandbtotal.pkl')
 
-        # https://stackoverflow.com/questions/45830206/pyinstaller-created-exe-file-can-not-load-a-keras-nn-model
         weights = wandb.iloc[0:wandb.shape[0]-2, 1:wandb.shape[1]-3]
         innerbias = wandb["Bias"][0:wandb.shape[0]-2]
         outerlayerbias = wandb["Outputlayerweights"][0:wandb.shape[0]-2]
         outerbias = wandb["Outputbias"][0]
         minkWh = wandb["Bias"].iloc[-2]
         maxkWh = wandb["Bias"].iloc[-1]
-        # print(maxkWh)
 
         # explode input data
         input_trans_minmax = pd.DataFrame(data_std)
@@ -596,7 +754,7 @@ class mainwindow(QDialog):
 
         return predictionvalue
 
-    def predict_vacuum(self, data, wandb):
+    def predict_vacuum(self, data, wandb): # predicting vacuum kWh
         # data = cooling_db.iloc[0, 1:9]
         # wandb = pd.read_csv('wandbcooling.csv')
         data["dairycows_total"] = np.log(data["dairycows_total"])
@@ -608,14 +766,12 @@ class mainwindow(QDialog):
         # wandbtotal = pd.to_pickle(wandb, 'wandbtotal.pkl')
         # wandbtotal = pd.read_pickle('wandbtotal.pkl')
 
-        # https://stackoverflow.com/questions/45830206/pyinstaller-created-exe-file-can-not-load-a-keras-nn-model
         weights = wandb.iloc[0:wandb.shape[0]-2, 1:wandb.shape[1]-3]
         innerbias = wandb["Bias"][0:wandb.shape[0]-2]
         outerlayerbias = wandb["Outputlayerweights"][0:wandb.shape[0]-2]
         outerbias = wandb["Outputbias"][0]
         minkWh = wandb["Bias"].iloc[-2]
         maxkWh = wandb["Bias"].iloc[-1]
-        # print(maxkWh)
 
         # explode input data
         input_trans_minmax = pd.DataFrame(data_std)
@@ -630,10 +786,10 @@ class mainwindow(QDialog):
         outerlayersumTF = np.tanh(outerlayersum + outerbias)
 
         predictionvalue = (((outerlayersumTF + 1) * (maxkWh - minkWh)) / 2) + minkWh
-        # predictionvalue.values[data["milkyield"] == 0] = 0
+
         return predictionvalue
 
-    def predict_heating(self, data, wandb):
+    def predict_heating(self, data, wandb): # predicting water heating kWh
         # data = cooling_db.iloc[0, 1:9]
         # wandb = pd.read_csv('wandbcooling.csv')
         data["dairycows_milking"] = np.sqrt(data["dairycows_milking"])
@@ -646,14 +802,12 @@ class mainwindow(QDialog):
         # wandbtotal = pd.to_pickle(wandb, 'wandbtotal.pkl')
         # wandbtotal = pd.read_pickle('wandbtotal.pkl')
 
-        # https://stackoverflow.com/questions/45830206/pyinstaller-created-exe-file-can-not-load-a-keras-nn-model
         weights = wandb.iloc[0:wandb.shape[0]-2, 1:wandb.shape[1]-3]
         innerbias = wandb["Bias"][0:wandb.shape[0]-2]
         outerlayerbias = wandb["Outputlayerweights"][0:wandb.shape[0]-2]
         outerbias = wandb["Outputbias"][0]
         minkWh = wandb["Bias"].iloc[-2]
         maxkWh = wandb["Bias"].iloc[-1]
-        # print(maxkWh)
 
         # explode input data
         input_trans_minmax = pd.DataFrame(data_std)
@@ -668,13 +822,11 @@ class mainwindow(QDialog):
         outerlayersumTF = np.tanh(outerlayersum + outerbias)
 
         predictionvalue = (((outerlayersumTF + 1) * (maxkWh - minkWh)) / 2) + minkWh
-        # predictionvalue.values[data["electric"] == 1] = 0
         return predictionvalue
 
-    def predict_combined(self, data, wandb):
+    def predict_combined(self, data, wandb): # predicting combined kWh
         # data = combined_db.iloc[0, 1:22]
         # wandb = pd.read_csv('wandbcooling.csv')
-        # wandb = wandb_combined
         data["dairycows_milking"] = np.sqrt(data["dairycows_milking"])
         data["dairycows_total"] = np.log(data["dairycows_total"])
         data["milkyield"] = np.sqrt(data["milkyield"])
@@ -688,7 +840,6 @@ class mainwindow(QDialog):
         # wandbtotal = pd.to_pickle(wandb, 'wandbtotal.pkl')
         # wandbtotal = pd.read_pickle('wandbtotal.pkl')
 
-        # https://stackoverflow.com/questions/45830206/pyinstaller-created-exe-file-can-not-load-a-keras-nn-model
         weights = wandb.iloc[0:wandb.shape[0]-2, 1:wandb.shape[1]-3]
         innerbias = wandb["Bias"][0:wandb.shape[0]-2]
         outerlayerbias = wandb["Outputlayerweights"][0:wandb.shape[0]-2]
@@ -712,7 +863,7 @@ class mainwindow(QDialog):
         return predictionvalue
 
     @QtCore.pyqtSlot()
-    def on_filterButtonLoad_clicked(self):
+    def on_filterButtonLoad_clicked(self): # action when filter button clicked
 
         if hasattr(self, "tvdatabase"):
 
@@ -729,13 +880,13 @@ class mainwindow(QDialog):
             elif self.VSD_no.isChecked():
                 current_tv = current_tv.loc[(current_tv['VSD'] == "no")]
 
-            # #PHE
+            #PHE
             if self.PHE_yes.isChecked():
                 current_tv = current_tv.loc[(current_tv['coolingsystem_platecooler'] == "yes")]
             elif self.PHE_no.isChecked():
                 current_tv = current_tv.loc[(current_tv['coolingsystem_platecooler'] == "no")]
 
-            # #Cooling System
+            #Cooling System
             if self.cs_DX.isChecked():
                 current_tv = current_tv.loc[(current_tv['coolingsystem_directexpansion'] == "yes")]
             elif self.cs_IB.isChecked():
@@ -746,7 +897,7 @@ class mainwindow(QDialog):
             DER_selected = np.array(["A", "B", "C", "D", "E"])[np.array(der_logical)]
             current_tv = current_tv[(current_tv['DER'].isin(DER_selected))]
 
-            #filter treeview database based on slider chart values
+            # Filter treeview database based on slider chart values
             current_tv = current_tv.loc[(current_tv['herd_size'] >= minsize) & (current_tv['herd_size'] <= maxsize)]
             current_charts = current_charts.loc[current_charts['farm_id'].isin(current_tv["farm_id"])]
 
@@ -777,9 +928,10 @@ class mainwindow(QDialog):
             current_tv["subset_diff_%"] = round((current_tv["wh_lm"] - statistics.mean(current_tv["wh_lm"])) / statistics.mean(current_tv["wh_lm"]) * 100, 2)
 
 
-            self.firstTab.MRChart(current_tv)
-            self.firstTab.BLChart(current_charts)
-            self.firstTab.energychart(current_charts, current_tv)
+            # Macro-level section layout
+            self.firstTab.MRChart(current_tv) # Top left
+            self.firstTab.BLChart(current_charts) # Top right
+            self.firstTab.energychart(current_charts, current_tv) # Bottom left
             current_tv_removed = current_tv.drop(["TotalKWh", "wh_lm", "global_diff_%", "subset_diff_%", "pv_kwh"], axis=1)
             self.model = PandasModel(current_tv_removed)
             self.tableView.setModel(self.model)
@@ -829,38 +981,39 @@ class mainwindow(QDialog):
             msg.setStandardButtons(QMessageBox.Ok)
             x = msg.exec_()
 
-class FirstTab(QWidget):
+class FirstTab(QWidget): # macro-level tab layout
     def __init__(self, tabwidget):
         super(FirstTab, self).__init__()
+        # define instance
         self.tabwidget = tabwidget
         self.data = tabwidget.data
         self.filtereddatabase = []
         self.filtereddatabase_ann = []
 
+        # Bottom right
         bottomright = QGridLayout()
         bottomright.addWidget(self.kpi(self.filtereddatabase_ann), 0, 0, 1, 1)
         bottomright.addWidget(self.info(self.data), 1, 0, 2, 1)
 
         # Grid layout of entire tab
         layout = QGridLayout()
-        layout.addWidget(self.infrastructure(self.data), 0, 0)
-        layout.addWidget(self.energy(), 0, 1)
-        layout.addWidget(self.energymonth(), 1, 0)
-        layout.addLayout(bottomright, 1, 1)
+        layout.addWidget(self.infrastructure(self.data), 0, 0) # top left
+        layout.addWidget(self.energy(), 0, 1) # top right
+        layout.addWidget(self.energymonth(), 1, 0) # bottom left
+        layout.addLayout(bottomright, 1, 1) # bottom right
         layout.setRowStretch(0, 1)
         layout.setRowStretch(1, 1)
         layout.setColumnStretch(0, 1)
         layout.setColumnStretch(1, 1)
 
-
         self.setLayout(layout)
 
-    def info(self, data):  # function defining characteristics of each group/grid object
+    def info(self, data):  # Terms and conditions section
         groupBox = QGroupBox("Terms + Conditions")
         label = QTextEdit()
         label.setFrameStyle(0)
         label.setReadOnly(True)
-        label.textCursor().insertHtml("The National Artificial Intelligent Dairy Energy Application (NAIDEA) was developed and is maintained by researchers in the MeSSO research group at the Munster Technological University (messo.mtu.ie). NAIDEA is not for use by commercial bodies. Contact messo@mtu.ie for further information.")
+        label.textCursor().insertHtml("The National Artificial Intelligent Dairy Energy Application (NAIDEA) was developed and is maintained by researchers in the MeSSO research group at the Munster Technological University (messo.cit.ie). NAIDEA is not for use by commercial bodies. Contact messo@mtu.ie for further information.")
 
         ExLayout = QVBoxLayout()
         ExLayout.addWidget(label)
@@ -870,10 +1023,10 @@ class FirstTab(QWidget):
 
         return groupBox
 
-    def kpi_table(self, data):
+    def kpi_table(self, data): # KPI table bottom right
 
         try:
-            val = len(data)
+            val = len(data) # number of farms
             if val == 0:
                 self.modelkpi.setItem(0, 0, QStandardItem(str("")))
             else:
@@ -882,7 +1035,7 @@ class FirstTab(QWidget):
             self.modelkpi.setItem(0, 0, QStandardItem(str("")))
 
         try:
-            val = sum(data["TotalKWh"])
+            val = np.mean(data["TotalKWh"]) # mean kWh use per farm
             if val == 0:
                 self.modelkpi.setItem(0, 1, QStandardItem(str("")))
             else:
@@ -890,22 +1043,22 @@ class FirstTab(QWidget):
         except:
             self.modelkpi.setItem(0, 1, QStandardItem(str("")))
 
-        try:
-            val = sum(data["TotalKWh"]) / sum(data["milk_yield_litres"]) * 1000
-            self.modelkpi.setItem(0, 2, QStandardItem(str(round(val, 1))))
-        except:
-            self.modelkpi.setItem(0, 2, QStandardItem(str("")))
+        # try:
+        #     val = sum(data["TotalKWh"]) / sum(data["milk_yield_litres"]) * 1000 # mean Wh/Lm
+        #     self.modelkpi.setItem(0, 2, QStandardItem(str(round(val, 1))))
+        # except:
+        #     self.modelkpi.setItem(0, 2, QStandardItem(str("")))
 
         try:
             val = data["TotalKWh"] / data["herd_size"]
-            val = val.mean()
+            val = val.mean() # mean kWh / cow
             if val == 0:
-                self.modelkpi.setItem(0, 3, QStandardItem(str("")))
+                self.modelkpi.setItem(0, 2, QStandardItem(str("")))
             else:
-                self.modelkpi.setItem(0, 3, QStandardItem(str(f'{round(val):,}')))
+                self.modelkpi.setItem(0, 2, QStandardItem(str(f'{round(val):,}')))
 
         except:
-            self.modelkpi.setItem(0, 3, QStandardItem(str("")))
+            self.modelkpi.setItem(0, 2, QStandardItem(str("")))
 
         try:
             val = sum(data["TotalKWh"]) / sum(data["milk_yield_litres"]) * 1000
@@ -917,44 +1070,46 @@ class FirstTab(QWidget):
             DER = DER.replace(str(3), 'C')
             DER = DER.replace(str(4), 'D')
             DER = DER.replace(str(5), 'E')
-            self.modelkpi.setItem(0, 4, QStandardItem(DER))
+            self.modelkpi.setItem(0, 3, QStandardItem(DER)) # mean DER
+        except:
+            self.modelkpi.setItem(0, 3, QStandardItem(str("")))
+
+        try:
+            val = np.mean(data["TotalKWh"])*float(self.tabwidget.inptbox.text())/1000 # kg CO2 / farm
+            if val == 0:
+                self.modelkpi.setItem(0, 4, QStandardItem(str("")))
+            else:
+                self.modelkpi.setItem(0, 4, QStandardItem(str(f'{round(val):,}')))
         except:
             self.modelkpi.setItem(0, 4, QStandardItem(str("")))
 
-        try:
-            val = sum(data["TotalKWh"])*float(self.tabwidget.inptbox.text())/1000
-            if val == 0:
-                self.modelkpi.setItem(0, 5, QStandardItem(str("")))
-            else:
-                self.modelkpi.setItem(0, 5, QStandardItem(str(f'{round(val):,}')))
-        except:
-            self.modelkpi.setItem(0, 5, QStandardItem(str("")))
-
         return self.modelkpi
 
-    def kpi(self, data):
+    def kpi(self, data): # key performance indicator table
         qss = """
         {border: none;}
         """
         groupBoxkpi = QGroupBox("Key Performance Indicators")
 
+        # Define KPI table
         self.modelkpi = QtGui.QStandardItemModel(self)
         self.modelkpi.setRowCount(1)
-        self.modelkpi.setColumnCount(6)
+        self.modelkpi.setColumnCount(5)
         self.tableViewkpi = QtWidgets.QTableView(self)
         self.tableViewkpi.setFixedHeight(62) # height of available space
         self.tableViewkpi.setShowGrid(False) # removes horizontal lines
-        # self.tableViewkpi.setStyleSheet('QTableView::item {border-right: 1px solid #d6d9dc; QTableView::item {border-bottom: 1px solid #d6d9dc;}')
         self.tableViewkpi.setFrameStyle(0)
         self.tableViewkpi.setEditTriggers(QtWidgets.QTableWidget.NoEditTriggers)
         self.tableViewkpi.setObjectName("tableViewkpi")
         self.tableViewkpi.verticalHeader().hide()
+
+        # Table headings
         self.modelkpi.setHeaderData(0, Qt.Horizontal, "No. of Farms")
-        self.modelkpi.setHeaderData(1, Qt.Horizontal, "kWh")
-        self.modelkpi.setHeaderData(2, Qt.Horizontal, "Wh / Lm")
-        self.modelkpi.setHeaderData(3, Qt.Horizontal, "kWh /Farm /Cow")
-        self.modelkpi.setHeaderData(4, Qt.Horizontal, "Average DER")
-        self.modelkpi.setHeaderData(5, Qt.Horizontal, "kg CO\u2082")
+        self.modelkpi.setHeaderData(1, Qt.Horizontal, "kWh / Farm")
+        # self.modelkpi.setHeaderData(2, Qt.Horizontal, "Wh/Lm")
+        self.modelkpi.setHeaderData(2, Qt.Horizontal, "kWh / Cow")
+        self.modelkpi.setHeaderData(3, Qt.Horizontal, "Average DER")
+        self.modelkpi.setHeaderData(4, Qt.Horizontal, "kg CO\u2082 / Farm")
 
         # Align text in tableview
         for item in range(0, 6):
@@ -965,14 +1120,14 @@ class FirstTab(QWidget):
         layout = QHBoxLayout()
         layout.addWidget(self.tableViewkpi)
 
-
         groupBoxkpi.setLayout(layout)
         groupBoxkpi.setFlat(True)
+
         return groupBoxkpi
 
-    def MRChart(self, importedfile): # pie
+    def MRChart(self, importedfile): # pie chart (Top left)
         # https://pythonbasics.org/pyqt-radiobutton/
-        if self.radioButton1.isChecked():
+        if self.radioButton1.isChecked(): # pie chart changes depending upon which radio button is checked
             importedfile = importedfile.sort_values(by=[self.radioButton1.label], ascending=True)
             fig = go.Pie(labels=importedfile[self.radioButton1.label],  hovertemplate = "%{label}: <br>No. Farms: %{value} <extra></extra>", sort=False)
             layout = go.Layout(autosize=True, legend=dict(orientation="h", xanchor='center', x=0.5))
@@ -992,13 +1147,12 @@ class FirstTab(QWidget):
             importedfile = importedfile.sort_values(by=[self.radioButton11.label], ascending=True)
             fig = go.Pie(labels=importedfile[self.radioButton11.label],  hovertemplate = "%{label}: <br>No. Farms: %{value} <extra></extra>", sort=False)
             layout = go.Layout(autosize=True)
-        # layout = go.Layout(autosize=True, legend=dict(orientation="h",xanchor='center', x=0.5))
 
         fig = go.Figure(data=fig, layout=layout)
         fig.update_layout(margin=dict(t=0, b=0, l=0, r=0))
         self.browser.setHtml(fig.to_html(include_plotlyjs='cdn'))
 
-    def _on_downloaFunc(self, download):
+    def _on_downloaFunc(self, download): # save image function
         # save_file_name_dialog is a function to show the windows file window
         option = QFileDialog.Options()
         image_path, _ = QFileDialog.getSaveFileName(self, 'Save file',
@@ -1007,34 +1161,39 @@ class FirstTab(QWidget):
             download.setPath(image_path)
             download.accept()
 
-    def infrastructure(self, importedfile):
+    def infrastructure(self, importedfile): # Plot infrastructural breakdown pie charts
         groupBox = QGroupBox("Infrastructure Breakdown")
 
         self.browser = QtWebEngineWidgets.QWebEngineView(self)
         self.browser.page().profile().downloadRequested.connect(self._on_downloaFunc)
         right = QVBoxLayout()
 
+        # Low-energy lighting
         self.radioButton1 = QRadioButton("Low-Energy Lighting")
         self.radioButton1.label = "low_energy_lighting"
         self.radioButton1.toggled.connect(lambda: self.MRChart(self.tabwidget.filtereddatabase_ann))
         right.addWidget(self.radioButton1)
 
+        # Green Electricity
         self.radioButton2 = QRadioButton("Green Electricity")
         self.radioButton2.setChecked(True)
         self.radioButton2.label = "green_electricity"
         self.radioButton2.toggled.connect(lambda: self.MRChart(self.tabwidget.filtereddatabase_ann))
         right.addWidget(self.radioButton2)
 
+        # VSD
         self.radioButton3 = QRadioButton("Variable Speed Drive")
         self.radioButton3.label = "VSD"
         self.radioButton3.toggled.connect(lambda: self.MRChart(self.tabwidget.filtereddatabase_ann))
         right.addWidget(self.radioButton3)
 
+        # PHE
         self.radioButton4 = QRadioButton("Plate Cooler")
         self.radioButton4.label = "coolingsystem_platecooler"
         self.radioButton4.toggled.connect(lambda: self.MRChart(self.tabwidget.filtereddatabase_ann))
         right.addWidget(self.radioButton4)
 
+        # Renewable Energy
         self.radioButton11 = QRadioButton("Renewable Energy")
         self.radioButton11.label = "retech"
         self.radioButton11.toggled.connect(lambda: self.MRChart(self.tabwidget.filtereddatabase_ann))
@@ -1046,12 +1205,12 @@ class FirstTab(QWidget):
         groupBox.setLayout(middleright)
         groupBox.setFlat(True)
 
-
         return groupBox
 
-    def energychart(self, importedfile, ann_file):
+    def energychart(self, importedfile, ann_file): # Pie charts for top right
+
         kwhdata = importedfile[["CoolingKWh", "VacuumKWh", "WaterHeatKWh", "OtherKWh"]]
-        if self.radioButton5.isChecked():
+        if self.radioButton5.isChecked(): # Changes depending on radio button checked
             kwhdata = importedfile[["CoolingKWh", "VacuumKWh", "WaterHeatKWh", "OtherKWh"]]
             summed = round(kwhdata.sum(axis=0))
             fig = go.Pie(labels=["Milk Cooling", "Milk Harvesting", "Water Heating", "Other Use"], values=summed.values,  hovertemplate = "%{label}: <br>Sum: %{value} kWh <extra></extra>", sort=False)
@@ -1068,20 +1227,23 @@ class FirstTab(QWidget):
         fig.update_layout(margin=dict(t=0, b=0, l=0, r=0))
         self.browserEn.setHtml(fig.to_html(include_plotlyjs='cdn'))
 
-    def energy(self):
+    def energy(self): # Energy/Carbon section
         groupBox = QGroupBox("Energy/Carbon Breakdown")
 
         right = QVBoxLayout()
 
+        # Energy
         self.radioButton5 = QRadioButton("Energy Breakdown")
         self.radioButton5.toggled.connect(lambda: self.energychart(self.tabwidget.filtereddatabase_mth, self.tabwidget.filtereddatabase_ann))
         right.addWidget(self.radioButton5)
 
+        # DER
         self.radioButton6 = QRadioButton("Dairy Energy Rating")
         self.radioButton6.setChecked(True)
         self.radioButton6.toggled.connect(lambda: self.energychart(self.tabwidget.filtereddatabase_mth, self.tabwidget.filtereddatabase_ann))
         right.addWidget(self.radioButton6)
 
+        # CO2
         self.radioButton7 = QRadioButton("Carbon Dioxide")
         self.radioButton7.toggled.connect(lambda: self.energychart(self.tabwidget.filtereddatabase_mth, self.tabwidget.filtereddatabase_ann))
         right.addWidget(self.radioButton7)
@@ -1093,26 +1255,24 @@ class FirstTab(QWidget):
         groupBox.setLayout(middleright)
         groupBox.setFlat(True)
 
-
         return groupBox
 
-    def BLChart(self, importedfile):
+    def BLChart(self, importedfile): # Stacke dbar chart bottom left
 
         smonth = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
         if self.radioButton8.isChecked():# total
             kwhdata = importedfile[["month", "CoolingKWh", "VacuumKWh", "WaterHeatKWh", "OtherKWh"]].groupby("month",
-                                                                                                             as_index=False).sum()
+                                                                                                             as_index=False).mean()
             y_axislabel = "Electricity Use\n(kWh)"
             hovertext = "%{x}: <br>%{y} kWh <extra></extra>"
             fig = go.Figure(data=[go.Bar(name='Milk Cooling', x=smonth, y=round(kwhdata["CoolingKWh"], 1)),
                                   go.Bar(name='Milk Harvesting', x=smonth, y=round(kwhdata["VacuumKWh"], 1)),
-                                  go.Bar(name='Water Heating', x=smonth, y=round(kwhdata["WaterHeatKWh"], 1)),
-                                  go.Bar(name='Other Use', x=smonth, y=round(kwhdata["OtherKWh"], 1))])
+                                  go.Bar(name='Water Heating', x=smonth, y=round(kwhdata["WaterHeatKWh"], 1))])
             fig.update_layout(legend=dict(orientation="h", xanchor='center', x=0.5))
 
         elif self.radioButton9.isChecked(): # total / litre milk
-            kwhdata_perlitre = importedfile[["month", "milk_yield_litres", "CoolingKWh", "VacuumKWh", "WaterHeatKWh", "OtherKWh"]].groupby("month", as_index = False).sum()
+            kwhdata_perlitre = importedfile[["month", "milk_yield_litres", "CoolingKWh", "VacuumKWh", "WaterHeatKWh", "OtherKWh"]].groupby("month", as_index = False).mean()
             month_vector = kwhdata_perlitre["month"]
             kwhdata_perlitre = kwhdata_perlitre[["CoolingKWh", "VacuumKWh", "WaterHeatKWh", "OtherKWh"]].div(
                 kwhdata_perlitre.milk_yield_litres, axis=0)
@@ -1123,8 +1283,7 @@ class FirstTab(QWidget):
             hovertext = "%{label}: <br>%{value} Wh/Litre <extra></extra>"
             fig = go.Figure(data=[go.Bar(name='Milk Cooling', x=smonth, y=round(kwhdata["CoolingKWh"], 1)),
                                   go.Bar(name='Milk Harvesting', x=smonth, y=round(kwhdata["VacuumKWh"], 1)),
-                                  go.Bar(name='Water Heating', x=smonth, y=round(kwhdata["WaterHeatKWh"], 1)),
-                                  go.Bar(name='Other Use', x=smonth, y=round(kwhdata["OtherKWh"], 1))])
+                                  go.Bar(name='Water Heating', x=smonth, y=round(kwhdata["WaterHeatKWh"], 1))])
 
         elif self.radioButton10.isChecked(): # total / cow
             kwhdata_percow = importedfile[["CoolingKWh", "VacuumKWh", "WaterHeatKWh", "OtherKWh"]].div(importedfile.herd_size, axis=0)
@@ -1134,8 +1293,9 @@ class FirstTab(QWidget):
             hovertext = "%{label}: <br>%{value} kWh/Cow <extra></extra>"
             fig = go.Figure(data=[go.Bar(name='Milk Cooling', x=smonth, y=round(kwhdata["CoolingKWh"], 1)),
                                   go.Bar(name='Milk Harvesting', x=smonth, y=round(kwhdata["VacuumKWh"], 1)),
-                                  go.Bar(name='Water Heating', x=smonth, y=round(kwhdata["WaterHeatKWh"], 1)),
-                                  go.Bar(name='Other Use', x=smonth, y=round(kwhdata["OtherKWh"], 1))])
+                                  go.Bar(name='Water Heating', x=smonth, y=round(kwhdata["WaterHeatKWh"], 1))])
+            # ,
+            #                       go.Bar(name='Other Use', x=smonth, y=round(kwhdata["OtherKWh"], 1))])
 
 
         fig.update_traces(hovertemplate=hovertext)
@@ -1146,21 +1306,24 @@ class FirstTab(QWidget):
         fig.update_yaxes(title=y_axislabel, title_font_size=10)
         self.browserBL.setHtml(fig.to_html(include_plotlyjs='cdn'))
 
-    def energymonth(self): # box and whisker
+    def energymonth(self): # monthly energy stats bar chart section
         groupBox = QGroupBox("Monthly Energy Statistics")
 
         right = QVBoxLayout()
 
+        # Electricity use
         self.radioButton8 = QRadioButton("Electricity Use")
         self.radioButton8.setChecked(True)
         self.radioButton8.toggled.connect(lambda: self.BLChart(self.tabwidget.filtereddatabase_mth))
         right.addWidget(self.radioButton8)
 
+        # Wh/Lm
         self.radioButton9 = QRadioButton("Electricity Use / Litre")
         self.radioButton9.toggled.connect(lambda: self.BLChart(self.tabwidget.filtereddatabase_mth))
         right.addWidget(self.radioButton9)
 
-        self.radioButton10 = QRadioButton("Electricity Use / Farm / Cow")
+        # kWh / cow
+        self.radioButton10 = QRadioButton("Electricity Use / Cow")
         self.radioButton10.toggled.connect(lambda: self.BLChart(self.tabwidget.filtereddatabase_mth))
         right.addWidget(self.radioButton10)
 
@@ -1173,7 +1336,7 @@ class FirstTab(QWidget):
 
         return groupBox
 
-class ThirdTab(QWidget):
+class ThirdTab(QWidget): # Help section (Showing user manual)
     def __init__(self):
         super().__init__()
 
@@ -1224,16 +1387,10 @@ class AlignDelegate(QtWidgets.QStyledItemDelegate):
 
 if __name__ == "__main__":
     appctxt = ApplicationContext()
-    # app = QApplication(sys.argv)
     appctxt.app.setStyle('Breeze')
-    # app.setStyle('Breeze')
     window = mainwindow(data=None)
     # Formatting
     window.showMaximized()
     window.setWindowTitle("NAIDEA")
     window.setWindowIcon(QIcon('icon.ico'))
-    # window.setWindowIcon(QIcon(appctxt.get_resource('icon.ico')))
-
-    #Exit
-    # app.exec()
     sys.exit(appctxt.app.exec())
