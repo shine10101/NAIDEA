@@ -293,20 +293,21 @@ class mainwindow(QDialog):
         # Create datasets specific to predicting each Dependent variable
         total_db, cooling_db, vacuum_db, heating_db, combined_db = self.processimportedfile(df1)
         # Load csv files (required for updating pfl files with ANN weights and biases)
-        # wandb_total = pd.read_csv('wandbtotalkwh.csv')
+        # wandb_total = pd.read_csv('new_wandbtotalkwh.csv')
+        # wandb_total = wandb_total.iloc[:, :-2]
         # wandb_cooling = pd.read_csv('wandbcoolingkwh.csv')
         # wandb_vacuum = pd.read_csv('wandbvacuumkwh.csv')
         # wandb_heating = pd.read_csv('wandbwaterheatkwh.csv')
         # wandb_combined = pd.read_csv('wandbcombinedkwh.csv')
         # Convert to pickle files
-        # wandbtotal = pd.to_pickle(wandb_total, 'wandbtotalkwh.pkl')
+        # wandbtotal = pd.to_pickle(wandb_total, 'new_wandbtotalkwh.pkl')
         # wandb_cooling = pd.to_pickle(wandb_cooling, 'wandbcoolingkwh.pkl')
         # wandb_vacuum = pd.to_pickle(wandb_vacuum, 'wandbvacuumkwh.pkl')
         # wandb_heating = pd.to_pickle(wandb_heating, 'wandbwaterheatkwh.pkl')
         # wandb_combined = pd.to_pickle(wandb_combined, 'wandbcombinedkwh.pkl')
 
         # Read pickle files
-        wandb_total = pd.read_pickle('wandbtotalkwh.pkl')
+        wandb_total = pd.read_pickle('new_wandbtotalkwh.pkl')
         wandb_cooling = pd.read_pickle('wandbcoolingkwh.pkl')
         wandb_vacuum = pd.read_pickle('wandbvacuumkwh.pkl')
         wandb_heating = pd.read_pickle('wandbwaterheatkwh.pkl')
@@ -649,7 +650,10 @@ class mainwindow(QDialog):
         df.columns = df.columns.str.replace(' ', '')
 
         # Create datasets for each dependent variable, with required vars in correct order.
-        total_vars = ['farm_id', 'month', 'dairycows_milking', 'dairycows_total', 'milkyield','ibdx', 'gwphe', 'icwphe', 'totalbulktankvolume', 'parlour_vacuumpump1_variablespeedy_n', 'oad', 'oam', 'oaw', 'parlour_solarthermaly_n', 'totalwaterheatervolume','totalwaterheaterpower', 'electricandoil', 'diaphragm', 'doublediaphragm','highspeed','variablespeedpump','dwelling','milking']
+        # total_vars = ['farm_id', 'month', 'dairycows_milking', 'dairycows_total', 'milkyield','ibdx', 'gwphe', 'icwphe', 'totalbulktankvolume', 'parlour_vacuumpump1_variablespeedy_n', 'oad', 'oam', 'oaw', 'parlour_solarthermaly_n', 'totalwaterheatervolume','totalwaterheaterpower', 'electricandoil', 'diaphragm', 'doublediaphragm','highspeed','variablespeedpump','dwelling','milking']
+        # re-do modelling when hi-spec machine comes back online
+        total_vars = ['farm_id', 'month', 'dairycows_total', 'milkyield','noofparlourunits', 'totalbulktankvolume', 'totalvacuumpower', 'oad', 'oam', 'totalwaterheatervolume','totalwaterheaterpower', 'diaphragm', 'parlour_vacuumpump1_variablespeedy_n','milking']
+
         total_vars = [each.lower() for each in total_vars]
         total_db = df[total_vars]
         total_db = total_db.fillna(total_db.mean().round())
@@ -681,12 +685,16 @@ class mainwindow(QDialog):
         # wandb = pd.read_csv('wandbtotal.csv')
 
         # transform data as per data used for model training
-        data["dairycows_milking"] = np.sqrt(data["dairycows_milking"])
+        # data["dairycows_milking"] = np.sqrt(data["dairycows_milking"])
+        # data = total_db
+        # wandb=wandb_total
         data["dairycows_total"] = np.log(data["dairycows_total"])
         data["milkyield"] = np.sqrt(data["milkyield"])
+        data["noofparlourunits"] = np.log(data["noofparlourunits"])
         data["totalbulktankvolume"] = np.log(data["totalbulktankvolume"])
         data["totalwaterheatervolume"] = np.reciprocal(data["totalwaterheatervolume"])
         data["totalwaterheaterpower"] = np.sqrt(data["totalwaterheaterpower"])
+        data["totalvacuumpower"] = np.log(data["totalvacuumpower"])
 
         # Normalize according to data used for model training
         minmax = wandb.iloc[wandb.shape[0]-2:wandb.shape[0], 1:wandb.shape[1]-3]
@@ -1043,22 +1051,22 @@ class FirstTab(QWidget): # macro-level tab layout
         except:
             self.modelkpi.setItem(0, 1, QStandardItem(str("")))
 
-        # try:
-        #     val = sum(data["TotalKWh"]) / sum(data["milk_yield_litres"]) * 1000 # mean Wh/Lm
-        #     self.modelkpi.setItem(0, 2, QStandardItem(str(round(val, 1))))
-        # except:
-        #     self.modelkpi.setItem(0, 2, QStandardItem(str("")))
+        try:
+            val = sum(data["TotalKWh"]) / sum(data["milk_yield_litres"]) * 1000 # mean Wh/Lm
+            self.modelkpi.setItem(0, 2, QStandardItem(str(round(val, 1))))
+        except:
+            self.modelkpi.setItem(0, 2, QStandardItem(str("")))
 
         try:
             val = data["TotalKWh"] / data["herd_size"]
             val = val.mean() # mean kWh / cow
             if val == 0:
-                self.modelkpi.setItem(0, 2, QStandardItem(str("")))
+                self.modelkpi.setItem(0, 3, QStandardItem(str("")))
             else:
-                self.modelkpi.setItem(0, 2, QStandardItem(str(f'{round(val):,}')))
+                self.modelkpi.setItem(0, 3, QStandardItem(str(f'{round(val):,}')))
 
         except:
-            self.modelkpi.setItem(0, 2, QStandardItem(str("")))
+            self.modelkpi.setItem(0, 3, QStandardItem(str("")))
 
         try:
             val = sum(data["TotalKWh"]) / sum(data["milk_yield_litres"]) * 1000
@@ -1070,18 +1078,18 @@ class FirstTab(QWidget): # macro-level tab layout
             DER = DER.replace(str(3), 'C')
             DER = DER.replace(str(4), 'D')
             DER = DER.replace(str(5), 'E')
-            self.modelkpi.setItem(0, 3, QStandardItem(DER)) # mean DER
+            self.modelkpi.setItem(0, 4, QStandardItem(DER)) # mean DER
         except:
-            self.modelkpi.setItem(0, 3, QStandardItem(str("")))
+            self.modelkpi.setItem(0, 4, QStandardItem(str("")))
 
         try:
             val = np.mean(data["TotalKWh"])*float(self.tabwidget.inptbox.text())/1000 # kg CO2 / farm
             if val == 0:
-                self.modelkpi.setItem(0, 4, QStandardItem(str("")))
+                self.modelkpi.setItem(0, 5, QStandardItem(str("")))
             else:
-                self.modelkpi.setItem(0, 4, QStandardItem(str(f'{round(val):,}')))
+                self.modelkpi.setItem(0, 5, QStandardItem(str(f'{round(val):,}')))
         except:
-            self.modelkpi.setItem(0, 4, QStandardItem(str("")))
+            self.modelkpi.setItem(0, 5, QStandardItem(str("")))
 
         return self.modelkpi
 
@@ -1094,7 +1102,7 @@ class FirstTab(QWidget): # macro-level tab layout
         # Define KPI table
         self.modelkpi = QtGui.QStandardItemModel(self)
         self.modelkpi.setRowCount(1)
-        self.modelkpi.setColumnCount(5)
+        self.modelkpi.setColumnCount(6)
         self.tableViewkpi = QtWidgets.QTableView(self)
         self.tableViewkpi.setFixedHeight(62) # height of available space
         self.tableViewkpi.setShowGrid(False) # removes horizontal lines
@@ -1106,10 +1114,10 @@ class FirstTab(QWidget): # macro-level tab layout
         # Table headings
         self.modelkpi.setHeaderData(0, Qt.Horizontal, "No. of Farms")
         self.modelkpi.setHeaderData(1, Qt.Horizontal, "kWh / Farm")
-        # self.modelkpi.setHeaderData(2, Qt.Horizontal, "Wh/Lm")
-        self.modelkpi.setHeaderData(2, Qt.Horizontal, "kWh / Cow")
-        self.modelkpi.setHeaderData(3, Qt.Horizontal, "Average DER")
-        self.modelkpi.setHeaderData(4, Qt.Horizontal, "kg CO\u2082 / Farm")
+        self.modelkpi.setHeaderData(2, Qt.Horizontal, "Wh / Lm")
+        self.modelkpi.setHeaderData(3, Qt.Horizontal, "kWh / Cow")
+        self.modelkpi.setHeaderData(4, Qt.Horizontal, "Average DER")
+        self.modelkpi.setHeaderData(5, Qt.Horizontal, "kg CO\u2082 / Farm")
 
         # Align text in tableview
         for item in range(0, 6):
@@ -1268,7 +1276,8 @@ class FirstTab(QWidget): # macro-level tab layout
             hovertext = "%{x}: <br>%{y} kWh <extra></extra>"
             fig = go.Figure(data=[go.Bar(name='Milk Cooling', x=smonth, y=round(kwhdata["CoolingKWh"], 1)),
                                   go.Bar(name='Milk Harvesting', x=smonth, y=round(kwhdata["VacuumKWh"], 1)),
-                                  go.Bar(name='Water Heating', x=smonth, y=round(kwhdata["WaterHeatKWh"], 1))])
+                                  go.Bar(name='Water Heating', x=smonth, y=round(kwhdata["WaterHeatKWh"], 1)),
+                                  go.Bar(name='Other Use', x=smonth, y=round(kwhdata["OtherKWh"], 1))])
             fig.update_layout(legend=dict(orientation="h", xanchor='center', x=0.5))
 
         elif self.radioButton9.isChecked(): # total / litre milk
@@ -1283,7 +1292,8 @@ class FirstTab(QWidget): # macro-level tab layout
             hovertext = "%{label}: <br>%{value} Wh/Litre <extra></extra>"
             fig = go.Figure(data=[go.Bar(name='Milk Cooling', x=smonth, y=round(kwhdata["CoolingKWh"], 1)),
                                   go.Bar(name='Milk Harvesting', x=smonth, y=round(kwhdata["VacuumKWh"], 1)),
-                                  go.Bar(name='Water Heating', x=smonth, y=round(kwhdata["WaterHeatKWh"], 1))])
+                                  go.Bar(name='Water Heating', x=smonth, y=round(kwhdata["WaterHeatKWh"], 1)),
+                                  go.Bar(name='Other Use', x=smonth, y=round(kwhdata["OtherKWh"], 1))])
 
         elif self.radioButton10.isChecked(): # total / cow
             kwhdata_percow = importedfile[["CoolingKWh", "VacuumKWh", "WaterHeatKWh", "OtherKWh"]].div(importedfile.herd_size, axis=0)
@@ -1293,7 +1303,8 @@ class FirstTab(QWidget): # macro-level tab layout
             hovertext = "%{label}: <br>%{value} kWh/Cow <extra></extra>"
             fig = go.Figure(data=[go.Bar(name='Milk Cooling', x=smonth, y=round(kwhdata["CoolingKWh"], 1)),
                                   go.Bar(name='Milk Harvesting', x=smonth, y=round(kwhdata["VacuumKWh"], 1)),
-                                  go.Bar(name='Water Heating', x=smonth, y=round(kwhdata["WaterHeatKWh"], 1))])
+                                  go.Bar(name='Water Heating', x=smonth, y=round(kwhdata["WaterHeatKWh"], 1)),
+                                  go.Bar(name='Other Use', x=smonth, y=round(kwhdata["OtherKWh"], 1))])
             # ,
             #                       go.Bar(name='Other Use', x=smonth, y=round(kwhdata["OtherKWh"], 1))])
 
