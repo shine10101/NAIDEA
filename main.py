@@ -212,9 +212,9 @@ class mainwindow(QDialog):
         self.slider1.setSingleStep(step=25)
         self.slider1.setEdgeLabelMode(opt=0)
         self.slider1.setHandleLabelPosition(opt=2)
-        self.slider1.setRange(5, 501)
+        self.slider1.setRange(5, 2001)
         self.slider1.setTickInterval(25)
-        self.slider1.setValue((5, 500))
+        self.slider1.setValue((5, 2000))
         self.slider1.setStyleSheet(QSS)
         righttoplayout.addWidget(self.slider1)
 
@@ -292,6 +292,17 @@ class mainwindow(QDialog):
 
         # Create datasets specific to predicting each Dependent variable
         total_db, cooling_db, vacuum_db, heating_db, combined_db = self.processimportedfile(df1)
+
+        # 0. Identify farms (locations) with mean herd size greater than 500
+        # 1. Scale down to ~250
+        # 2. Scale back up after prediction
+        # df_scaling = total_db[["farm_id", "dairycows_total"]].groupby("farm_id").mean().round()
+        # farmstoscale = df_scaling.index[df_scaling["dairycows_total"] >300].tolist()
+        # print(farmstoscale)
+        # total_scaled = total_db[total_db['farm_id'].isin(farmstoscale)]
+        #
+        # # Begin scaling here
+
         # Load csv files (required for updating pfl files with ANN weights and biases)
         # wandb_total = pd.read_csv('new_wandbtotalkwh.csv')
         # wandb_total = wandb_total.iloc[:, :-2]
@@ -515,7 +526,7 @@ class mainwindow(QDialog):
         # Replace missing values according to farm size using regression coefficients
         data['farm_id'] = pd.Categorical(data.farm_id)
         farmdata = data[["farm_id", "herd_size"]].groupby("farm_id").mean()
-        b = np.linspace(0,500, 11)
+        b = np.linspace(0,2000, 41)
         BIN = pd.DataFrame(np.digitize(farmdata, b), columns=['bins'])
         BIN = BIN.set_index(farmdata.index)
         show = pd.concat([farmdata, pd.DataFrame(BIN, columns=['bins'])], axis=1)
@@ -651,7 +662,6 @@ class mainwindow(QDialog):
 
         # Create datasets for each dependent variable, with required vars in correct order.
         # total_vars = ['farm_id', 'month', 'dairycows_milking', 'dairycows_total', 'milkyield','ibdx', 'gwphe', 'icwphe', 'totalbulktankvolume', 'parlour_vacuumpump1_variablespeedy_n', 'oad', 'oam', 'oaw', 'parlour_solarthermaly_n', 'totalwaterheatervolume','totalwaterheaterpower', 'electricandoil', 'diaphragm', 'doublediaphragm','highspeed','variablespeedpump','dwelling','milking']
-        # re-do modelling when hi-spec machine comes back online
         total_vars = ['farm_id', 'month', 'dairycows_total', 'milkyield','noofparlourunits', 'totalbulktankvolume', 'totalvacuumpower', 'oad', 'oam', 'totalwaterheatervolume','totalwaterheaterpower', 'diaphragm', 'parlour_vacuumpump1_variablespeedy_n','milking']
 
         total_vars = [each.lower() for each in total_vars]
