@@ -212,9 +212,9 @@ class mainwindow(QDialog):
         self.slider1.setSingleStep(step=25)
         self.slider1.setEdgeLabelMode(opt=0)
         self.slider1.setHandleLabelPosition(opt=2)
-        self.slider1.setRange(5, 501)
+        self.slider1.setRange(5, 2001)
         self.slider1.setTickInterval(25)
-        self.slider1.setValue((5, 500))
+        self.slider1.setValue((5, 2000))
         self.slider1.setStyleSheet(QSS)
         righttoplayout.addWidget(self.slider1)
 
@@ -283,6 +283,8 @@ class mainwindow(QDialog):
                                                 CURRENT_DIR, "CSV files (*.csv)", options=option)
 
         # read file
+        # fname = "C:/NAIDEA SAMPLE DATA_BordBia.csv"
+        # df1 = pd.read_csv(fname)
         df1 = pd.read_csv(fname[0])
 
         # Manual filtering
@@ -292,6 +294,32 @@ class mainwindow(QDialog):
 
         # Create datasets specific to predicting each Dependent variable
         total_db, cooling_db, vacuum_db, heating_db, combined_db = self.processimportedfile(df1)
+
+        # Identify farms requiring scaling
+        df_scaling = total_db[["farm_id", "dairycows_total"]].groupby("farm_id").mean().round()
+        farmstoscale = df_scaling.index[df_scaling["dairycows_total"] >500].tolist()
+        total_scale = total_db[total_db['farm_id'].isin(farmstoscale)]
+        cooling_scale = cooling_db[cooling_db['farm_id'].isin(farmstoscale)]
+        vacuum_scale = vacuum_db[vacuum_db['farm_id'].isin(farmstoscale)]
+        heating_scale = heating_db[heating_db['farm_id'].isin(farmstoscale)]
+        combined_scale = combined_db[combined_db['farm_id'].isin(farmstoscale)]
+
+        # Begin scaling here
+        scaling_factor = df_scaling[df_scaling["dairycows_total"] >500]/250
+
+        total_scale = self.scaleds(total_scale, scaling_factor, 'down')
+        cooling_scale = self.scaleds(cooling_scale, scaling_factor, 'down')
+        vacuum_scale = self.scaleds(vacuum_scale, scaling_factor, 'down')
+        heating_scale = self.scaleds(heating_scale, scaling_factor, 'down')
+        combined_scale = self.scaleds(combined_scale, scaling_factor, 'down')
+
+        # Update dataframes with scaled values for prediction
+        total_db.update(total_scale)
+        cooling_db.update(cooling_scale)
+        vacuum_db.update(vacuum_scale)
+        heating_db.update(heating_scale)
+        combined_db.update(combined_scale)
+
         # Load csv files (required for updating pfl files with ANN weights and biases)
         # wandb_total = pd.read_csv('new_wandbtotalkwh.csv')
         # wandb_total = wandb_total.iloc[:, :-2]
@@ -313,8 +341,8 @@ class mainwindow(QDialog):
         wandb_heating = pd.read_pickle('wandbwaterheatkwh.pkl')
         wandb_combined = pd.read_pickle('wandbcombinedkwh.pkl')
         t = time.time()
-        total = total_db.iloc[:, 1:total_db.shape[1]]
         # Predict monthly total, cooling, vacuum, heating and combined kWh consumption
+        total = total_db.iloc[:, 1:total_db.shape[1]]
         df1["TotalKWh"] = pd.DataFrame([self.predict_total(data=row, wandb=wandb_total) for idx, row in total.iterrows()], columns=['TotalKWh'])
         cooling = cooling_db.iloc[:, 1:cooling_db.shape[1]]
         df1["CoolingKWh"] = pd.DataFrame([self.predict_cooling(data=row, wandb=wandb_cooling) for idx, row in cooling.iterrows()], columns=['CoolingKWh'])
@@ -325,6 +353,11 @@ class mainwindow(QDialog):
         combined = combined_db.iloc[:, 1:combined_db.shape[1]]
         df1["CombinedKWh"] = pd.DataFrame([self.predict_combined(data=row, wandb=wandb_combined) for idx, row in combined.iterrows()], columns=['CombinedKWh'])
         print(time.time()-t)
+
+        # Scale up prediction values a/c to scaling factor
+        df1_scale = df1[df1['farm_id'].isin(farmstoscale)]
+        df1_scale = self.scaleds(df1_scale, scaling_factor, 'up')
+        df1.update(df1_scale)
 
         # Manual processing
         # Milk cooling and vacuum equals 0 when milk production = 0
@@ -444,6 +477,52 @@ class mainwindow(QDialog):
         if fname:
             return df1, df2
 
+    def scaleds(self, total_scale, scaling_factor, action):
+        fts = scaling_factor.index.tolist()
+        if action =='down':
+
+            for id in fts:
+                if 'dairycows_total' in total_scale.columns:
+                    total_scale.dairycows_total[total_scale.farm_id == id] /= scaling_factor.dairycows_total[
+                        scaling_factor.index == id].tolist()
+                if 'dairycows_milking' in total_scale.columns:
+                    total_scale.dairycows_milking[total_scale.farm_id == id] /= scaling_factor.dairycows_total[
+                        scaling_factor.index == id].tolist()
+                if 'milkyield' in total_scale.columns:
+                    total_scale.milkyield[total_scale.farm_id == id] /= scaling_factor.dairycows_total[
+                        scaling_factor.index == id].tolist()
+                if 'noofparlourunits' in total_scale.columns:
+                    total_scale.noofparlourunits[total_scale.farm_id == id] /= scaling_factor.dairycows_total[
+                        scaling_factor.index == id].tolist()
+                if 'totalbulktankvolume' in total_scale.columns:
+                    total_scale.totalbulktankvolume[total_scale.farm_id == id] /= scaling_factor.dairycows_total[
+                        scaling_factor.index == id].tolist()
+                if 'totalvacuumpower' in total_scale.columns:
+                    total_scale.totalvacuumpower[total_scale.farm_id == id] /= scaling_factor.dairycows_total[
+                        scaling_factor.index == id].tolist()
+                if 'totalwaterheatervolume' in total_scale.columns:
+                    total_scale.totalwaterheatervolume[total_scale.farm_id == id] /= scaling_factor.dairycows_total[
+                        scaling_factor.index == id].tolist()
+                if 'totalwaterheaterpower' in total_scale.columns:
+                    total_scale.totalwaterheaterpower[total_scale.farm_id == id] /= scaling_factor.dairycows_total[
+                        scaling_factor.index == id].tolist()
+
+        elif action == 'up':
+
+            for id in fts:
+                total_scale.TotalKWh[total_scale.farm_id == id] *= scaling_factor.dairycows_total[
+                    scaling_factor.index == id].tolist()
+                total_scale.CoolingKWh[total_scale.farm_id == id] *= scaling_factor.dairycows_total[
+                    scaling_factor.index == id].tolist()
+                total_scale.VacuumKWh[total_scale.farm_id == id] *= scaling_factor.dairycows_total[
+                    scaling_factor.index == id].tolist()
+                total_scale.WaterHeatKWh[total_scale.farm_id == id] *= scaling_factor.dairycows_total[
+                    scaling_factor.index == id].tolist()
+                total_scale.CombinedKWh[total_scale.farm_id == id] *= scaling_factor.dairycows_total[
+                    scaling_factor.index == id].tolist()
+
+        return total_scale
+
     @QtCore.pyqtSlot()
     def on_pushButtonLoad_clicked(self): # update charts when import button pressed
 
@@ -515,7 +594,7 @@ class mainwindow(QDialog):
         # Replace missing values according to farm size using regression coefficients
         data['farm_id'] = pd.Categorical(data.farm_id)
         farmdata = data[["farm_id", "herd_size"]].groupby("farm_id").mean()
-        b = np.linspace(0,500, 11)
+        b = np.linspace(0,2000, 41)
         BIN = pd.DataFrame(np.digitize(farmdata, b), columns=['bins'])
         BIN = BIN.set_index(farmdata.index)
         show = pd.concat([farmdata, pd.DataFrame(BIN, columns=['bins'])], axis=1)
@@ -651,7 +730,6 @@ class mainwindow(QDialog):
 
         # Create datasets for each dependent variable, with required vars in correct order.
         # total_vars = ['farm_id', 'month', 'dairycows_milking', 'dairycows_total', 'milkyield','ibdx', 'gwphe', 'icwphe', 'totalbulktankvolume', 'parlour_vacuumpump1_variablespeedy_n', 'oad', 'oam', 'oaw', 'parlour_solarthermaly_n', 'totalwaterheatervolume','totalwaterheaterpower', 'electricandoil', 'diaphragm', 'doublediaphragm','highspeed','variablespeedpump','dwelling','milking']
-        # re-do modelling when hi-spec machine comes back online
         total_vars = ['farm_id', 'month', 'dairycows_total', 'milkyield','noofparlourunits', 'totalbulktankvolume', 'totalvacuumpower', 'oad', 'oam', 'totalwaterheatervolume','totalwaterheaterpower', 'diaphragm', 'parlour_vacuumpump1_variablespeedy_n','milking']
 
         total_vars = [each.lower() for each in total_vars]
@@ -681,8 +759,8 @@ class mainwindow(QDialog):
         return total_db, cooling_db, vacuum_db, heating_db, combined_db
 
     def predict_total(self, data, wandb): # predict total kWh consumption
-        # data = total_db.iloc[0, 1:23]
-        # wandb = pd.read_csv('wandbtotal.csv')
+        # data = total_db.iloc[0, 1:14]
+        # wandb = wandb_total
 
         # transform data as per data used for model training
         # data["dairycows_milking"] = np.sqrt(data["dairycows_milking"])
