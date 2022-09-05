@@ -680,6 +680,7 @@ class mainwindow(QDialog):
         VSD = VSD.rename(columns={"yes": "Parlour_VacuumPump1_VariableSpeedY_N", "Yes": "Parlour_VacuumPump1_VariableSpeedY_N"})
         data_mdl = data_mdl.drop(columns=["VSD"])
 
+
         # WH Fuel source
         WH = data_mdl[["TotalWaterHeaterPower", "waterheating_power_gas_kw", "waterheating_power_oil_kw"]]
         WH['TotalWaterHeaterPower'].values[WH['TotalWaterHeaterPower'] > 0] = 1
