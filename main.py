@@ -730,7 +730,8 @@ class mainwindow(QDialog):
 
         # Create datasets for each dependent variable, with required vars in correct order.
         # total_vars = ['farm_id', 'month', 'dairycows_milking', 'dairycows_total', 'milkyield','ibdx', 'gwphe', 'icwphe', 'totalbulktankvolume', 'parlour_vacuumpump1_variablespeedy_n', 'oad', 'oam', 'oaw', 'parlour_solarthermaly_n', 'totalwaterheatervolume','totalwaterheaterpower', 'electricandoil', 'diaphragm', 'doublediaphragm','highspeed','variablespeedpump','dwelling','milking']
-        total_vars = ['farm_id', 'month', 'dairycows_total', 'milkyield','noofparlourunits', 'totalbulktankvolume', 'totalvacuumpower', 'oad', 'oam', 'totalwaterheatervolume','totalwaterheaterpower', 'diaphragm', 'parlour_vacuumpump1_variablespeedy_n','milking']
+        # total_vars = ['farm_id', 'month', 'dairycows_total', 'milkyield','noofparlourunits', 'totalbulktankvolume', 'totalvacuumpower', 'oad', 'oam', 'totalwaterheatervolume','totalwaterheaterpower', 'diaphragm', 'parlour_vacuumpump1_variablespeedy_n','milking']
+        total_vars = ['farm_id', 'Month', 'DairyCows_Total', 'MilkYield','NoOfParlourUnits','IBDX', 'GWPHE', 'TotalBulkTankVolume', 'Parlour_VacuumPump1_VariableSpeedY_N','E2ndD', 'OAD', 'OAM', 'TotalWaterHeaterVolume','TotalWaterHeaterPower', 'singlespeed', 'variablespeedpump','milking']
 
         total_vars = [each.lower() for each in total_vars]
         total_db = df[total_vars]
@@ -772,7 +773,7 @@ class mainwindow(QDialog):
         data["totalbulktankvolume"] = np.log(data["totalbulktankvolume"])
         data["totalwaterheatervolume"] = np.reciprocal(data["totalwaterheatervolume"])
         data["totalwaterheaterpower"] = np.sqrt(data["totalwaterheaterpower"])
-        data["totalvacuumpower"] = np.log(data["totalvacuumpower"])
+        #data["totalvacuumpower"] = np.log(data["totalvacuumpower"])
 
         # Normalize according to data used for model training
         minmax = wandb.iloc[wandb.shape[0]-2:wandb.shape[0], 1:wandb.shape[1]-3]
