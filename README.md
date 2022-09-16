@@ -17,9 +17,14 @@ NAIDEA's targeted approach can help fast track the proliferation of energy effic
 
 # Getting Started
 
+## Running Source File
+1. Download respository files
+2. Ensure resources/base are located in the same file directory as main.py
+3. Run main.py
+
 ## Accessing NAIDEA
 
-Open NAIDEA_windows.exe and follow installation guidelines (currently only available for windows systems). NAIDEA_windows.exe is available at: https://doi.org/10.5281/zenodo.6511393
+Open NAIDEA_windows.exe and follow installation guidelines (currently only available for windows systems). NAIDEA_windows.exe is available at: https://doi.org/10.5281/zenodo.6511392
 
 ## Usage Steps
 
