@@ -263,13 +263,20 @@ class mainwindow(QDialog):
     def Header3(self): # Header section: collaboration logos
         HeaderBox = QGroupBox("A Collaboration of:")
 
+
         label_collab = QLabel()
         pixmap = QPixmap("collab2_trans.png")
         pixmap2 = pixmap.scaled(600, 600, Qt.KeepAspectRatio, Qt.SmoothTransformation)
         label_collab.setPixmap(pixmap2)
 
-        grid = QHBoxLayout()
+
+        # label = QLabel(wordWrap=True)
+        # label.setText("This work has been funded by the Sustainable Energy Authority of Ireland under the SEAI Research, Development and Demonstration Funding Program 2019, Grant number 19/RDD/453.")
+        # label.setAlignment(Qt.AlignCenter)
+
+        grid = QVBoxLayout()
         grid.addWidget(label_collab)
+        # grid.addWidget(label)
         HeaderBox.setLayout(grid)
 
         HeaderBox.setFlat(True)
@@ -294,6 +301,7 @@ class mainwindow(QDialog):
 
         # Create datasets specific to predicting each Dependent variable
         total_db, cooling_db, vacuum_db, heating_db, combined_db = self.processimportedfile(df1)
+        # total_db.to_csv('total_db.csv')
 
         # Identify farms requiring scaling
         df_scaling = total_db[["farm_id", "dairycows_total"]].groupby("farm_id").mean().round()
@@ -1097,11 +1105,15 @@ class FirstTab(QWidget): # macro-level tab layout
         self.setLayout(layout)
 
     def info(self, data):  # Terms and conditions section
-        groupBox = QGroupBox("Terms + Conditions")
+        groupBox = QGroupBox("Further Information")
         label = QTextEdit()
         label.setFrameStyle(0)
         label.setReadOnly(True)
-        label.textCursor().insertHtml("The National Artificial Intelligent Dairy Energy Application (NAIDEA) was developed and is maintained by researchers in the MeSSO research group at the Munster Technological University (messo.cit.ie). NAIDEA is not for use by commercial bodies. Contact messo@mtu.ie for further information.")
+        label.textCursor().insertHtml("The National Artificial Intelligent Dairy Energy Application (NAIDEA) was developed and is maintained by researchers in the MeSSO research group at the Munster Technological University (messo@mtu.ie). NAIDEA is not for use by commercial bodies.")
+        label.textCursor().insertHtml("<br> <br> Please read the user manual provided in the Help section prior to use and ensure that you are utilizing the most recent version available at: https://doi.org/10.5281/zenodo.6511392")
+        label.textCursor().insertHtml("<br> <br> This work has been funded by the Sustainable Energy Authority of Ireland under the SEAI Research, Development and Demonstration Funding Program 2019, Grant number 19/RDD/453.")
+
+        label.setAlignment(Qt.AlignCenter)
 
         ExLayout = QVBoxLayout()
         ExLayout.addWidget(label)
@@ -1482,6 +1494,6 @@ if __name__ == "__main__":
     window = mainwindow(data=None)
     # Formatting
     window.showMaximized()
-    window.setWindowTitle("NAIDEA")
+    window.setWindowTitle("NAIDEA 5.0")
     window.setWindowIcon(QIcon('icon.ico'))
     sys.exit(appctxt.app.exec())
